@@ -25,18 +25,41 @@ const AdminPortal = ({
       })).sort((a, b) => String(a.label).localeCompare(String(b.label), undefined, { numeric: true }))
     : [];
 
-  // Handle password login verification
-  const handleLogin = (e) => {
-    e.preventDefault();
-    if (password === 'admin123') { // Simple admin password
+  // Check session token on mount
+  useEffect(() => {
+    const token = sessionStorage.getItem('admin_token');
+    if (token) {
       setIsAuthenticated(true);
-      setLoginError('');
-      // Autoselect first lot if available
-      if (lotsList.length > 0) {
-        setSelectedLotId(lotsList[0].id);
+    }
+  }, []);
+
+  // Set initial selected lot when authenticated and list is populated
+  useEffect(() => {
+    if (isAuthenticated && lotsList.length > 0 && !selectedLotId) {
+      setSelectedLotId(lotsList[0].id);
+    }
+  }, [isAuthenticated, lotsList, selectedLotId]);
+
+  // Handle password login verification via API
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    setLoginError('');
+    try {
+      const res = await fetch('/api/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ password })
+      });
+      if (res.ok) {
+        const data = await res.json();
+        sessionStorage.setItem('admin_token', data.token);
+        setIsAuthenticated(true);
+      } else {
+        const errData = await res.json();
+        setLoginError(errData.error || 'Contraseña incorrecta. Inténtelo de nuevo.');
       }
-    } else {
-      setLoginError('Contraseña incorrecta. Inténtelo de nuevo.');
+    } catch (err) {
+      setLoginError('Error de red al intentar conectar con el servidor.');
     }
   };
 
@@ -51,19 +74,49 @@ const AdminPortal = ({
     }
   }, [selectedLotId, adminOverrides]);
 
-  const handleSave = (e) => {
+  // Handle saving overrides via API
+  const handleSave = async (e) => {
     e.preventDefault();
     if (!selectedLotId) return;
 
-    onSaveOverrides(selectedLotId, {
+    const token = sessionStorage.getItem('admin_token');
+    if (!token) {
+      alert("Sesión no válida o expirada. Por favor inicie sesión de nuevo.");
+      setIsAuthenticated(false);
+      return;
+    }
+
+    const payload = {
       price: price ? Number(price) : null,
       status,
       tags,
       description
-    });
-    
-    // Simple feedback toast
-    alert(`¡Cambios guardados con éxito para el Lote!`);
+    };
+
+    try {
+      const res = await fetch(`/api/overrides/${selectedLotId}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify(payload)
+      });
+
+      if (res.ok) {
+        onSaveOverrides(selectedLotId, payload);
+        alert(`¡Cambios guardados con éxito para el Lote!`);
+      } else {
+        const errData = await res.json();
+        alert(`Error al guardar cambios: ${errData.error || 'Desconocido'}`);
+        if (res.status === 401) {
+          sessionStorage.removeItem('admin_token');
+          setIsAuthenticated(false);
+        }
+      }
+    } catch (err) {
+      alert("Error de red al intentar guardar los cambios.");
+    }
   };
 
   // If not logged in, show login form

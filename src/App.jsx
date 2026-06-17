@@ -6,6 +6,8 @@ import AccessibilityControls from './components/AccessibilityControls';
 import SearchStatsPanel from './components/SearchStatsPanel';
 import LotDetails from './components/LotDetails';
 import AdminPortal from './components/AdminPortal';
+import CookieBanner from './components/CookieBanner';
+import WelcomeOverlay from './components/WelcomeOverlay';
 import { extractLotInfo } from './utils/lotUtils';
 
 function App() {
@@ -31,29 +33,59 @@ function App() {
   const [searchCollapsed,     setSearchCollapsed]    = useState(false);
   const [accessCollapsed,     setAccessCollapsed]    = useState(true);
   const [cameraMode,          setCameraMode]         = useState('third');
-
-  /* ─ Admin overrides (localStorage) ─ */
-  const [adminOverrides, setAdminOverrides] = useState(() => {
-    const saved = localStorage.getItem('admin_overrides');
-    return saved ? JSON.parse(saved) : {};
+  const [loadProgress,        setLoadProgress]       = useState(0);
+  const [performanceMode,     setPerformanceMode]    = useState(() => {
+    const isMobile = /Mobi|Android|iPhone/i.test(navigator.userAgent);
+    const lowCores = navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4;
+    return (isMobile || lowCores) ? 'low' : 'high';
   });
+
+  /* ─ Admin overrides (API with localStorage fallback cache) ─ */
+  const [adminOverrides, setAdminOverrides] = useState({});
+
+  useEffect(() => {
+    const fetchOverrides = async () => {
+      try {
+        const res = await fetch('/api/overrides');
+        if (res.ok) {
+          const data = await res.json();
+          setAdminOverrides(data);
+          localStorage.setItem('admin_overrides_cache', JSON.stringify(data));
+        }
+      } catch (e) {
+        console.warn("No se pudo conectar a la API de overrides, usando caché local:", e);
+        const cached = localStorage.getItem('admin_overrides_cache');
+        if (cached) setAdminOverrides(JSON.parse(cached));
+      }
+    };
+    fetchOverrides();
+    const interval = setInterval(fetchOverrides, 30000);
+    return () => clearInterval(interval);
+  }, []);
 
   /* ─ Load GeoJSON ─ */
   useEffect(() => {
+    let loaded = 0;
     const load = async (file, setter) => {
       try {
         const res = await fetch(`/data/${file}`);
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        setter(await res.json());
+        const data = await res.json();
+        setter(data);
       } catch (e) {
         console.error(`GeoJSON load error [${file}]:`, e.message);
+      } finally {
+        loaded++;
+        setLoadProgress(loaded);
       }
     };
-    load('loteo.geojson',   setLoteoGeojson);
-    load('manzana.geojson', setManzanaGeojson);
-    load('vias.geojson',    setViasGeojson);
-    load('predio.geojson',  setPredioGeojson);
-    load('cotas.geojson',   setCotasGeojson);
+    Promise.all([
+      load('loteo.geojson',   setLoteoGeojson),
+      load('manzana.geojson', setManzanaGeojson),
+      load('vias.geojson',    setViasGeojson),
+      load('predio.geojson',  setPredioGeojson),
+      load('cotas.geojson',   setCotasGeojson),
+    ]);
   }, []);
 
   /* ─ Deep linking on load ─ */
@@ -85,7 +117,7 @@ function App() {
   const handleSaveOverrides = (lotId, overrides) => {
     const updated = { ...adminOverrides, [lotId]: { ...adminOverrides[lotId], ...overrides } };
     setAdminOverrides(updated);
-    localStorage.setItem('admin_overrides', JSON.stringify(updated));
+    localStorage.setItem('admin_overrides_cache', JSON.stringify(updated));
     if (selectedLot?.id === lotId) setSelectedLot(prev => ({ ...prev, ...overrides }));
   };
 
@@ -142,13 +174,24 @@ function App() {
         setCameraMode={setCameraMode}
         viewMode={viewMode}
         setViewMode={setViewMode}
+        performanceMode={performanceMode}
       />
 
       {/* ── Top Navbar ── */}
       <nav className="vr-navbar">
         {/* Brand */}
         <div className="vr-brand">
-          <div className="vr-brand-mark">Q</div>
+          <div style={{
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            background: 'rgba(255,255,255,0.03)', border: '1px solid var(--glass-border)',
+            borderRadius: 6, width: 34, height: 34
+          }}>
+            <svg width="22" height="22" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="46" cy="44" r="30" stroke="var(--gold-400, #d4a843)" strokeWidth="9" />
+              <path d="M68 66 L88 86" stroke="var(--gold-400, #d4a843)" strokeWidth="12" strokeLinecap="round" />
+              <path d="M46 25 C46 25 54 33 54 44 C54 55 46 63 46 63 C46 63 38 55 38 44 C38 33 46 25 46 25 Z" fill="var(--gold-400, #d4a843)" opacity="0.95" />
+            </svg>
+          </div>
           <div>
             <div className="vr-brand-name">Querube</div>
             <div className="vr-brand-sub">Parcelación · San Pedro de Urabá</div>
@@ -223,6 +266,8 @@ function App() {
             leftPosition={ctrlLeft}
             viewMode={viewMode}
             setViewMode={setViewMode}
+            performanceMode={performanceMode}
+            setPerformanceMode={setPerformanceMode}
           />
         )}
       </AnimatePresence>
@@ -271,6 +316,38 @@ function App() {
 
       {/* Hidden admin opener — Ctrl+Shift+A ── */}
       <HiddenAdminTrigger onOpen={() => setAdminOpen(true)} />
+
+      {/* Cookie Consent Banner */}
+      <CookieBanner />
+
+      {/* Welcome Intro Overlay */}
+      <WelcomeOverlay />
+
+      {/* Cartographic Progress Loader */}
+      {loadProgress < 5 && (
+        <div style={{
+          position: 'absolute', top: 0, left: 0, width: '100vw', height: '100vh',
+          background: '#020617', zIndex: 99999, display: 'flex', flexDirection: 'column',
+          alignItems: 'center', justifyContent: 'center', gap: 20
+        }}>
+          <div style={{ animation: 'pulse 1.5s infinite alternate' }}>
+            <svg width="60" height="60" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="46" cy="44" r="30" stroke="var(--gold-400, #d4a843)" strokeWidth="9" />
+              <path d="M68 66 L88 86" stroke="var(--gold-400, #d4a843)" strokeWidth="12" strokeLinecap="round" />
+              <path d="M46 25 C46 25 54 33 54 44 C54 55 46 63 46 63 C46 63 38 55 38 44 C38 33 46 25 46 25 Z" fill="var(--gold-400, #d4a843)" opacity="0.95" />
+            </svg>
+          </div>
+          <div style={{ textAlign: 'center', fontFamily: 'var(--font-header)', color: 'var(--text-100)' }}>
+            <div style={{ fontSize: '1.2rem', fontWeight: 800, color: 'var(--gold-300)', letterSpacing: '0.04em' }}>Querube 3D</div>
+            <div style={{ fontSize: '0.78rem', color: 'var(--text-400)', marginTop: 6 }}>
+              Cargando cartografía y datos SIG ({Math.round(loadProgress / 5 * 100)}%)
+            </div>
+          </div>
+          <div style={{ width: 180, height: 4, background: 'rgba(255,255,255,0.05)', borderRadius: 2, overflow: 'hidden' }}>
+            <div style={{ width: `${loadProgress / 5 * 100}%`, height: '100%', background: 'var(--gold-400, #d4a843)', transition: 'width 0.3s ease' }} />
+          </div>
+        </div>
+      )}
     </div>
   );
 }

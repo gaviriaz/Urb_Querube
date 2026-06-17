@@ -250,7 +250,7 @@ const RouteHUD = ({ vehicleType, cameraMode, progress, distance, onStop, onCycle
 // ─────────────────────────────────────────────
 // Main Map3D Component
 // ─────────────────────────────────────────────
-const Map3D = forwardRef(({ onSelectLot, selectedLotId, adminOverrides, viasGeojson, loteoGeojson, manzanaGeojson, predioGeojson, cotasGeojson, voiceEnabled, timeOfDay, environmentalLayer, cameraMode, setCameraMode, viewMode }, ref) => {
+const Map3D = forwardRef(({ onSelectLot, selectedLotId, adminOverrides, viasGeojson, loteoGeojson, manzanaGeojson, predioGeojson, cotasGeojson, voiceEnabled, timeOfDay, environmentalLayer, cameraMode, setCameraMode, viewMode, performanceMode }, ref) => {
   const mapContainerRef = useRef(null);
   const mapRef = useRef(null);
   const [mapLoaded, setMapLoaded] = useState(false);
@@ -732,6 +732,7 @@ const Map3D = forwardRef(({ onSelectLot, selectedLotId, adminOverrides, viasGeoj
         id: '3d-houses-layer',
         type: 'custom',
         renderingMode: '3d',
+        performanceMode: performanceMode,
         onAdd: function (mapInstance, gl) {
           this.map = mapInstance;
           this.camera = new THREE.Camera();
@@ -740,18 +741,22 @@ const Map3D = forwardRef(({ onSelectLot, selectedLotId, adminOverrides, viasGeoj
           this.ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
           this.scene.add(this.ambientLight);
 
+          const isLow = this.performanceMode === 'low';
+
           this.dirLight = new THREE.DirectionalLight(0xffffff, 1.2);
           this.dirLight.position.set(100, 200, 300).normalize();
-          this.dirLight.castShadow = true;
-          this.dirLight.shadow.mapSize.width = 2048;
-          this.dirLight.shadow.mapSize.height = 2048;
-          this.dirLight.shadow.camera.near = 0.5;
-          this.dirLight.shadow.camera.far = 1000;
-          this.dirLight.shadow.camera.left = -200;
-          this.dirLight.shadow.camera.right = 200;
-          this.dirLight.shadow.camera.top = 200;
-          this.dirLight.shadow.camera.bottom = -200;
-          this.dirLight.shadow.bias = -0.0001;
+          this.dirLight.castShadow = !isLow;
+          if (!isLow) {
+            this.dirLight.shadow.mapSize.width = 2048;
+            this.dirLight.shadow.mapSize.height = 2048;
+            this.dirLight.shadow.camera.near = 0.5;
+            this.dirLight.shadow.camera.far = 1000;
+            this.dirLight.shadow.camera.left = -200;
+            this.dirLight.shadow.camera.right = 200;
+            this.dirLight.shadow.camera.top = 200;
+            this.dirLight.shadow.camera.bottom = -200;
+            this.dirLight.shadow.bias = -0.0001;
+          }
           this.scene.add(this.dirLight);
 
           this.fillLight = new THREE.DirectionalLight(0xadd8e6, 0.3);
@@ -761,7 +766,7 @@ const Map3D = forwardRef(({ onSelectLot, selectedLotId, adminOverrides, viasGeoj
           this.hemiLight = new THREE.HemisphereLight(0x87ceeb, 0x362907, 0.4);
           this.scene.add(this.hemiLight);
 
-          this.neighborhood = createProceduralNeighborhood(this.scene, mapInstance, loteoGeojson, viasGeojson);
+          this.neighborhood = createProceduralNeighborhood(this.scene, mapInstance, loteoGeojson, viasGeojson, isLow);
           if (this.neighborhood && typeof this.neighborhood.toggle3DMode === 'function') {
             this.neighborhood.toggle3DMode(viewMode === '3d');
           }
@@ -773,8 +778,8 @@ const Map3D = forwardRef(({ onSelectLot, selectedLotId, adminOverrides, viasGeoj
             antialias: true
           });
           this.renderer.autoClear = false;
-          this.renderer.shadowMap.enabled = true;
-          this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+          this.renderer.shadowMap.enabled = !isLow;
+          this.renderer.shadowMap.type = THREE.PCFShadowMap;
           this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
           this.renderer.toneMappingExposure = 1.2;
           this.renderer.outputColorSpace = THREE.SRGBColorSpace;
@@ -794,6 +799,7 @@ const Map3D = forwardRef(({ onSelectLot, selectedLotId, adminOverrides, viasGeoj
           if (!this.ambientLight || !this.dirLight) return;
           
           this.scene.fog = null;
+          const isLow = this.performanceMode === 'low';
 
           if (this.map && this.map.getLayer('satellite-base')) {
             if (mode === 'night') {
@@ -813,21 +819,21 @@ const Map3D = forwardRef(({ onSelectLot, selectedLotId, adminOverrides, viasGeoj
             this.dirLight.color.setHex(0xffb703);
             this.dirLight.intensity = 0.65;
             this.dirLight.position.set(-200, -100, 50).normalize();
-            this.scene.fog = new THREE.FogExp2(0xfef3c7, 0.005);
+            if (!isLow) this.scene.fog = new THREE.FogExp2(0xfef3c7, 0.005);
           } else if (mode === 'sunset') {
             this.ambientLight.color.setHex(0xffddcc);
             this.ambientLight.intensity = 0.45;
             this.dirLight.color.setHex(0xff5500);
             this.dirLight.intensity = 0.75;
             this.dirLight.position.set(200, 100, 40).normalize();
-            this.scene.fog = new THREE.FogExp2(0xfed7aa, 0.004);
+            if (!isLow) this.scene.fog = new THREE.FogExp2(0xfed7aa, 0.004);
           } else if (mode === 'night') {
             this.ambientLight.color.setHex(0x0f172a);
             this.ambientLight.intensity = 0.25;
             this.dirLight.color.setHex(0x38bdf8);
             this.dirLight.intensity = 0.25;
             this.dirLight.position.set(-100, 200, 150).normalize();
-            this.scene.fog = new THREE.FogExp2(0x020617, 0.007);
+            if (!isLow) this.scene.fog = new THREE.FogExp2(0x020617, 0.007);
           } else {
             this.ambientLight.color.setHex(0xffffff);
             this.ambientLight.intensity = 0.85;
@@ -844,7 +850,8 @@ const Map3D = forwardRef(({ onSelectLot, selectedLotId, adminOverrides, viasGeoj
         updateNeighborhood: function (newLoteoGeojson, newViasGeojson) {
           if (this.neighborhood) this.neighborhood.dispose();
           if (this.scene && this.map) {
-            this.neighborhood = createProceduralNeighborhood(this.scene, this.map, newLoteoGeojson, newViasGeojson || viasGeojson);
+            const isLow = this.performanceMode === 'low';
+            this.neighborhood = createProceduralNeighborhood(this.scene, this.map, newLoteoGeojson, newViasGeojson || viasGeojson, isLow);
             this.setTimeOfDay(this.currentTimeOfDay || 'midday');
           }
         }
@@ -1087,6 +1094,32 @@ const Map3D = forwardRef(({ onSelectLot, selectedLotId, adminOverrides, viasGeoj
       housesLayer.implementation.setTimeOfDay(timeOfDay);
     }
   }, [timeOfDay, mapLoaded]);
+
+  // Handle dynamic performanceMode updates in Three.js custom layer
+  useEffect(() => {
+    if (!mapLoaded || !mapRef.current) return;
+    const map = mapRef.current;
+    const housesLayer = map.getLayer('3d-houses-layer');
+    if (housesLayer && housesLayer.implementation) {
+      const impl = housesLayer.implementation;
+      const isLow = performanceMode === 'low';
+      
+      impl.performanceMode = performanceMode;
+
+      if (impl.dirLight && impl.renderer) {
+        impl.dirLight.castShadow = !isLow;
+        impl.renderer.shadowMap.enabled = !isLow;
+        
+        // Re-apply time settings (including fog) under new performance setting
+        impl.setTimeOfDay(impl.currentTimeOfDay || 'midday');
+
+        // Re-generate neighborhood with the correct detail level
+        impl.updateNeighborhood(loteoGeojson, viasGeojson);
+
+        map.triggerRepaint();
+      }
+    }
+  }, [performanceMode, mapLoaded, loteoGeojson, viasGeojson]);
 
   // Helper to calculate simulated environmental metrics
   const getEnvironmentalColorExpression = (layerType) => {

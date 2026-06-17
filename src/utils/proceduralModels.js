@@ -99,7 +99,15 @@ const sampleViasForStreetlights = (viasGeojson, mapInstance, spacingMeters = 30)
   return points;
 };
 
-export const createProceduralNeighborhood = (scene, mapInstance, loteoGeojson, viasGeojson) => {
+export const createProceduralNeighborhood = (scene, mapInstance, loteoGeojson, viasGeojson, lowPerformance = false) => {
+  if (lowPerformance) {
+    return {
+      toggle3DMode: () => {},
+      updateLightMode: () => {},
+      dispose: () => {}
+    };
+  }
+
   const features = loteoGeojson ? loteoGeojson.features.filter(feat => {
     return feat.properties.LOTE !== 'REMANENTE';
   }) : [];

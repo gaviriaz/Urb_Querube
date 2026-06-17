@@ -61,7 +61,7 @@ const LotDetails = ({ lot, adminOverrides, onClose }) => {
   const handleRequestInfo = () => {
     setRequestedInfo(true);
 
-    const phoneNumber = "573123456789"; // Standard sales advisor WhatsApp number
+    const phoneNumber = import.meta.env.VITE_WHATSAPP_NUMBER || "573123456789"; // Sales advisor WhatsApp number
     const lotLabel = lot.label;
     const lotArea = Math.round(areaM2);
     const lotManzana = lot.manzana || "—";
@@ -218,6 +218,9 @@ const LotDetails = ({ lot, adminOverrides, onClose }) => {
                   +${Math.round(capitalGain).toLocaleString('es-CO')}
                 </div>
               </div>
+            </div>
+            <div style={{ fontSize: '0.62rem', color: 'var(--text-400)', marginTop: 4, fontStyle: 'italic', lineHeight: 1.3 }}>
+              * Esta es una proyección estimada basada en tendencias históricas de la zona. No constituye una garantía de rentabilidad ni una promesa de valorización.
             </div>
           </div>
         </div>

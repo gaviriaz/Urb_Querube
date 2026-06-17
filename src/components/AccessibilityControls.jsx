@@ -45,6 +45,7 @@ const AccessibilityControls = ({
   isCollapsed, setIsCollapsed,
   leftPosition = '360px',
   viewMode, setViewMode,
+  performanceMode, setPerformanceMode,
 }) => {
   const [activeTab,    setActiveTab]    = useState('camera');
   const [soundEnabled, setSoundEnabled] = useState(false);
@@ -334,6 +335,31 @@ const AccessibilityControls = ({
                     onClick={() => handleFontChange(item.id)}
                   >{item.lbl}</button>
                 ))}
+              </div>
+            </div>
+
+            <div className="controls-section">
+              <SectionTitle>Modo de Rendimiento</SectionTitle>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 5 }}>
+                <button 
+                  className={`view-toggle-btn ${performanceMode==='low'?'active':''}`}
+                  onClick={() => setPerformanceMode?.('low')}
+                  style={{ padding: '6px 4px', fontSize: '0.7rem' }}
+                >
+                  ⚡ Fluidez (Móvil)
+                </button>
+                <button 
+                  className={`view-toggle-btn ${performanceMode==='high'?'active':''}`}
+                  onClick={() => setPerformanceMode?.('high')}
+                  style={{ padding: '6px 4px', fontSize: '0.7rem' }}
+                >
+                  ✨ Alta Calidad
+                </button>
+              </div>
+              <div style={{ fontSize: '0.62rem', color: 'var(--text-400)', marginTop: 6, lineHeight: 1.3 }}>
+                {performanceMode === 'low' 
+                  ? 'Sombras y niebla desactivadas, maqueta 3D optimizada para mayor fluidez.' 
+                  : 'Renderizado completo con sombras en tiempo real, ciclo día/noche y niebla.'}
               </div>
             </div>
 
