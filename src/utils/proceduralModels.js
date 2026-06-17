@@ -729,6 +729,14 @@ export const createProceduralNeighborhood = (scene, mapInstance, loteoGeojson, v
   // Create green pulses for available lots (Visual Salience Engine)
   const pulseMeshes = [];
   const pulseGeom = new THREE.RingGeometry(0.1, 7.5, 32); // Flat circle
+
+  const pulseMat = new THREE.MeshBasicMaterial({
+    color: 0x10b981,
+    transparent: true,
+    opacity: 0.6,
+    depthWrite: false,
+    side: THREE.DoubleSide
+  });
   
   features.forEach((feat) => {
     const lotId = feat.properties.fid || feat.properties.OBJECTID || 0;
@@ -753,13 +761,6 @@ export const createProceduralNeighborhood = (scene, mapInstance, loteoGeojson, v
       }
       const rotation = new THREE.Quaternion().setFromEuler(new THREE.Euler(Math.PI / 2, 0, angle));
       
-      const pulseMat = new THREE.MeshBasicMaterial({
-        color: 0x10b981,
-        transparent: true,
-        opacity: 0.6,
-        depthWrite: false,
-        side: THREE.DoubleSide
-      });
       const pulseMesh = new THREE.Mesh(pulseGeom, pulseMat);
       pulseMesh.position.copy(position);
       pulseMesh.rotation.setFromQuaternion(rotation);
@@ -768,7 +769,6 @@ export const createProceduralNeighborhood = (scene, mapInstance, loteoGeojson, v
       scene.add(pulseMesh);
       pulseMeshes.push({
         mesh: pulseMesh,
-        material: pulseMat,
         baseScale: scaleFactor
       });
     }
@@ -914,14 +914,20 @@ export const createProceduralNeighborhood = (scene, mapInstance, loteoGeojson, v
       slReflectorMat.needsUpdate = true;
     },
     animate: (hoveredId) => {
-      // 1. Pulse animations
-      const elapsed = (Date.now() % 4000) / 4000;
-      const scaleVal = 0.1 + elapsed * 1.7;
-      const opacityVal = 0.6 * (1 - elapsed);
-      pulseMeshes.forEach(p => {
-        p.mesh.scale.set(p.baseScale * scaleVal, p.baseScale * scaleVal, p.baseScale);
-        p.material.opacity = opacityVal;
-      });
+      let activeAnimation = false;
+
+      // 1. Pulse animations (runs continuously if there are available lots)
+      if (pulseMeshes.length > 0) {
+        const elapsed = (Date.now() % 4000) / 4000;
+        const scaleVal = 0.1 + elapsed * 1.7;
+        const opacityVal = 0.6 * (1 - elapsed);
+        
+        pulseMat.opacity = opacityVal;
+        pulseMeshes.forEach(p => {
+          p.mesh.scale.set(p.baseScale * scaleVal, p.baseScale * scaleVal, p.baseScale);
+        });
+        activeAnimation = true;
+      }
 
       // 2. Smooth hover elevation lerp (+2 meters on local Y / global Z axis when hovered)
       let needsUpdate = false;
@@ -1007,7 +1013,10 @@ export const createProceduralNeighborhood = (scene, mapInstance, loteoGeojson, v
         allInstancedMeshes.forEach(m => {
           m.instanceMatrix.needsUpdate = true;
         });
+        activeAnimation = true;
       }
+
+      return activeAnimation;
     },
     updateLOD: (zoom) => {
       const showAll = zoom >= 17.8;
@@ -1105,8 +1114,8 @@ export const createProceduralNeighborhood = (scene, mapInstance, loteoGeojson, v
       // Dispose pulses
       pulseMeshes.forEach(p => {
         scene.remove(p.mesh);
-        p.material.dispose();
       });
+      pulseMat.dispose();
       pulseGeom.dispose();
 
       // Dispose geometries

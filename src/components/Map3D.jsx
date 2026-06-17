@@ -1338,13 +1338,14 @@ const Map3D = forwardRef(({ onSelectLot, selectedLotId, adminOverrides, lotClick
           this.scene.add(this.ambientLight);
 
           const isLow = this.performanceMode === 'low';
+          const isMobile = window.innerWidth <= 768 || /Mobi|Android|iPhone/i.test(navigator.userAgent);
 
           this.dirLight = new THREE.DirectionalLight(0xffffff, 1.2);
           this.dirLight.position.set(100, 200, 300).normalize();
-          this.dirLight.castShadow = !isLow;
-          if (!isLow) {
-            this.dirLight.shadow.mapSize.width = 2048;
-            this.dirLight.shadow.mapSize.height = 2048;
+          this.dirLight.castShadow = !isLow && !isMobile;
+          if (!isLow && !isMobile) {
+            this.dirLight.shadow.mapSize.width = 1024;
+            this.dirLight.shadow.mapSize.height = 1024;
             this.dirLight.shadow.camera.near = 0.5;
             this.dirLight.shadow.camera.far = 1000;
             this.dirLight.shadow.camera.left = -200;
@@ -1374,16 +1375,17 @@ const Map3D = forwardRef(({ onSelectLot, selectedLotId, adminOverrides, lotClick
             antialias: true
           });
           this.renderer.autoClear = false;
-          this.renderer.shadowMap.enabled = !isLow;
+          this.renderer.shadowMap.enabled = !isLow && !isMobile;
           this.renderer.shadowMap.type = THREE.PCFShadowMap;
           this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
           this.renderer.toneMappingExposure = 1.2;
           this.renderer.outputColorSpace = THREE.SRGBColorSpace;
         },
         render: function (gl, matrix) {
+          let hasActiveAnimation = false;
           if (this.neighborhood) {
             if (typeof this.neighborhood.animate === 'function') {
-              this.neighborhood.animate(hoveredLotIdRef.current);
+              hasActiveAnimation = !!this.neighborhood.animate(hoveredLotIdRef.current);
             }
             if (typeof this.neighborhood.updateLOD === 'function') {
               this.neighborhood.updateLOD(this.map.getZoom());
@@ -1392,7 +1394,10 @@ const Map3D = forwardRef(({ onSelectLot, selectedLotId, adminOverrides, lotClick
           this.camera.projectionMatrix = new THREE.Matrix4().fromArray(matrix);
           this.renderer.resetState();
           this.renderer.render(this.scene, this.camera);
-          this.map.triggerRepaint();
+          
+          if (hasActiveAnimation || flightActiveRef.current || routeActiveRef.current) {
+            this.map.triggerRepaint();
+          }
         },
         onRemove: function (mapInstance, gl) {
           if (this.neighborhood) this.neighborhood.dispose();
@@ -1808,12 +1813,13 @@ const Map3D = forwardRef(({ onSelectLot, selectedLotId, adminOverrides, lotClick
     if (housesLayer && housesLayer.implementation) {
       const impl = housesLayer.implementation;
       const isLow = performanceMode === 'low';
+      const isMobile = window.innerWidth <= 768 || /Mobi|Android|iPhone/i.test(navigator.userAgent);
       
       impl.performanceMode = performanceMode;
 
       if (impl.dirLight && impl.renderer) {
-        impl.dirLight.castShadow = !isLow;
-        impl.renderer.shadowMap.enabled = !isLow;
+        impl.dirLight.castShadow = !isLow && !isMobile;
+        impl.renderer.shadowMap.enabled = !isLow && !isMobile;
         
         // Re-apply time settings (including fog) under new performance setting
         impl.setTimeOfDay(impl.currentTimeOfDay || 'midday');
