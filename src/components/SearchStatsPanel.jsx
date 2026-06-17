@@ -1,6 +1,6 @@
 import { useState, useMemo, useRef, useCallback, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Search, X, Navigation, ChevronLeft, ChevronRight, TrendingUp, User, Car, Bike, Award } from 'lucide-react';
+import { Search, X, Navigation, ChevronLeft, ChevronRight, TrendingUp, User, Car, Bike, Award, MapPin, Sparkles } from 'lucide-react';
 import { extractLotInfo } from '../utils/lotUtils.js';
 import QuerubeLogo from './QuerubeLogo';
 
@@ -150,17 +150,58 @@ const SearchStatsPanel = ({
         <ChevronLeft size={18} />
       </button>
 
-
+      {/* ── Premium Header ── */}
+      <div style={{
+        padding: '68px 20px 18px',
+        borderBottom: '1px solid rgba(199, 168, 109, 0.06)',
+        flexShrink: 0,
+        background: 'linear-gradient(180deg, rgba(199, 168, 109, 0.03) 0%, transparent 100%)',
+      }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 6 }}>
+          <div style={{
+            width: 32, height: 32, borderRadius: 8,
+            background: 'rgba(199, 168, 109, 0.08)',
+            border: '1px solid rgba(199, 168, 109, 0.15)',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+          }}>
+            <QuerubeLogo width={18} height={18} />
+          </div>
+          <div>
+            <div style={{
+              fontFamily: 'var(--font-display)', fontSize: '1.05rem',
+              fontWeight: 800, color: 'var(--gold-300)',
+              letterSpacing: '0.02em', lineHeight: 1.2,
+            }}>
+              Catálogo de Lotes
+            </div>
+            <div style={{
+              fontSize: '0.62rem', color: 'var(--text-400)',
+              letterSpacing: '0.1em', textTransform: 'uppercase',
+              marginTop: 1, fontWeight: 500,
+            }}>
+              Parcelación Querube
+            </div>
+          </div>
+        </div>
+      </div>
 
       {/* ── Stats ── */}
       <div className="catalog-stats">
         {[
-          { n: stats.total,      l: 'Lotes',      c: 'var(--text-100)' },
-          { n: stats.disponible, l: 'Libres', c: 'var(--status-available)' },
-          { n: stats.vendido + stats.reservado, l: 'Reservados', c: 'var(--status-reserved)' },
+          { n: stats.total,      l: 'Total',     c: 'var(--text-100)' },
+          { n: stats.disponible, l: 'Libres',    c: '#3ecf8e' },
+          { n: stats.reservado + stats.vendido, l: 'Reservados', c: '#f59e0b' },
         ].map(({ n, l, c }) => (
           <div key={l} className="stat-cell">
-            <span className="stat-number" style={{ color: c }}>{n}</span>
+            <motion.span
+              className="stat-number"
+              style={{ color: c }}
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, ease: 'easeOut' }}
+            >
+              {n}
+            </motion.span>
             <span className="stat-label">{l}</span>
           </div>
         ))}
@@ -168,12 +209,17 @@ const SearchStatsPanel = ({
 
       {/* ── Progress ── */}
       <div className="catalog-progress-bar">
-        <div style={{ display: 'flex', justifycontent: 'space-between', alignItems: 'center', marginBottom: 4 }}>
-          <span style={{ fontSize: '0.68rem', color: 'var(--text-400)', letterSpacing: '0.08em', textTransform: 'uppercase' }}>
-            <TrendingUp size={11} style={{ display: 'inline', marginRight: 4 }} />
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 5 }}>
+          <span style={{ fontSize: '0.66rem', color: 'var(--text-400)', letterSpacing: '0.08em', textTransform: 'uppercase', fontWeight: 600, display: 'flex', alignItems: 'center', gap: 4 }}>
+            <TrendingUp size={10} />
             Progreso de Ventas
           </span>
-          <span style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--gold-300)' }}>
+          <span style={{
+            fontSize: '0.72rem', fontWeight: 700, color: 'var(--gold-300)',
+            background: 'rgba(199, 168, 109, 0.08)',
+            padding: '2px 8px', borderRadius: 10,
+            border: '1px solid rgba(199, 168, 109, 0.12)',
+          }}>
             {stats.vendido}/{stats.total}
           </span>
         </div>
@@ -258,7 +304,14 @@ const SearchStatsPanel = ({
 
       {/* ── Lot list ── */}
       <div className="lot-list custom-scrollbar">
-        <div style={{ fontSize: '0.62rem', color: 'var(--text-400)', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 4, paddingLeft: 2 }}>
+        <div style={{
+          fontSize: '0.6rem', color: 'var(--text-400)',
+          letterSpacing: '0.08em', textTransform: 'uppercase',
+          marginBottom: 6, paddingLeft: 2,
+          display: 'flex', alignItems: 'center', gap: 6,
+          fontWeight: 500,
+        }}>
+          <MapPin size={10} style={{ color: 'var(--gold-400)', opacity: 0.6 }} />
           {filteredLots.length} lotes · {statusFilter !== 'Todos' ? statusFilter : 'Todos los estados'}
         </div>
 
