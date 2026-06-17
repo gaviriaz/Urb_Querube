@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { X, Calendar, User, Mail, Phone, Lock, Check } from 'lucide-react';
 import { crearReserva } from '../services/apiLotes';
+import { validateEmail, validateColombiaPhone } from '../utils/validation';
 
 export default function ReservaForm({ lotId, lotLabel, onClose, onComplete }) {
   const [nombre, setNombre] = useState('');
@@ -69,6 +70,18 @@ export default function ReservaForm({ lotId, lotLabel, onClose, onComplete }) {
 
     if (!nombre.trim() || !email.trim() || !phone.trim()) {
       setErrorMsg('Por favor completa todos los campos.');
+      setIsSubmitting(false);
+      return;
+    }
+
+    if (!validateEmail(email)) {
+      setErrorMsg('Por favor ingresa un correo electrónico válido (ej: tu@correo.com).');
+      setIsSubmitting(false);
+      return;
+    }
+
+    if (!validateColombiaPhone(phone)) {
+      setErrorMsg('El teléfono debe tener 10 dígitos y empezar con 3 (ej: 3001234567).');
       setIsSubmitting(false);
       return;
     }
@@ -160,7 +173,7 @@ export default function ReservaForm({ lotId, lotLabel, onClose, onComplete }) {
                 value={nombre}
                 onChange={(e) => setNombre(e.target.value)}
                 placeholder="Ej. Juan Pérez"
-                style={{ width: '100%', padding: '8px 12px 8px 30px', background: 'rgba(255,255,255,0.02)', border: '1px solid var(--glass-border)', borderRadius: 6, color: '#fff', fontSize: '0.8rem', outline: 'none' }}
+                style={{ width: '100%', height: 48, padding: '0 12px 0 30px', background: 'rgba(255,255,255,0.02)', border: '1px solid var(--glass-border)', borderRadius: 6, color: '#fff', fontSize: '16px', outline: 'none' }}
               />
             </div>
           </div>
@@ -176,7 +189,7 @@ export default function ReservaForm({ lotId, lotLabel, onClose, onComplete }) {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="ejemplo@correo.com"
-                style={{ width: '100%', padding: '8px 12px 8px 30px', background: 'rgba(255,255,255,0.02)', border: '1px solid var(--glass-border)', borderRadius: 6, color: '#fff', fontSize: '0.8rem', outline: 'none' }}
+                style={{ width: '100%', height: 48, padding: '0 12px 0 30px', background: 'rgba(255,255,255,0.02)', border: '1px solid var(--glass-border)', borderRadius: 6, color: '#fff', fontSize: '16px', outline: 'none' }}
               />
             </div>
           </div>
@@ -191,8 +204,8 @@ export default function ReservaForm({ lotId, lotLabel, onClose, onComplete }) {
                 required
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
-                placeholder="+57 300 123 4567"
-                style={{ width: '100%', padding: '8px 12px 8px 30px', background: 'rgba(255,255,255,0.02)', border: '1px solid var(--glass-border)', borderRadius: 6, color: '#fff', fontSize: '0.8rem', outline: 'none' }}
+                placeholder="Ej. 3001234567"
+                style={{ width: '100%', height: 48, padding: '0 12px 0 30px', background: 'rgba(255,255,255,0.02)', border: '1px solid var(--glass-border)', borderRadius: 6, color: '#fff', fontSize: '16px', outline: 'none' }}
               />
             </div>
           </div>
@@ -246,12 +259,12 @@ export default function ReservaForm({ lotId, lotLabel, onClose, onComplete }) {
             disabled={isSubmitting || !captchaToken}
             style={{
               width: '100%',
-              padding: '10px',
+              height: 50,
               borderRadius: 6,
               background: (!captchaToken || isSubmitting) ? 'rgba(255,255,255,0.05)' : 'linear-gradient(135deg, var(--gold-400), var(--gold-500))',
               color: (!captchaToken || isSubmitting) ? 'var(--text-500)' : '#020617',
-              fontSize: '0.8rem',
-              fontWeight: 700,
+              fontSize: '0.9rem',
+              fontWeight: 800,
               cursor: (!captchaToken || isSubmitting) ? 'not-allowed' : 'pointer',
               border: 'none',
               marginTop: 4
