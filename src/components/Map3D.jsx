@@ -92,23 +92,24 @@ const FlightHUD = ({ progress, totalStations, currentLabel, elapsed, totalDurati
       left: 0,
       right: 0,
       zIndex: 20,
-      background: 'linear-gradient(to top, rgba(3,7,4,0.92) 0%, rgba(3,7,4,0.6) 70%, transparent 100%)',
-      padding: '40px 32px 20px 32px',
-      pointerEvents: 'auto'
+      background: 'linear-gradient(to top, rgba(15,23,42,0.95) 0%, rgba(15,23,42,0.6) 70%, transparent 100%)',
+      padding: '30px 24px 16px 24px',
+      pointerEvents: 'auto',
+      borderTop: '1px solid var(--glass-border)'
     }}>
       {/* Progress bar */}
       <div style={{
         width: '100%',
         height: '3px',
-        backgroundColor: 'rgba(255,255,255,0.1)',
+        backgroundColor: 'rgba(255,255,255,0.08)',
         borderRadius: '2px',
-        marginBottom: '14px',
+        marginBottom: '12px',
         overflow: 'hidden'
       }}>
         <div style={{
           width: `${progressPercent}%`,
           height: '100%',
-          background: 'linear-gradient(90deg, #22c55e, #eab308, #f97316)',
+          background: 'linear-gradient(90deg, var(--gold-600), var(--gold-400))',
           borderRadius: '2px',
           transition: 'width 0.3s ease'
         }} />
@@ -126,16 +127,16 @@ const FlightHUD = ({ progress, totalStations, currentLabel, elapsed, totalDurati
             <div
               key={i}
               style={{
-                width: i === Math.floor(progress) ? '10px' : '6px',
-                height: i === Math.floor(progress) ? '10px' : '6px',
+                width: i === Math.floor(progress) ? '8px' : '5px',
+                height: i === Math.floor(progress) ? '8px' : '5px',
                 borderRadius: '50%',
                 backgroundColor: i < Math.floor(progress)
-                  ? '#22c55e'
+                  ? 'var(--gold-500)'
                   : i === Math.floor(progress)
-                    ? '#eab308'
-                    : 'rgba(255,255,255,0.2)',
-                transition: 'all 0.4s ease',
-                boxShadow: i === Math.floor(progress) ? '0 0 8px rgba(234,179,8,0.6)' : 'none'
+                    ? 'var(--gold-300)'
+                    : 'rgba(255,255,255,0.15)',
+                transition: 'all 0.3s ease',
+                boxShadow: i === Math.floor(progress) ? '0 0 6px var(--gold-glow)' : 'none'
               }}
             />
           ))}
@@ -145,25 +146,25 @@ const FlightHUD = ({ progress, totalStations, currentLabel, elapsed, totalDurati
         <div style={{
           flex: 1,
           textAlign: 'center',
-          fontSize: '0.95rem',
+          fontSize: '0.82rem',
           fontWeight: 600,
-          color: '#fde047',
-          textShadow: '0 2px 8px rgba(0,0,0,0.7)',
-          letterSpacing: '0.03em',
+          color: 'var(--gold-300)',
+          textShadow: '0 1px 4px rgba(0,0,0,0.6)',
+          letterSpacing: '0.02em',
           whiteSpace: 'nowrap',
           overflow: 'hidden',
           textOverflow: 'ellipsis'
         }}>
-          {currentLabel || '🎬 Recorrido Virtual'}
+          {currentLabel || 'Recorrido Catastral Virtual'}
         </div>
 
         {/* Timer */}
         <div style={{
-          fontSize: '0.78rem',
-          color: 'rgba(255,255,255,0.5)',
+          fontSize: '0.75rem',
+          color: 'var(--text-400)',
           fontFamily: 'monospace',
           flexShrink: 0,
-          minWidth: '85px',
+          minWidth: '80px',
           textAlign: 'right'
         }}>
           {String(minutes).padStart(2, '0')}:{String(seconds).padStart(2, '0')} / {String(totalMin).padStart(2, '0')}:{String(totalSec).padStart(2, '0')}
@@ -173,22 +174,21 @@ const FlightHUD = ({ progress, totalStations, currentLabel, elapsed, totalDurati
         <button
           onClick={onStop}
           style={{
-            padding: '6px 16px',
-            borderRadius: '8px',
-            border: '1px solid rgba(239,68,68,0.4)',
-            backgroundColor: 'rgba(239,68,68,0.15)',
-            color: '#f87171',
-            fontSize: '0.8rem',
+            padding: '4px 12px',
+            borderRadius: '4px',
+            border: '1px solid rgba(239,68,68,0.35)',
+            backgroundColor: 'rgba(239,68,68,0.1)',
+            color: '#ef4444',
+            fontSize: '0.78rem',
             fontWeight: 600,
             cursor: 'pointer',
-            transition: 'all 0.3s ease',
-            flexShrink: 0,
-            letterSpacing: '0.02em'
+            transition: 'all 0.2s ease',
+            flexShrink: 0
           }}
-          onMouseEnter={e => { e.target.style.backgroundColor = 'rgba(239,68,68,0.3)'; }}
-          onMouseLeave={e => { e.target.style.backgroundColor = 'rgba(239,68,68,0.15)'; }}
+          onMouseEnter={e => { e.target.style.backgroundColor = 'rgba(239,68,68,0.2)'; }}
+          onMouseLeave={e => { e.target.style.backgroundColor = 'rgba(239,68,68,0.1)'; }}
         >
-          ⏹ Detener
+          Detener
         </button>
       </div>
     </div>
@@ -207,40 +207,41 @@ const RouteHUD = ({ vehicleType, cameraMode, progress, distance, onStop, onCycle
   return (
     <div style={{
       position: 'absolute', bottom: 0, left: 0, right: 0, zIndex: 20,
-      background: 'linear-gradient(to top, rgba(3,7,4,0.95) 0%, rgba(3,7,4,0.7) 60%, transparent 100%)',
-      padding: '30px 28px 16px 28px', pointerEvents: 'auto'
+      background: 'linear-gradient(to top, rgba(15,23,42,0.95) 0%, rgba(15,23,42,0.7) 60%, transparent 100%)',
+      padding: '24px 24px 14px 24px', pointerEvents: 'auto',
+      borderTop: '1px solid var(--glass-border)'
     }}>
       {/* Progress bar */}
-      <div style={{ width: '100%', height: '3px', backgroundColor: 'rgba(255,255,255,0.1)', borderRadius: '2px', marginBottom: '12px', overflow: 'hidden' }}>
-        <div style={{ width: `${progressPct}%`, height: '100%', background: 'linear-gradient(90deg, #38bdf8, #22c55e, #eab308)', borderRadius: '2px', transition: 'width 0.15s linear' }} />
+      <div style={{ width: '100%', height: '3px', backgroundColor: 'rgba(255,255,255,0.08)', borderRadius: '2px', marginBottom: '10px', overflow: 'hidden' }}>
+        <div style={{ width: `${progressPct}%`, height: '100%', background: 'linear-gradient(90deg, var(--gold-600), var(--gold-400))', borderRadius: '2px', transition: 'width 0.15s linear' }} />
       </div>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '12px', flexWrap: 'wrap' }}>
         {/* Vehicle selector */}
         <button onClick={onCycleVehicle} style={{
-          padding: '5px 12px', borderRadius: '8px', border: '1px solid rgba(56,189,248,0.3)',
-          backgroundColor: 'rgba(56,189,248,0.1)', color: '#7dd3fc', fontSize: '0.82rem',
-          fontWeight: 600, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '6px'
+          padding: '4px 10px', borderRadius: '4px', border: '1px solid rgba(2,132,199,0.3)',
+          backgroundColor: 'rgba(2,132,199,0.08)', color: 'var(--gold-300)', fontSize: '0.78rem',
+          fontWeight: 600, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px'
         }}>
-          {vConfig.emoji} {vConfig.label}
+          Recorrido: {vConfig.label}
         </button>
         {/* Camera mode */}
         <button onClick={onCycleCamera} style={{
-          padding: '5px 12px', borderRadius: '8px', border: '1px solid rgba(234,179,8,0.3)',
-          backgroundColor: 'rgba(234,179,8,0.1)', color: '#fde047', fontSize: '0.82rem',
-          fontWeight: 600, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '6px'
+          padding: '4px 10px', borderRadius: '4px', border: '1px solid rgba(2,132,199,0.3)',
+          backgroundColor: 'rgba(2,132,199,0.08)', color: 'var(--gold-300)', fontSize: '0.78rem',
+          fontWeight: 600, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px'
         }}>
-          {camConfig.emoji} {camConfig.label}
+          Vista: {camConfig.label}
         </button>
         {/* Distance */}
-        <span style={{ fontSize: '0.8rem', color: 'rgba(255,255,255,0.55)', fontFamily: 'monospace' }}>
+        <span style={{ fontSize: '0.75rem', color: 'var(--text-400)', fontFamily: 'monospace' }}>
           {distTraveled} / {distance.toFixed(0)} m
         </span>
         {/* Stop */}
         <button onClick={onStop} style={{
-          padding: '5px 14px', borderRadius: '8px', border: '1px solid rgba(239,68,68,0.4)',
-          backgroundColor: 'rgba(239,68,68,0.12)', color: '#f87171', fontSize: '0.8rem',
+          padding: '4px 12px', borderRadius: '4px', border: '1px solid rgba(239,68,68,0.35)',
+          backgroundColor: 'rgba(239,68,68,0.1)', color: '#ef4444', fontSize: '0.78rem',
           fontWeight: 600, cursor: 'pointer'
-        }}>⏹ Detener</button>
+        }}>Detener</button>
       </div>
     </div>
   );
@@ -249,10 +250,11 @@ const RouteHUD = ({ vehicleType, cameraMode, progress, distance, onStop, onCycle
 // ─────────────────────────────────────────────
 // Main Map3D Component
 // ─────────────────────────────────────────────
-const Map3D = forwardRef(({ onSelectLot, selectedLotId, adminOverrides, viasGeojson, loteoGeojson, manzanaGeojson, predioGeojson, cotasGeojson, voiceEnabled, timeOfDay, environmentalLayer, cameraMode, setCameraMode }, ref) => {
+const Map3D = forwardRef(({ onSelectLot, selectedLotId, adminOverrides, viasGeojson, loteoGeojson, manzanaGeojson, predioGeojson, cotasGeojson, voiceEnabled, timeOfDay, environmentalLayer, cameraMode, setCameraMode, viewMode }, ref) => {
   const mapContainerRef = useRef(null);
   const mapRef = useRef(null);
   const [mapLoaded, setMapLoaded] = useState(false);
+  const [hoveredLot, setHoveredLot] = useState(null);
   const [flightActive, setFlightActive] = useState(false);
   
   // Flight HUD state
@@ -632,13 +634,12 @@ const Map3D = forwardRef(({ onSelectLot, selectedLotId, adminOverrides, viasGeoj
       
       map.addLayer({
         id: 'loteo-fill',
-        type: 'fill-extrusion',
+        type: 'fill',
         source: 'loteo',
         filter: ['==', ['to-number', ['get', 'fid']], -1],
         paint: {
-          'fill-extrusion-color': 'rgba(0,0,0,0)',
-          'fill-extrusion-opacity': 0.85,
-          'fill-extrusion-height': 0
+          'fill-color': 'rgba(0,0,0,0)',
+          'fill-opacity': 1.0
         }
       });
 
@@ -761,6 +762,9 @@ const Map3D = forwardRef(({ onSelectLot, selectedLotId, adminOverrides, viasGeoj
           this.scene.add(this.hemiLight);
 
           this.neighborhood = createProceduralNeighborhood(this.scene, mapInstance, loteoGeojson, viasGeojson);
+          if (this.neighborhood && typeof this.neighborhood.toggle3DMode === 'function') {
+            this.neighborhood.toggle3DMode(viewMode === '3d');
+          }
           this.setTimeOfDay(timeOfDay);
 
           this.renderer = new THREE.WebGLRenderer({
@@ -957,14 +961,33 @@ const Map3D = forwardRef(({ onSelectLot, selectedLotId, adminOverrides, viasGeoj
       }
     });
 
-    map.on('mouseenter', 'loteo-fill', () => {
-      map.getCanvas().style.cursor = 'pointer';
-    });
-    map.on('mouseleave', 'loteo-fill', () => {
-      map.getCanvas().style.cursor = '';
+    map.on('mousemove', 'loteo-fill', (e) => {
+      if (e.features.length > 0) {
+        map.getCanvas().style.cursor = 'pointer';
+        const feat = e.features[0];
+        const info = extractLotInfo(feat);
+        const override = adminOverrides[info.id] || {};
+        const status = override.status || 'Disponible';
+        const priceVal = override.price ? `$${Number(override.price).toLocaleString('es-CO')} COP` : 'Consultar';
+
+        setHoveredLot({
+          id: info.id,
+          label: info.label,
+          area: info.area,
+          status: status,
+          price: priceVal,
+          x: e.point.x,
+          y: e.point.y
+        });
+      }
     });
 
-  }, [mapLoaded, normalizeLoteoGeojson, manzanaGeojson, viasGeojson, predioGeojson, cotasGeojson, segmentCotasGeojson]);
+    map.on('mouseleave', 'loteo-fill', () => {
+      map.getCanvas().style.cursor = '';
+      setHoveredLot(null);
+    });
+
+  }, [mapLoaded, normalizeLoteoGeojson, manzanaGeojson, viasGeojson, predioGeojson, cotasGeojson, segmentCotasGeojson, adminOverrides]);
 
   // Handle selected lot highlight and admin overrides (sold/reserved colors/filters)
   useEffect(() => {
@@ -987,51 +1010,73 @@ const Map3D = forwardRef(({ onSelectLot, selectedLotId, adminOverrides, viasGeoj
       else if (state === 'Reservado') reservedLots.push(Number(key));
     });
 
-    const activeIds = [...soldLots, ...reservedLots];
-    if (selectedLotId) {
-      activeIds.push(Number(selectedLotId));
-    }
+    // Keep all non-remanente lots clickable and visible
+    map.setFilter('loteo-fill', ['!=', ['get', 'LOTE'], 'REMANENTE']);
 
-    if (activeIds.length > 0) {
-      map.setFilter('loteo-fill', [
-        'in',
-        ['to-number', ['get', 'fid']],
-        ['literal', activeIds]
-      ]);
-    } else {
-      map.setFilter('loteo-fill', ['==', ['to-number', ['get', 'fid']], -1]);
-    }
+    const hoveredLotId = hoveredLot?.id || null;
 
-    map.setPaintProperty('loteo-fill', 'fill-extrusion-color', [
+    map.setPaintProperty('loteo-fill', 'fill-color', [
       'case',
-      ['==', ['to-number', ['get', 'fid']], Number(selectedLotId || -1)], 'rgba(234, 179, 8, 0.45)',
-      ['in', ['to-number', ['get', 'fid']], ['literal', soldLots]], 'rgba(239, 68, 68, 0.35)',
-      ['in', ['to-number', ['get', 'fid']], ['literal', reservedLots]], 'rgba(249, 115, 22, 0.35)',
-      'rgba(0,0,0,0)'
-    ]);
-
-    map.setPaintProperty('loteo-fill', 'fill-extrusion-height', [
-      'case',
-      ['==', ['to-number', ['get', 'fid']], Number(selectedLotId || -1)], 1.2,
-      ['in', ['to-number', ['get', 'fid']], ['literal', soldLots]], 0.3,
-      ['in', ['to-number', ['get', 'fid']], ['literal', reservedLots]], 0.3,
-      0
+      ['==', ['to-number', ['get', 'fid']], Number(selectedLotId || -1)], 'rgba(2, 132, 199, 0.4)', // Selected: Blue
+      ['==', ['to-number', ['get', 'fid']], Number(hoveredLotId || -1)], [
+        'case',
+        ['in', ['to-number', ['get', 'fid']], ['literal', soldLots]], 'rgba(239, 68, 68, 0.25)', // Hover sold
+        ['in', ['to-number', ['get', 'fid']], ['literal', reservedLots]], 'rgba(249, 115, 22, 0.25)', // Hover reserved
+        'rgba(16, 185, 129, 0.25)' // Hover available
+      ],
+      ['in', ['to-number', ['get', 'fid']], ['literal', soldLots]], 'rgba(239, 68, 68, 0.15)', // Sold
+      ['in', ['to-number', ['get', 'fid']], ['literal', reservedLots]], 'rgba(249, 115, 22, 0.15)', // Reserved
+      'rgba(0,0,0,0)' // Available: transparent
     ]);
 
     map.setPaintProperty('loteo-line-base', 'line-color', [
       'case',
-      ['==', ['to-number', ['get', 'fid']], Number(selectedLotId || -1)], '#eab308',
-      ['in', ['to-number', ['get', 'fid']], ['literal', soldLots]], '#ef4444',
-      ['in', ['to-number', ['get', 'fid']], ['literal', reservedLots]], '#f97316',
-      '#ffffff'
+      ['==', ['to-number', ['get', 'fid']], Number(selectedLotId || -1)], '#0284c7', // Selected: Precision Blue
+      ['==', ['to-number', ['get', 'fid']], Number(hoveredLotId || -1)], [
+        'case',
+        ['in', ['to-number', ['get', 'fid']], ['literal', soldLots]], '#ef4444',
+        ['in', ['to-number', ['get', 'fid']], ['literal', reservedLots]], '#f97316',
+        '#10b981' // Hover available: green
+      ],
+      ['in', ['to-number', ['get', 'fid']], ['literal', soldLots]], 'rgba(239, 68, 68, 0.4)',
+      ['in', ['to-number', ['get', 'fid']], ['literal', reservedLots]], 'rgba(249, 115, 22, 0.4)',
+      'rgba(255, 255, 255, 0.25)' // Default border
     ]);
 
     map.setPaintProperty('loteo-line-base', 'line-width', [
       'case',
       ['==', ['to-number', ['get', 'fid']], Number(selectedLotId || -1)], 3.5,
-      1.8
+      ['==', ['to-number', ['get', 'fid']], Number(hoveredLotId || -1)], 2.5,
+      1.5
     ]);
-  }, [selectedLotId, adminOverrides, mapLoaded, normalizeLoteoGeojson]);
+  }, [selectedLotId, adminOverrides, mapLoaded, normalizeLoteoGeojson, hoveredLot]);
+
+  // Handle 2D / 3D Mode changes
+  useEffect(() => {
+    if (!mapLoaded || !mapRef.current) return;
+    const map = mapRef.current;
+    
+    // Toggle Three.js meshes visibility
+    const housesLayer = map.getLayer('3d-houses-layer');
+    if (housesLayer && housesLayer.implementation && typeof housesLayer.implementation.toggle3DMode === 'function') {
+      housesLayer.implementation.toggle3DMode(viewMode === '3d');
+    }
+    
+    // Animate camera to flat/3D perspective
+    if (viewMode === '2d') {
+      map.easeTo({
+        pitch: 0,
+        bearing: 0,
+        duration: 1500
+      });
+    } else {
+      map.easeTo({
+        pitch: 55,
+        bearing: -15,
+        duration: 1500
+      });
+    }
+  }, [viewMode, mapLoaded]);
 
   // Handle 4D time of day changes in Three.js custom layer
   useEffect(() => {
@@ -1372,8 +1417,11 @@ const Map3D = forwardRef(({ onSelectLot, selectedLotId, adminOverrides, viasGeoj
         // Update marker
         if (vehicleMarkerRef.current) {
           vehicleMarkerRef.current.setLngLat([pos.lng, pos.lat]);
+          vehicleMarkerRef.current.setRotation(pos.bearing || 0);
           const markerEl = vehicleMarkerRef.current.getElement();
-          if (markerEl) markerEl.style.transform += ` rotate(${pos.bearing || 0}deg)`;
+          if (markerEl) {
+            markerEl.style.display = (cameraMode === 'first') ? 'none' : 'block';
+          }
         }
         
         // Update camera with smoothing to reduce jitter
@@ -1472,6 +1520,44 @@ const Map3D = forwardRef(({ onSelectLot, selectedLotId, adminOverrides, viasGeoj
     <>
       <div className="map-container" ref={mapContainerRef} />
       
+      {/* Map Hover Tooltip */}
+      {hoveredLot && (
+        <div
+          className="map-tooltip"
+          style={{
+            left: hoveredLot.x + 15,
+            top: hoveredLot.y + 15,
+          }}
+        >
+          <div className="map-tooltip-header">
+            <span>{hoveredLot.label}</span>
+            <span style={{
+              width: 6, height: 6, borderRadius: '50%',
+              backgroundColor: hoveredLot.status === 'Disponible' ? 'var(--status-available)' :
+                               hoveredLot.status === 'Reservado' ? 'var(--status-reserved)' :
+                               'var(--status-sold)',
+              display: 'inline-block'
+            }} />
+          </div>
+          <div className="map-tooltip-row">
+            <span className="map-tooltip-label">Área:</span>
+            <span className="map-tooltip-value">{Math.round(hoveredLot.area)} m²</span>
+          </div>
+          <div className="map-tooltip-row">
+            <span className="map-tooltip-label">Estado:</span>
+            <span className="map-tooltip-value" style={{
+              color: hoveredLot.status === 'Disponible' ? 'var(--status-available)' :
+                     hoveredLot.status === 'Reservado' ? 'var(--status-reserved)' :
+                     'var(--status-sold)'
+            }}>{hoveredLot.status}</span>
+          </div>
+          <div className="map-tooltip-row">
+            <span className="map-tooltip-label">Precio:</span>
+            <span className="map-tooltip-value" style={{ color: 'var(--gold-300)' }}>{hoveredLot.price}</span>
+          </div>
+        </div>
+      )}
+
       {/* Flight HUD Overlay */}
       {flightActive && (
         <FlightHUD

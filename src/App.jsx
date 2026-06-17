@@ -1,155 +1,131 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { AnimatePresence } from 'framer-motion';
+import { Map, SlidersHorizontal, Compass } from 'lucide-react';
 import Map3D from './components/Map3D';
 import AccessibilityControls from './components/AccessibilityControls';
 import SearchStatsPanel from './components/SearchStatsPanel';
 import LotDetails from './components/LotDetails';
 import AdminPortal from './components/AdminPortal';
+import { extractLotInfo } from './utils/lotUtils';
 
 function App() {
   const map3dRef = useRef(null);
 
-  // GeoJSON data states
-  const [loteoGeojson, setLoteoGeojson] = useState(null);
+  /* ─ GeoJSON data ─ */
+  const [loteoGeojson,   setLoteoGeojson]   = useState(null);
   const [manzanaGeojson, setManzanaGeojson] = useState(null);
-  const [viasGeojson, setViasGeojson] = useState(null);
-  const [predioGeojson, setPredioGeojson] = useState(null);
-  const [cotasGeojson, setCotasGeojson] = useState(null);
+  const [viasGeojson,    setViasGeojson]    = useState(null);
+  const [predioGeojson,  setPredioGeojson]  = useState(null);
+  const [cotasGeojson,   setCotasGeojson]   = useState(null);
 
-  // Interactive UI states
-  const [selectedLot, setSelectedLot] = useState(null);
-  const [fontSize, setFontSize] = useState('normal');
-  const [voiceEnabled, setVoiceEnabled] = useState(true);
-  const [flightActive, setFlightActive] = useState(false);
-  const [adminOpen, setAdminOpen] = useState(false);
-  const [timeOfDay, setTimeOfDay] = useState('midday');
+  /* ─ UI state ─ */
+  const [selectedLot,        setSelectedLot]        = useState(null);
+  const [fontSize,            setFontSize]           = useState('normal');
+  const [voiceEnabled,        setVoiceEnabled]       = useState(false);
+  const [flightActive,        setFlightActive]       = useState(false);
+  const [adminOpen,           setAdminOpen]          = useState(false);
+  const [timeOfDay,           setTimeOfDay]          = useState('midday');
+  const [viewMode,            setViewMode]           = useState('3d');
+  const [environmentalLayer,  setEnvironmentalLayer] = useState('satellite');
+  const [weather,             setWeather]            = useState('clear');
+  const [searchCollapsed,     setSearchCollapsed]    = useState(false);
+  const [accessCollapsed,     setAccessCollapsed]    = useState(true);
+  const [cameraMode,          setCameraMode]         = useState('third');
 
-  // Siguiente level states
-  const [environmentalLayer, setEnvironmentalLayer] = useState('satellite');
-  const [weather, setWeather] = useState('clear');
-  const [searchCollapsed, setSearchCollapsed] = useState(false);
-  const [accessCollapsed, setAccessCollapsed] = useState(true);
-  const [cameraMode, setCameraMode] = useState('third');
-
-  // Admin overrides state (persisted in localStorage)
+  /* ─ Admin overrides (localStorage) ─ */
   const [adminOverrides, setAdminOverrides] = useState(() => {
     const saved = localStorage.getItem('admin_overrides');
     return saved ? JSON.parse(saved) : {};
   });
 
-  // Load GeoJSON data from public folder on mount
+  /* ─ Load GeoJSON ─ */
   useEffect(() => {
-    const loadGeojson = async (file, setter) => {
+    const load = async (file, setter) => {
       try {
-        const response = await fetch(`/data/${file}`);
-        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-        const data = await response.json();
-        setter(data);
+        const res = await fetch(`/data/${file}`);
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        setter(await res.json());
       } catch (e) {
-        console.error(`Error loading GeoJSON /data/${file}:`, e.message);
+        console.error(`GeoJSON load error [${file}]:`, e.message);
       }
     };
-
-    loadGeojson('loteo.geojson', setLoteoGeojson);
-    loadGeojson('manzana.geojson', setManzanaGeojson);
-    loadGeojson('vias.geojson', setViasGeojson);
-    loadGeojson('predio.geojson', setPredioGeojson);
-    loadGeojson('cotas.geojson', setCotasGeojson);
+    load('loteo.geojson',   setLoteoGeojson);
+    load('manzana.geojson', setManzanaGeojson);
+    load('vias.geojson',    setViasGeojson);
+    load('predio.geojson',  setPredioGeojson);
+    load('cotas.geojson',   setCotasGeojson);
   }, []);
 
-  // Reload GeoJSON files with timestamp cache-buster to bypass browser/CDN caches
-  const reloadGeojsons = async () => {
-    const loadGeojson = async (file, setter) => {
-      try {
-        const response = await fetch(`/data/${file}?t=${Date.now()}`);
-        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-        const data = await response.json();
-        setter(data);
-      } catch (e) {
-        console.error(`Error reloading GeoJSON /data/${file}:`, e.message);
+  /* ─ Deep linking on load ─ */
+  useEffect(() => {
+    if (!loteoGeojson) return;
+    const handleHash = () => {
+      const hash = window.location.hash;
+      if (hash && hash.startsWith('#lote=')) {
+        const idStr = hash.replace('#lote=', '');
+        const idNum = Number(idStr);
+        const feat = loteoGeojson.features.find(f => {
+          const info = extractLotInfo(f);
+          return Number(info.id) === idNum || String(info.id) === idStr;
+        });
+        if (feat) {
+          const info = extractLotInfo(feat);
+          setTimeout(() => {
+            handleSelectLot(info, false);
+          }, 1000);
+        }
       }
     };
+    handleHash();
+    window.addEventListener('hashchange', handleHash);
+    return () => window.removeEventListener('hashchange', handleHash);
+  }, [loteoGeojson]);
 
-    await Promise.all([
-      loadGeojson('loteo.geojson', setLoteoGeojson),
-      loadGeojson('manzana.geojson', setManzanaGeojson),
-      loadGeojson('vias.geojson', setViasGeojson),
-      loadGeojson('predio.geojson', setPredioGeojson),
-      loadGeojson('cotas.geojson', setCotasGeojson)
-    ]);
-  };
-
-  // Save admin overrides to localStorage
+  /* ─ Admin handlers ─ */
   const handleSaveOverrides = (lotId, overrides) => {
-    const updated = {
-      ...adminOverrides,
-      [lotId]: {
-        ...adminOverrides[lotId],
-        ...overrides
-      }
-    };
+    const updated = { ...adminOverrides, [lotId]: { ...adminOverrides[lotId], ...overrides } };
     setAdminOverrides(updated);
     localStorage.setItem('admin_overrides', JSON.stringify(updated));
-
-    // Update current selected lot if we edited it, so the card changes immediately
-    if (selectedLot && selectedLot.id === lotId) {
-      setSelectedLot(prev => ({
-        ...prev,
-        ...overrides
-      }));
-    }
+    if (selectedLot?.id === lotId) setSelectedLot(prev => ({ ...prev, ...overrides }));
   };
 
+  /* ─ Lot interaction ─ */
   const handleSelectLot = (lotData, isAutomated = false) => {
-    setSelectedLot((prev) => (prev?.id === lotData.id ? prev : lotData));
-    if (!isAutomated && map3dRef.current && lotData.geomCoordinates) {
+    setSelectedLot(prev => (prev?.id === lotData.id ? prev : lotData));
+    if (!isAutomated && map3dRef.current && lotData.geomCoordinates)
       map3dRef.current.flyToLot(lotData.id, lotData.geomCoordinates, lotData.geometryType);
-    }
   };
 
-  // Navigate to lot with animated vehicle route
   const handleNavigateToLot = (lotData, vehicleType) => {
-    if (!map3dRef.current || !lotData) return;
+    if (!map3dRef.current || !lotData?.geomCoordinates) return;
     setSelectedLot(lotData);
-    // Calculate centroid for the lot
-    const coords = lotData.geomCoordinates;
-    if (!coords) return;
-    // Use the getCentroid from Map3D via the route animation
-    // We pass the centroid as [lng, lat]
-    const getCentroidSimple = (c) => {
-      const pts = [];
-      const collect = (arr) => {
-        if (Array.isArray(arr) && arr.length >= 2 && typeof arr[0] === 'number' && typeof arr[1] === 'number') { pts.push(arr); return; }
-        if (Array.isArray(arr)) arr.forEach(collect);
-      };
-      collect(c);
-      if (pts.length === 0) return null;
-      return [pts.reduce((s,p) => s+p[0], 0)/pts.length, pts.reduce((s,p) => s+p[1], 0)/pts.length];
+    const pts = [];
+    const collect = (arr) => {
+      if (Array.isArray(arr) && arr.length >= 2 && typeof arr[0] === 'number') { pts.push(arr); return; }
+      if (Array.isArray(arr)) arr.forEach(collect);
     };
-    const centroid = getCentroidSimple(coords);
-    if (centroid) {
-      map3dRef.current.startRouteToLot(centroid, vehicleType || 'car');
-    }
+    collect(lotData.geomCoordinates);
+    if (!pts.length) return;
+    const centroid = [
+      pts.reduce((s, p) => s + p[0], 0) / pts.length,
+      pts.reduce((s, p) => s + p[1], 0) / pts.length,
+    ];
+    map3dRef.current.startRouteToLot(centroid, vehicleType || 'car');
   };
 
   const handleToggleFlight = () => {
-    if (flightActive) {
-      map3dRef.current?.stopStreetFlight();
-      setFlightActive(false);
-    } else {
-      setSelectedLot(null); // Close active lot card during fly tour
-      map3dRef.current?.startStreetFlight();
-      setFlightActive(true);
-    }
+    if (flightActive) { map3dRef.current?.stopStreetFlight();  setFlightActive(false); }
+    else              { setSelectedLot(null); map3dRef.current?.startStreetFlight(); setFlightActive(true); }
   };
 
-  // Calculate next-to-next panel offsets
-  const accessLeft = searchCollapsed ? '88px' : '360px';
+  /* ─ Controls panel left offset ─ */
+  const ctrlLeft = searchCollapsed ? '80px' : '356px';
 
   return (
     <div style={{ position: 'relative', width: '100vw', height: '100vh', overflow: 'hidden' }}>
-      
-      {/* 3D Map canvas background */}
-      <Map3D 
+
+      {/* ── 3D Map canvas — full screen background ── */}
+      <Map3D
         ref={map3dRef}
         onSelectLot={handleSelectLot}
         selectedLotId={selectedLot?.id || null}
@@ -164,127 +140,151 @@ function App() {
         environmentalLayer={environmentalLayer}
         cameraMode={cameraMode}
         setCameraMode={setCameraMode}
+        viewMode={viewMode}
+        setViewMode={setViewMode}
       />
 
-      {/* Search, Filter & Stats panel */}
-      <SearchStatsPanel 
-        loteoGeojson={loteoGeojson}
-        adminOverrides={adminOverrides}
-        onSelectLot={handleSelectLot}
-        onNavigateToLot={handleNavigateToLot}
-        selectedLotId={selectedLot?.id || null}
-        isCollapsed={searchCollapsed}
-        setIsCollapsed={setSearchCollapsed}
-      />
+      {/* ── Top Navbar ── */}
+      <nav className="vr-navbar">
+        {/* Brand */}
+        <div className="vr-brand">
+          <div className="vr-brand-mark">Q</div>
+          <div>
+            <div className="vr-brand-name">Querube</div>
+            <div className="vr-brand-sub">Parcelación · San Pedro de Urabá</div>
+          </div>
+        </div>
 
-      {/* Senior-friendly floating Accessibility Dashboard */}
-      <AccessibilityControls 
-        mapRef={map3dRef}
-        fontSize={fontSize}
-        setFontSize={setFontSize}
-        voiceEnabled={voiceEnabled}
-        setVoiceEnabled={setVoiceEnabled}
-        flightActive={flightActive}
-        toggleFlight={handleToggleFlight}
-        timeOfDay={timeOfDay}
-        setTimeOfDay={setTimeOfDay}
-        environmentalLayer={environmentalLayer}
-        setEnvironmentalLayer={setEnvironmentalLayer}
-        weather={weather}
-        setWeather={setWeather}
-        cameraMode={cameraMode}
-        setCameraMode={setCameraMode}
-        isCollapsed={accessCollapsed}
-        setIsCollapsed={setAccessCollapsed}
-        leftPosition={accessLeft}
-      />
+        {/* Actions */}
+        <div className="vr-navbar-actions">
+          {/* Catalog toggle */}
+          <button className="vr-nav-btn" onClick={() => setSearchCollapsed(s => !s)}>
+            <Map size={13} />
+            {searchCollapsed ? 'Catálogo' : 'Ocultar'}
+          </button>
 
-      {/* Lot metrics details sidebar */}
-      {selectedLot && (
-        <LotDetails 
-          lot={selectedLot}
-          adminOverrides={adminOverrides}
-          voiceEnabled={voiceEnabled}
-          onClose={() => setSelectedLot(null)}
-        />
-      )}
+          {/* Controls toggle */}
+          <button className="vr-nav-btn" onClick={() => setAccessCollapsed(s => !s)}>
+            <SlidersHorizontal size={13} />
+            {accessCollapsed ? 'Controles' : 'Ocultar'}
+          </button>
 
-      {/* Admin Portal Overlay */}
-      {adminOpen && (
-        <AdminPortal 
-          loteoGeojson={loteoGeojson}
-          adminOverrides={adminOverrides}
-          onSaveOverrides={handleSaveOverrides}
-          onClose={() => setAdminOpen(false)}
-        />
-      )}
+          {/* Drone */}
+          <button
+            className={`vr-nav-btn ${flightActive ? 'gold' : ''}`}
+            onClick={handleToggleFlight}
+          >
+            <Compass size={13} className={flightActive ? 'animate-spin' : ''} />
+            {flightActive ? 'Detener Sobrevuelo' : 'Sobrevuelo 3D'}
+          </button>
 
-      {/* Top Right Admin Access & Refresh SIG Buttons */}
-      <div style={{
-        position: 'absolute',
-        top: '24px',
-        right: '24px',
-        zIndex: 5,
-        display: 'flex',
-        gap: '12px'
-      }}>
-        <button
-          onClick={reloadGeojsons}
-          className="glass-panel glass-panel-interactive"
-          style={{
-            padding: '12px 20px',
-            fontSize: '1rem',
-            fontWeight: 'bold',
-            borderRadius: '12px',
-            color: '#10b981',
-            border: '1px solid rgba(16, 185, 129, 0.3)',
-            display: 'flex',
-            alignItems: 'center',
-            gap: '8px'
-          }}
-        >
-          🔄 Refrescar Capas SIG (QGIS)
-        </button>
-        <button
-          onClick={() => setAdminOpen(true)}
-          className="glass-panel glass-panel-interactive"
-          style={{
-            padding: '12px 20px',
-            fontSize: '1rem',
-            fontWeight: 'bold',
-            borderRadius: '12px',
-            color: 'var(--accent-gold)',
-            border: '1px solid rgba(234, 179, 8, 0.3)',
-            display: 'flex',
-            alignItems: 'center',
-            gap: '8px'
-          }}
-        >
-          ⚙️ Modificar Lotes (Admin)
-        </button>
-      </div>
+          {/* Admin — hidden behind double-click (Ctrl+A) */}
+        </div>
+      </nav>
 
-      {/* Ambient local audio player instructions */}
-      <div style={{
-        position: 'absolute',
-        bottom: '24px',
-        left: '24px',
-        zIndex: 5,
-        display: 'flex',
-        alignItems: 'center',
-        gap: '12px',
-        padding: '10px 16px',
-        borderRadius: '12px',
-        backgroundColor: 'var(--glass-bg)',
-        border: '1px solid var(--glass-border)',
-        fontSize: '0.85rem',
-        color: 'var(--text-muted)'
-      }}>
-        <span>📢 Zona: Rural - San Pedro de Urabá</span>
-      </div>
+      {/* ── Catalog Side Panel ── */}
+      <AnimatePresence>
+        {!searchCollapsed && (
+          <SearchStatsPanel
+            key="catalog"
+            loteoGeojson={loteoGeojson}
+            adminOverrides={adminOverrides}
+            onSelectLot={handleSelectLot}
+            onNavigateToLot={handleNavigateToLot}
+            selectedLotId={selectedLot?.id || null}
+            isCollapsed={false}
+            setIsCollapsed={setSearchCollapsed}
+          />
+        )}
+      </AnimatePresence>
 
+      {/* ── Controls Panel ── */}
+      <AnimatePresence>
+        {!accessCollapsed && (
+          <AccessibilityControls
+            key="controls"
+            mapRef={map3dRef}
+            fontSize={fontSize}
+            setFontSize={setFontSize}
+            voiceEnabled={voiceEnabled}
+            setVoiceEnabled={setVoiceEnabled}
+            flightActive={flightActive}
+            toggleFlight={handleToggleFlight}
+            timeOfDay={timeOfDay}
+            setTimeOfDay={setTimeOfDay}
+            environmentalLayer={environmentalLayer}
+            setEnvironmentalLayer={setEnvironmentalLayer}
+            weather={weather}
+            setWeather={setWeather}
+            cameraMode={cameraMode}
+            setCameraMode={setCameraMode}
+            isCollapsed={false}
+            setIsCollapsed={setAccessCollapsed}
+            leftPosition={ctrlLeft}
+            viewMode={viewMode}
+            setViewMode={setViewMode}
+          />
+        )}
+      </AnimatePresence>
+
+      {/* Catalog collapsed FAB */}
+      <AnimatePresence>
+        {searchCollapsed && (
+          <SearchStatsPanel
+            key="catalog-fab"
+            loteoGeojson={loteoGeojson}
+            adminOverrides={adminOverrides}
+            onSelectLot={handleSelectLot}
+            onNavigateToLot={handleNavigateToLot}
+            selectedLotId={selectedLot?.id || null}
+            isCollapsed={true}
+            setIsCollapsed={setSearchCollapsed}
+          />
+        )}
+      </AnimatePresence>
+
+      {/* ── Lot Detail Panel ── */}
+      <AnimatePresence>
+        {selectedLot && (
+          <LotDetails
+            key={selectedLot.id}
+            lot={selectedLot}
+            adminOverrides={adminOverrides}
+            voiceEnabled={voiceEnabled}
+            onClose={() => setSelectedLot(null)}
+          />
+        )}
+      </AnimatePresence>
+
+      {/* ── Admin Portal ── */}
+      <AnimatePresence>
+        {adminOpen && (
+          <AdminPortal
+            key="admin"
+            loteoGeojson={loteoGeojson}
+            adminOverrides={adminOverrides}
+            onSaveOverrides={handleSaveOverrides}
+            onClose={() => setAdminOpen(false)}
+          />
+        )}
+      </AnimatePresence>
+
+      {/* Hidden admin opener — Ctrl+Shift+A ── */}
+      <HiddenAdminTrigger onOpen={() => setAdminOpen(true)} />
     </div>
   );
+}
+
+/* Admin triggered by Ctrl+Shift+A — invisible to end users */
+function HiddenAdminTrigger({ onOpen }) {
+  useEffect(() => {
+    const handler = (e) => {
+      if (e.ctrlKey && e.shiftKey && e.key === 'A') { e.preventDefault(); onOpen(); }
+    };
+    window.addEventListener('keydown', handler);
+    return () => window.removeEventListener('keydown', handler);
+  }, [onOpen]);
+  return null;
 }
 
 export default App;

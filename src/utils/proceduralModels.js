@@ -481,36 +481,157 @@ export const createProceduralNeighborhood = (scene, mapInstance, loteoGeojson, v
     const lotId = feat.properties.fid || feat.properties.OBJECTID || 0;
     const style = lotId % 3;
 
-    // No 3D fill on lots — flat plan view only
-    matrix.compose(position, rotation, scale);
-    instancedLawn.setMatrixAt(lotIdx, zeroMatrix);
+    // Compose lot master matrix
+    const lotMatrix = new THREE.Matrix4();
+    lotMatrix.compose(position, rotation, scale);
 
-    // All building elements disabled per user request (flat plan view)
-    instancedFoundation.setMatrixAt(lotIdx, zeroMatrix);
-    instancedDriveway.setMatrixAt(lotIdx, zeroMatrix);
-    instancedWallAccent.setMatrixAt(lotIdx, zeroMatrix);
-    instancedWallClassic.setMatrixAt(lotIdx, zeroMatrix);
-    instancedRoofBase.setMatrixAt(lotIdx, zeroMatrix);
-    instancedRoofClassic.setMatrixAt(lotIdx, zeroMatrix);
-    instancedRoofOverhang.setMatrixAt(lotIdx, zeroMatrix);
-    instancedDoorClassic.setMatrixAt(lotIdx, zeroMatrix);
-    instancedDoorFrame.setMatrixAt(lotIdx, zeroMatrix);
-    instancedWindowClassic.setMatrixAt(lotIdx, zeroMatrix);
-    instancedWindowFrame.setMatrixAt(lotIdx, zeroMatrix);
-    instancedWallPremium.setMatrixAt(lotIdx, zeroMatrix);
-    instancedWallBase.setMatrixAt(lotIdx, zeroMatrix);
-    instancedWallCap.setMatrixAt(lotIdx, zeroMatrix);
-    instancedRoofPremium.setMatrixAt(lotIdx, zeroMatrix);
-    instancedRoofEdge.setMatrixAt(lotIdx, zeroMatrix);
-    instancedDoorPremium.setMatrixAt(lotIdx, zeroMatrix);
-    instancedDoorFramePremium.setMatrixAt(lotIdx, zeroMatrix);
-    instancedWindowPremium.setMatrixAt(lotIdx, zeroMatrix);
-    instancedWindowFramePremium.setMatrixAt(lotIdx, zeroMatrix);
-    instancedPoolBorder.setMatrixAt(lotIdx, zeroMatrix);
-    instancedPoolEdge.setMatrixAt(lotIdx, zeroMatrix);
-    instancedPoolWater.setMatrixAt(lotIdx, zeroMatrix);
-    instancedSolarPanel.setMatrixAt(lotIdx, zeroMatrix);
-    instancedSolarFrame.setMatrixAt(lotIdx, zeroMatrix);
+    const subMatrix = new THREE.Matrix4();
+    const tempTranslation = new THREE.Vector3();
+    const tempRotation = new THREE.Quaternion();
+    const tempScale = new THREE.Vector3(1, 1, 1);
+
+    const setSubMesh = (instancedMesh, localPos, localEuler, localScale) => {
+      tempTranslation.copy(localPos);
+      if (localEuler) {
+        tempRotation.setFromEuler(localEuler);
+      } else {
+        tempRotation.set(0, 0, 0, 1);
+      }
+      tempScale.copy(localScale || new THREE.Vector3(1, 1, 1));
+      subMatrix.compose(tempTranslation, tempRotation, tempScale);
+      matrix.multiplyMatrices(lotMatrix, subMatrix);
+      instancedMesh.setMatrixAt(lotIdx, matrix);
+    };
+
+    // 1. Lawn (always show in 3D)
+    setSubMesh(instancedLawn, new THREE.Vector3(0, 0.15 / 2, 0));
+
+    // 2. Driveway (always show in 3D)
+    setSubMesh(instancedDriveway, new THREE.Vector3(2.0, 0.06 / 2, 5.0));
+
+    // 3. Build structures based on style
+    if (style === 0) {
+      // Style 0: Classic Residential House
+      setSubMesh(instancedFoundation, new THREE.Vector3(-0.3, 0.3 / 2, -1.0));
+      setSubMesh(instancedWallClassic, new THREE.Vector3(-0.3, 0.3 + 4.5 / 2, -1.0));
+      setSubMesh(instancedWallAccent, new THREE.Vector3(-0.3, 0.3 + 0.15, -1.0));
+      setSubMesh(instancedRoofBase, new THREE.Vector3(-0.3, 0.3 + 4.5 + 0.25 / 2, -1.0));
+      setSubMesh(instancedRoofClassic, new THREE.Vector3(-0.3, 0.3 + 4.5 + 0.25 + 1.2, -1.0), new THREE.Euler(Math.PI / 2, 0, 0));
+      setSubMesh(instancedDoorClassic, new THREE.Vector3(-1.5, 0.3 + 2.4 / 2, 3.9));
+      setSubMesh(instancedDoorFrame, new THREE.Vector3(-1.5, 0.3 + 2.6 / 2, 3.85));
+      setSubMesh(instancedWindowClassic, new THREE.Vector3(1.5, 0.3 + 1.8, 3.9));
+      setSubMesh(instancedWindowFrame, new THREE.Vector3(1.5, 0.3 + 1.8, 3.85));
+    } else if (style === 1) {
+      // Style 1: Modern Luxury Villa (with Pool & Solar Panels)
+      setSubMesh(instancedFoundation, new THREE.Vector3(-0.3, 0.3 / 2, -1.0));
+      setSubMesh(instancedWallPremium, new THREE.Vector3(-0.3, 0.3 + 8.0 / 2, -1.0));
+      setSubMesh(instancedWallBase, new THREE.Vector3(-0.3, 0.3 + 0.4 / 2, -1.0));
+      setSubMesh(instancedWallCap, new THREE.Vector3(-0.3, 0.3 + 8.0 - 0.25 / 2, -1.0));
+      setSubMesh(instancedRoofPremium, new THREE.Vector3(-0.3, 0.3 + 8.0 + 0.5 / 2, -1.0));
+      setSubMesh(instancedRoofEdge, new THREE.Vector3(-0.3, 0.3 + 8.0 + 0.5 + 0.2 / 2, -1.0));
+      setSubMesh(instancedDoorPremium, new THREE.Vector3(-1.5, 0.3 + 2.6 / 2, 3.9));
+      setSubMesh(instancedDoorFramePremium, new THREE.Vector3(-1.5, 0.3 + 2.8 / 2, 3.85));
+      setSubMesh(instancedWindowPremium, new THREE.Vector3(1.5, 0.3 + 4.8 / 2, 3.9));
+      setSubMesh(instancedWindowFramePremium, new THREE.Vector3(1.5, 0.3 + 4.8 / 2, 3.85));
+      
+      // Luxury Pool at backyard
+      setSubMesh(instancedPoolBorder, new THREE.Vector3(1.5, 0.15 / 2, -5.5));
+      setSubMesh(instancedPoolWater, new THREE.Vector3(1.5, 0.12, -5.5));
+      setSubMesh(instancedPoolEdge, new THREE.Vector3(1.5, 0.08 / 2, -5.5));
+
+      // Solar Panels on Flat Roof
+      setSubMesh(instancedSolarFrame, new THREE.Vector3(-1.5, 0.3 + 8.0 + 0.5 + 0.06, -1.0), new THREE.Euler(-0.25, 0, 0));
+      setSubMesh(instancedSolarPanel, new THREE.Vector3(-1.5, 0.3 + 8.0 + 0.5 + 0.12, -1.0), new THREE.Euler(-0.25, 0, 0));
+    } else {
+      // Style 2: Eco Wooden Cabin (with Solar Panels & Extra Trees)
+      setSubMesh(instancedFoundation, new THREE.Vector3(-0.3, 0.3 / 2, -1.0));
+      setSubMesh(instancedWallClassic, new THREE.Vector3(-0.3, 0.3 + 4.5 / 2, -1.0));
+      setSubMesh(instancedRoofPremium, new THREE.Vector3(-0.3, 0.3 + 4.5 + 0.5 / 2, -1.0));
+      setSubMesh(instancedDoorClassic, new THREE.Vector3(-1.5, 0.3 + 2.4 / 2, 3.9));
+      setSubMesh(instancedDoorFrame, new THREE.Vector3(-1.5, 0.3 + 2.6 / 2, 3.85));
+      setSubMesh(instancedWindowClassic, new THREE.Vector3(1.5, 0.3 + 1.8, 3.9));
+      setSubMesh(instancedWindowFrame, new THREE.Vector3(1.5, 0.3 + 1.8, 3.85));
+
+      // Solar Panels on Eco Roof
+      setSubMesh(instancedSolarFrame, new THREE.Vector3(-1.5, 0.3 + 4.5 + 0.5 + 0.06, -1.0), new THREE.Euler(-0.25, 0, 0));
+      setSubMesh(instancedSolarPanel, new THREE.Vector3(-1.5, 0.3 + 4.5 + 0.5 + 0.12, -1.0), new THREE.Euler(-0.25, 0, 0));
+    }
+
+    // 4. Place Vegetation (up to 4 trees and 6 shrubs per lot)
+    const setTree = (tIndex, localPos) => {
+      // Trunk (Y-cylinder, 3m tall)
+      tempTranslation.set(localPos.x, localPos.y + 1.5, localPos.z);
+      tempRotation.set(0, 0, 0, 1);
+      tempScale.set(1, 1, 1);
+      subMatrix.compose(tempTranslation, tempRotation, tempScale);
+      matrix.multiplyMatrices(lotMatrix, subMatrix);
+      instancedTrunk.setMatrixAt(tIndex, matrix);
+
+      // Foliage (Sphere at top)
+      tempTranslation.set(localPos.x, localPos.y + 3.0, localPos.z);
+      subMatrix.compose(tempTranslation, tempRotation, tempScale);
+      matrix.multiplyMatrices(lotMatrix, subMatrix);
+      instancedFoliage.setMatrixAt(tIndex, matrix);
+    };
+
+    const setFoliageLow = (flIndex, localPos) => {
+      tempTranslation.set(localPos.x, localPos.y + 1.0, localPos.z);
+      tempRotation.set(0, 0, 0, 1);
+      tempScale.set(1, 1, 1);
+      subMatrix.compose(tempTranslation, tempRotation, tempScale);
+      matrix.multiplyMatrices(lotMatrix, subMatrix);
+      instancedFoliageLow.setMatrixAt(flIndex, matrix);
+    };
+
+    const setShrub = (sIndex, localPos, isSmall = false) => {
+      tempTranslation.set(localPos.x, localPos.y + (isSmall ? 0.25 : 0.35), localPos.z);
+      tempRotation.set(0, 0, 0, 1);
+      tempScale.set(1, 1, 1);
+      subMatrix.compose(tempTranslation, tempRotation, tempScale);
+      matrix.multiplyMatrices(lotMatrix, subMatrix);
+      if (isSmall) {
+        instancedShrubSmall.setMatrixAt(sIndex, matrix);
+      } else {
+        instancedShrub.setMatrixAt(sIndex, matrix);
+      }
+    };
+
+    // Calculate unique indices for vegetation to avoid overlaps
+    const baseTreeIdx = lotIdx * 4;
+    setTree(baseTreeIdx + 0, new THREE.Vector3(-3.4, 0, 6.5));
+    setTree(baseTreeIdx + 1, new THREE.Vector3(-3.4, 0, -6.5));
+    setTree(baseTreeIdx + 2, new THREE.Vector3(3.4, 0, -6.5));
+    if (style === 2) {
+      // Eco gets an extra tree
+      setTree(baseTreeIdx + 3, new THREE.Vector3(3.4, 0, 2.0));
+    } else {
+      instancedTrunk.setMatrixAt(baseTreeIdx + 3, zeroMatrix);
+      instancedFoliage.setMatrixAt(baseTreeIdx + 3, zeroMatrix);
+    }
+
+    const baseFoliageLowIdx = lotIdx * 2;
+    setFoliageLow(baseFoliageLowIdx + 0, new THREE.Vector3(-3.4, 0, 0));
+    if (style === 2) {
+      setFoliageLow(baseFoliageLowIdx + 1, new THREE.Vector3(3.4, 0, -2.0));
+    } else {
+      instancedFoliageLow.setMatrixAt(baseFoliageLowIdx + 1, zeroMatrix);
+    }
+
+    // Border shrubs forming front hedge
+    const baseShrubIdx = lotIdx * 6;
+    setShrub(baseShrubIdx + 0, new THREE.Vector3(-2.0, 0, 7.0));
+    setShrub(baseShrubIdx + 1, new THREE.Vector3(-1.0, 0, 7.0));
+    setShrub(baseShrubIdx + 2, new THREE.Vector3(0.0, 0, 7.0));
+    setShrub(baseShrubIdx + 3, new THREE.Vector3(1.0, 0, 7.0));
+    setShrub(baseShrubIdx + 4, new THREE.Vector3(2.0, 0, 7.0));
+    setShrub(baseShrubIdx + 5, new THREE.Vector3(3.0, 0, 7.0));
+
+    // Entry path small shrubs
+    const baseShrubSmallIdx = lotIdx * 4;
+    setShrub(baseShrubSmallIdx + 0, new THREE.Vector3(0.8, 0, 5.0), true);
+    setShrub(baseShrubSmallIdx + 1, new THREE.Vector3(0.8, 0, 3.5), true);
+    setShrub(baseShrubSmallIdx + 2, new THREE.Vector3(3.2, 0, 5.0), true);
+    setShrub(baseShrubSmallIdx + 3, new THREE.Vector3(3.2, 0, 3.5), true);
   });
 
   // 6. Position Streetlights - Enhanced detail
@@ -640,6 +761,48 @@ export const createProceduralNeighborhood = (scene, mapInstance, loteoGeojson, v
 
   // Return helper to dynamically change lights & clean up resources
   return {
+    toggle3DMode: (show3D) => {
+      const visibility = !!show3D;
+      instancedLawn.visible = visibility;
+      instancedDriveway.visible = visibility;
+      instancedFoundation.visible = visibility;
+      instancedWallClassic.visible = visibility;
+      instancedWallAccent.visible = visibility;
+      instancedRoofBase.visible = visibility;
+      instancedRoofClassic.visible = visibility;
+      instancedRoofOverhang.visible = visibility;
+      instancedDoorClassic.visible = visibility;
+      instancedDoorFrame.visible = visibility;
+      instancedWindowClassic.visible = visibility;
+      instancedWindowFrame.visible = visibility;
+      instancedWallPremium.visible = visibility;
+      instancedWallBase.visible = visibility;
+      instancedWallCap.visible = visibility;
+      instancedRoofPremium.visible = visibility;
+      instancedRoofEdge.visible = visibility;
+      instancedDoorPremium.visible = visibility;
+      instancedDoorFramePremium.visible = visibility;
+      instancedWindowPremium.visible = visibility;
+      instancedWindowFramePremium.visible = visibility;
+      instancedPoolBorder.visible = visibility;
+      instancedPoolEdge.visible = visibility;
+      instancedPoolWater.visible = visibility;
+      instancedSolarPanel.visible = visibility;
+      instancedSolarFrame.visible = visibility;
+      instancedTrunk.visible = visibility;
+      instancedFoliage.visible = visibility;
+      instancedFoliageLow.visible = visibility;
+      instancedShrub.visible = visibility;
+      instancedShrubSmall.visible = visibility;
+      if (slCount > 0) {
+        instancedSlPole.visible = visibility;
+        instancedSlBase.visible = visibility;
+        instancedSlArm.visible = visibility;
+        instancedSlArmJoint.visible = visibility;
+        instancedSlBulb.visible = visibility;
+        instancedSlReflector.visible = visibility;
+      }
+    },
     updateLightMode: (timeOfDay) => {
       // House windows emission
       if (timeOfDay === 'night') {
