@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Map, SlidersHorizontal, Compass, X, Film } from 'lucide-react';
 import LotComparator from './components/LotComparator';
 import Map3D from './components/Map3D';
+import { useWebSocket } from './hooks/useWebSocket';
 import AccessibilityControls from './components/AccessibilityControls';
 import SearchStatsPanel from './components/SearchStatsPanel';
 import LotDetails from './components/LotDetails';
@@ -113,6 +114,7 @@ function App() {
 
   /* ─ Admin overrides (API with localStorage fallback cache) ─ */
   const [adminOverrides, setAdminOverrides] = useState({});
+  const { loteEstadoActualizado } = useWebSocket();
 
   useEffect(() => {
     const fetchOverrides = async () => {
@@ -130,9 +132,23 @@ function App() {
       }
     };
     fetchOverrides();
-    const interval = setInterval(fetchOverrides, 30000);
-    return () => clearInterval(interval);
   }, []);
+
+  // Listen to real-time status updates via WebSockets
+  useEffect(() => {
+    if (loteEstadoActualizado) {
+      const { loteId, estado } = loteEstadoActualizado;
+      const uiStatus = estado === 'DISPONIBLE' ? 'Disponible' : estado === 'RESERVADO' ? 'Reservado' : 'Vendido';
+      setAdminOverrides(prev => ({
+        ...prev,
+        [loteId]: {
+          ...prev[loteId],
+          status: uiStatus
+        }
+      }));
+      console.log(`[WebSocket] Lote ${loteId} actualizado a: ${uiStatus}`);
+    }
+  }, [loteEstadoActualizado]);
 
   /* ─ Sync body data-time for CSS themes ─ */
   useEffect(() => {

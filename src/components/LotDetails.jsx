@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Ruler, Compass, MapPin, X, FileText, Tag, Share2, Check, MessageSquare, TrendingUp, Sparkles, Scale } from 'lucide-react';
+import { Ruler, Compass, MapPin, X, FileText, Tag, Share2, Check, MessageSquare, TrendingUp, Sparkles, Scale, Calendar } from 'lucide-react';
 import ROIVisualizer from './ROIVisualizer';
 import QuickQualifier from './QuickQualifier';
 import ShareMenu from './ShareMenu';
+import ReservaForm from './ReservaForm';
 import { playLotSelect } from '../utils/brandAudio';
 
 const STATUS_STYLE = {
@@ -20,6 +21,7 @@ const LotDetails = ({ lot, adminOverrides, sessionId, onClose, onCompare, compar
   const [requestedInfo, setRequestedInfo] = useState(false);
   const [projectionYears, setProjectionYears] = useState(3);
   const [showQualifier, setShowQualifier] = useState(false);
+  const [showReservaForm, setShowReservaForm] = useState(false);
   const [showShareMenu, setShowShareMenu] = useState(false);
   const [showCommitment, setShowCommitment] = useState(false);
   const [customLotName, setCustomLotName] = useState(() => {
@@ -192,6 +194,20 @@ Ver lote: ${shareUrl}`;
           <QuickQualifier
             onClose={() => setShowQualifier(false)}
             onComplete={handleQualifierComplete}
+          />
+        )}
+      </AnimatePresence>
+
+      {/* Reservation Form Overlay */}
+      <AnimatePresence>
+        {showReservaForm && (
+          <ReservaForm
+            lotId={lot.id}
+            lotLabel={lot.label}
+            onClose={() => setShowReservaForm(false)}
+            onComplete={() => {
+              setShowReservaForm(false);
+            }}
           />
         )}
       </AnimatePresence>
@@ -471,28 +487,88 @@ Ver lote: ${shareUrl}`;
 
       {/* CTA Button at bottom */}
       <div style={{ padding: 16, borderTop: '1px solid var(--glass-border)', background: 'rgba(0,0,0,0.15)', display: 'flex', flexDirection: 'column', gap: 8 }}>
-        {!requestedInfo ? (
+        {status === 'Vendido' ? (
           <button
-            className="drone-btn"
-            onClick={() => setShowQualifier(true)}
+            disabled
             style={{
+              width: '100%',
               padding: '10px',
               borderRadius: '6px',
               fontSize: '0.8rem',
-              border: '1px solid var(--gold-400)',
-              background: 'rgba(199, 168, 109, 0.1)',
-              color: 'var(--gold-300)',
+              border: '1px solid rgba(239, 68, 68, 0.3)',
+              background: 'rgba(239, 68, 68, 0.05)',
+              color: '#ef4444',
               fontWeight: 700,
-              cursor: 'pointer',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              gap: 6
+              cursor: 'not-allowed',
+              textAlign: 'center'
             }}
           >
-            <MessageSquare size={13} />
-            Solicitar Información Catastral
+            Lote no disponible (Vendido)
           </button>
+        ) : status === 'Reservado' ? (
+          <button
+            disabled
+            style={{
+              width: '100%',
+              padding: '10px',
+              borderRadius: '6px',
+              fontSize: '0.8rem',
+              border: '1px solid rgba(245, 158, 11, 0.3)',
+              background: 'rgba(245, 158, 11, 0.05)',
+              color: '#f59e0b',
+              fontWeight: 700,
+              cursor: 'not-allowed',
+              textAlign: 'center'
+            }}
+          >
+            Lote no disponible (Reservado)
+          </button>
+        ) : !requestedInfo ? (
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+            <button
+              className="drone-btn"
+              onClick={() => setShowQualifier(true)}
+              style={{
+                padding: '10px',
+                borderRadius: '6px',
+                fontSize: '0.8rem',
+                border: '1px solid var(--gold-400)',
+                background: 'rgba(199, 168, 109, 0.1)',
+                color: 'var(--gold-300)',
+                fontWeight: 700,
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: 6
+              }}
+            >
+              <MessageSquare size={13} />
+              Solicitar Información Catastral
+            </button>
+            <button
+              className="drone-btn"
+              onClick={() => setShowReservaForm(true)}
+              style={{
+                padding: '10px',
+                borderRadius: '6px',
+                fontSize: '0.8rem',
+                border: '1px solid var(--gold-400)',
+                background: 'linear-gradient(135deg, var(--gold-400), var(--gold-500))',
+                color: '#020617',
+                fontWeight: 700,
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: 6,
+                boxShadow: '0 4px 12px rgba(212, 168, 67, 0.15)'
+              }}
+            >
+              <Calendar size={13} />
+              Reservar Lote Campestre
+            </button>
+          </div>
         ) : (
           <motion.div
             initial={{ opacity: 0, scale: 0.98 }}
