@@ -16,6 +16,7 @@ import QuerubeLogo from './components/QuerubeLogo';
 import { extractLotInfo } from './utils/lotUtils';
 import { ErrorBoundary, detectWebGLContext, WebGLFallbackScreen } from './components/ErrorBoundary';
 import { playBrandTone, playTourStart, playPanelClose, enableOnInteraction, setMuted as setBrandMuted } from './utils/brandAudio';
+import { API_BASE_URL } from './utils/config';
 
 function App() {
   const map3dRef = useRef(null);
@@ -61,7 +62,7 @@ function App() {
   useEffect(() => {
     const fetchClicks = async () => {
       try {
-        const res = await fetch('/api/clicks');
+        const res = await fetch(`${API_BASE_URL}/clicks`);
         if (res.ok) {
           const data = await res.json();
           setLotClicks(data);
@@ -119,7 +120,7 @@ function App() {
   useEffect(() => {
     const fetchOverrides = async () => {
       try {
-        const res = await fetch('/api/overrides');
+        const res = await fetch(`${API_BASE_URL}/overrides`);
         if (res.ok) {
           const data = await res.json();
           setAdminOverrides(data);
@@ -221,7 +222,7 @@ function App() {
       map3dRef.current.flyToLot(lotData.id, lotData.geomCoordinates, lotData.geometryType);
       
       // Register click in DB to feed click heatmap in real-time
-      fetch(`/api/clicks/${lotData.id}`, { method: 'POST' })
+      fetch(`${API_BASE_URL}/clicks/${lotData.id}`, { method: 'POST' })
         .then(() => {
           setLotClicks(prev => ({ ...prev, [lotData.id]: (prev[lotData.id] || 0) + 1 }));
         })
@@ -659,7 +660,7 @@ function App() {
                 <button
                   onClick={() => {
                     // Trigger lead metrics log
-                    fetch('/api/leads', {
+                    fetch(`${API_BASE_URL}/leads`, {
                       method: 'POST',
                       headers: { 'Content-Type': 'application/json' },
                       body: JSON.stringify({ lot_id: 'flight_cta', session_id: sessionId })

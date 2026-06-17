@@ -8,6 +8,7 @@ import { flightWaypoints, getFlightTiming } from '../config/flightWaypoints.js';
 import { createProceduralNeighborhood } from '../utils/proceduralModels.js';
 import { calculateRouteToLot, routeToGeoJSON, routeDistance as getRouteDistance, interpolateRoute, VEHICLE_TYPES, CAMERA_MODES, getCameraForPerspective } from '../utils/routeAnimation.js';
 import { haversineDistanceMeters, extractLotInfo, normalizeLoteoFeatures } from '../utils/lotUtils.js';
+import { API_BASE_URL } from '../utils/config.js';
 
 // ─────────────────────────────────────────────
 // Robust centroid calculator for Polygon / MultiPolygon
@@ -378,7 +379,7 @@ const Map3D = forwardRef(({ onSelectLot, selectedLotId, adminOverrides, lotClick
 
   // Telemetry Metric Log
   const logFlightMetric = useCallback((eventType, stationIndex = null, stationLabel = null) => {
-    fetch('/api/flight-metrics', {
+    fetch(`${API_BASE_URL}/flight-metrics`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

@@ -6,6 +6,7 @@ import QuickQualifier from './QuickQualifier';
 import ShareMenu from './ShareMenu';
 import ReservaForm from './ReservaForm';
 import { playLotSelect } from '../utils/brandAudio';
+import { API_BASE_URL } from '../utils/config';
 
 const STATUS_STYLE = {
   Disponible: { bg: 'rgba(16,185,129,0.12)', border: 'rgba(16,185,129,0.3)', text: '#10b981' },
@@ -105,7 +106,7 @@ const LotDetails = ({ lot, adminOverrides, sessionId, onClose, onCompare, compar
     setShowCommitment(false);
     
     // Registrar micro-compromiso en backend
-    fetch('/api/leads', {
+    fetch(`${API_BASE_URL}/leads`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -127,7 +128,7 @@ const LotDetails = ({ lot, adminOverrides, sessionId, onClose, onCompare, compar
     setRequestedInfo(true);
 
     // Enviar Lead calificado al servidor
-    fetch('/api/leads', {
+    fetch(`${API_BASE_URL}/leads`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({

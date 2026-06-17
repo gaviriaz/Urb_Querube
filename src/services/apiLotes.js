@@ -1,5 +1,7 @@
+import { API_BASE_URL } from '../utils/config';
+
 export async function getLotes() {
-  const response = await fetch('/api/lote');
+  const response = await fetch(`${API_BASE_URL}/lote`);
   if (!response.ok) {
     throw new Error('Error al obtener lotes');
   }
@@ -9,7 +11,7 @@ export async function getLotes() {
 export async function updateLoteEstado(loteId, estado) {
   const token = sessionStorage.getItem('admin_token') || localStorage.getItem('jwt_token');
   
-  const response = await fetch(`/api/lote/${loteId}/estado`, {
+  const response = await fetch(`${API_BASE_URL}/lote/${loteId}/estado`, {
     method: 'PATCH',
     headers: {
       'Content-Type': 'application/json',
@@ -26,7 +28,7 @@ export async function updateLoteEstado(loteId, estado) {
 }
 
 export async function crearReserva(reservaData) {
-  const response = await fetch('/api/reserva', {
+  const response = await fetch(`${API_BASE_URL}/reserva`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
