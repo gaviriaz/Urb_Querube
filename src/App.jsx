@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Map, SlidersHorizontal, Compass } from 'lucide-react';
+import { Map, SlidersHorizontal, Compass, X } from 'lucide-react';
+import LotComparator from './components/LotComparator';
 import Map3D from './components/Map3D';
 import AccessibilityControls from './components/AccessibilityControls';
 import SearchStatsPanel from './components/SearchStatsPanel';
@@ -8,9 +9,11 @@ import LotDetails from './components/LotDetails';
 import AdminPortal from './components/AdminPortal';
 import CookieBanner from './components/CookieBanner';
 import WelcomeOverlay from './components/WelcomeOverlay';
+import HeroLanding from './components/HeroLanding';
 import QuerubeLogo from './components/QuerubeLogo';
 import { extractLotInfo } from './utils/lotUtils';
 import { ErrorBoundary, detectWebGLContext, WebGLFallbackScreen } from './components/ErrorBoundary';
+import { playBrandTone, playTourStart, playPanelClose, enableOnInteraction, setMuted as setBrandMuted } from './utils/brandAudio';
 
 function App() {
   const map3dRef = useRef(null);
@@ -48,6 +51,21 @@ function App() {
   const [flightMode,          setFlightMode]         = useState('full'); // 'full' or 'short'
   const [showFlightCTA,       setShowFlightCTA]       = useState(false);
   const [catalogSearch,       setCatalogSearch]       = useState('');
+  const [compareList,         setCompareList]         = useState([]);
+  const [showComparator,      setShowComparator]      = useState(false);
+
+  const handleCompareLot = (lotData) => {
+    setCompareList(prev => {
+      const exists = prev.some(l => l.id === lotData.id);
+      if (exists) {
+        return prev.filter(l => l.id !== lotData.id);
+      }
+      if (prev.length >= 2) {
+        return [prev[0], lotData];
+      }
+      return [...prev, lotData];
+    });
+  };
   const [catalogStatus,       setCatalogStatus]       = useState('Todos');
   const [catalogArea,         setCatalogArea]         = useState('Todos');
   const [adminOpen,           setAdminOpen]          = useState(false);
@@ -59,6 +77,13 @@ function App() {
   const [accessCollapsed,     setAccessCollapsed]    = useState(true);
   const [cameraMode,          setCameraMode]         = useState('third');
   const [loadProgress,        setLoadProgress]       = useState(0);
+  const [showHeroLanding,     setShowHeroLanding]    = useState(() => {
+    // Skip hero on deep links or returning sessions (within 10 min)
+    if (window.location.hash && window.location.hash.startsWith('#lote=')) return false;
+    const lastVisit = sessionStorage.getItem('querube_hero_dismissed');
+    if (lastVisit && (Date.now() - Number(lastVisit)) < 600000) return false;
+    return true;
+  });
   const [performanceMode,     setPerformanceMode]    = useState(() => {
     const isMobile = /Mobi|Android|iPhone/i.test(navigator.userAgent);
     const lowCores = navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4;
@@ -87,6 +112,12 @@ function App() {
     const interval = setInterval(fetchOverrides, 30000);
     return () => clearInterval(interval);
   }, []);
+
+  /* ─ Sync body data-time for CSS themes ─ */
+  useEffect(() => {
+    document.body.setAttribute('data-time', timeOfDay);
+    return () => document.body.removeAttribute('data-time');
+  }, [timeOfDay]);
 
   /* ─ Load GeoJSON ─ */
   useEffect(() => {
@@ -179,6 +210,7 @@ function App() {
       setSelectedLot(null);
       map3dRef.current?.startStreetFlight();
       setFlightActive(true);
+      playTourStart();
     }
   };
 
@@ -382,7 +414,120 @@ function App() {
             adminOverrides={adminOverrides}
             voiceEnabled={voiceEnabled}
             sessionId={sessionId}
-            onClose={() => setSelectedLot(null)}
+            onClose={() => { playPanelClose(); setSelectedLot(null); }}
+            onCompare={handleCompareLot}
+            compareList={compareList}
+          />
+        )}
+      </AnimatePresence>
+
+      {/* ── Floating Compare Bar ── */}
+      <AnimatePresence>
+        {compareList.length > 0 && (
+          <motion.div
+            initial={{ y: 80, opacity: 0, x: '-50%' }}
+            animate={{ y: 0, opacity: 1, x: '-50%' }}
+            exit={{ y: 80, opacity: 0, x: '-50%' }}
+            style={{
+              position: 'absolute',
+              bottom: 24,
+              left: '50%',
+              zIndex: 9999,
+              background: 'rgba(10, 16, 9, 0.92)',
+              border: '1px solid var(--gold-400)',
+              borderRadius: '30px',
+              padding: '8px 24px',
+              boxShadow: '0 10px 30px rgba(0,0,0,0.5)',
+              display: 'flex',
+              alignItems: 'center',
+              gap: 16,
+              color: '#fff',
+              fontSize: '0.82rem'
+            }}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+              <span style={{ color: 'var(--gold-400)', fontWeight: 'bold' }}>Comparar:</span>
+              <span>{compareList.length} {compareList.length === 1 ? 'lote' : 'lotes'}</span>
+            </div>
+            
+            <div style={{ display: 'flex', gap: 6 }}>
+              {compareList.map(l => (
+                <div
+                  key={l.id}
+                  style={{
+                    background: 'rgba(255,255,255,0.06)',
+                    padding: '2px 8px',
+                    borderRadius: '12px',
+                    border: '1px solid var(--glass-border)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 6,
+                    fontSize: '0.75rem'
+                  }}
+                >
+                  <span>Lote {l.id}</span>
+                  <button
+                    onClick={() => handleCompareLot(l)}
+                    style={{ background: 'none', border: 'none', color: '#ef4444', cursor: 'pointer', padding: 0, display: 'flex', alignItems: 'center' }}
+                  >
+                    <X size={10} />
+                  </button>
+                </div>
+              ))}
+            </div>
+            
+            {compareList.length === 2 && (
+              <button
+                onClick={() => {
+                  setShowComparator(true);
+                  if (window.trackEvent) {
+                    window.trackEvent('comparison_viewed', { lots: compareList.map(l => l.id) });
+                  }
+                }}
+                className="drone-btn"
+                style={{
+                  padding: '6px 16px',
+                  borderRadius: '20px',
+                  background: 'var(--gold-400)',
+                  color: '#020617',
+                  fontWeight: 'bold',
+                  border: 'none',
+                  cursor: 'pointer',
+                  fontSize: '0.78rem'
+                }}
+              >
+                Comparar Ahora
+              </button>
+            )}
+            
+            <button
+              onClick={() => setCompareList([])}
+              style={{
+                background: 'none',
+                border: 'none',
+                color: 'var(--text-400)',
+                textDecoration: 'underline',
+                cursor: 'pointer',
+                fontSize: '0.75rem'
+              }}
+            >
+              Limpiar
+            </button>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* ── Lot Comparator Modal ── */}
+      <AnimatePresence>
+        {showComparator && (
+          <LotComparator
+            lots={compareList}
+            adminOverrides={adminOverrides}
+            onClose={() => setShowComparator(false)}
+            onSelectLot={(lot) => {
+              setShowComparator(false);
+              handleSelectLot(lot);
+            }}
           />
         )}
       </AnimatePresence>
@@ -532,8 +677,26 @@ function App() {
       {/* Cookie Consent Banner */}
       <CookieBanner />
 
-      {/* Welcome Intro Overlay */}
-      <WelcomeOverlay />
+      {/* Welcome Intro Overlay (only if hero is NOT showing) */}
+      {!showHeroLanding && <WelcomeOverlay />}
+
+      {/* Hero Landing Page — first visit immersive overlay */}
+      <AnimatePresence>
+        {showHeroLanding && loadProgress >= 5 && (
+          <HeroLanding
+            key="hero-landing"
+            onEnterExplorer={() => {
+              setShowHeroLanding(false);
+              sessionStorage.setItem('querube_hero_dismissed', String(Date.now()));
+              // Enable brand audio on user interaction
+              enableOnInteraction();
+              playBrandTone();
+              // Open the catalog to guide the user
+              setSearchCollapsed(false);
+            }}
+          />
+        )}
+      </AnimatePresence>
 
       {/* Cartographic Progress Loader */}
       {loadProgress < 5 && (

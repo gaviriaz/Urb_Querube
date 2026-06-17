@@ -2,64 +2,64 @@
 // Each waypoint: lng, lat, zoom, pitch, bearing, duration (relative weight), label
 // ZOOM LEVELS: 20+ = street-level detail, 21+ = architectural close-up
 export const flightWaypoints = [
-  // === ACT 1: GRAND ENTRANCE ===
+  // === ACT 1: GRAND ENTRANCE — ASOMBRO (WONDER) ===
   {
     lng: -76.38600, lat: 8.26350, zoom: 17.0, pitch: 45, bearing: 10,
     duration: 1.5,
     label: '🛫 Vista Panorámica',
-    narration: 'Bienvenidos al proyecto urbanístico San Pedro de Urabá. Desde esta vista aérea, contemplemos la extensión completa de esta parcelación que ofrece un hogar en armonía con la naturaleza.'
+    narration: 'Imagine despertar cada mañana con este paisaje. La Urbanización Querube le da la bienvenida a un entorno donde la naturaleza y su hogar se integran en perfecta armonía.'
   },
   {
     lng: -76.38630, lat: 8.26400, zoom: 18.5, pitch: 65, bearing: -5,
     duration: 1.2,
     label: '📐 Entrada Principal',
-    narration: 'Descendemos hacia la entrada principal del proyecto. Observe la distribución organizada de las manzanas y la red vial diseñada para la comodidad de los residentes.'
+    narration: 'Observe la majestuosidad de la topografía del Urabá. Un espacio exclusivo planificado meticulosamente para asegurar su tranquilidad y alta valorización.'
   },
-  // === ACT 2: STREET-LEVEL TOUR - CLOSE UP ===
+  // === ACT 2: STREET-LEVEL TOUR — PERTENENCIA (BELONGING) ===
   {
     lng: -76.38647, lat: 8.26440, zoom: 20.5, pitch: 78, bearing: 15,
     duration: 1.5,
-    label: '🛣️ Avenida Central',
+    label: '🛣️ Avenida Principal',
     shortTour: true,
-    narration: 'Ingresando por la avenida central, con calzadas amplias de seis metros, demarcación amarilla de seguridad y arborización nativa a ambos lados.'
+    narration: 'Avanzamos por la avenida principal. Sus vecinos ya están construyendo y dando vida a sus sueños. La comunidad Querube está tomando forma, unida por valores compartidos y un entorno verde.'
   },
   {
     lng: -76.38621, lat: 8.26500, zoom: 21.0, pitch: 82, bearing: 8,
     duration: 1.3,
-    label: '🏘️ Zona Residencial Sur',
-    narration: null
+    label: '🏘️ Zona Residencial',
+    narration: 'Calles amplias de seis metros y una red de servicios públicos en proceso de instalación. Aquí, la modernidad y la serenidad del campo conviven perfectamente.'
   },
-  // === ACT 3: LOT DETAIL SHOWCASE - MANZANA A ===
+  // === ACT 3: LOT DETAIL SHOWCASE — PROPIEDAD (OWNERSHIP) ===
   {
     lng: -76.38614, lat: 8.26540, zoom: 21.5, pitch: 85, bearing: -50,
     duration: 2.4,
     label: '🏡 Lote Lt 1 - Manzana A',
     lotId: 1000,
     shortTour: true,
-    narration: 'Giramos hacia la Manzana A. Cada lote de ocho por dieciséis metros incluye antejardín con árbol nativo, garaje pavimentado y conexión directa a la vía principal. Observe los acabados premium.',
-    narrationFallback: 'Giramos hacia la Manzana A, una de las zonas iniciales y consolidadas del proyecto, con excelente acceso a las vías principales y servicios de la parcelación.'
+    narration: 'Este podría ser su lote. Imagine diseñar su hogar campestre sobre este terreno de Manzana A, con la seguridad de contar con escritura pública independiente y servicios listos.',
+    narrationFallback: 'Observe los lotes listos para entrega en la Manzana A. Topografía regular con excelente ubicación y cercanía a las vías de acceso principales.'
   },
   {
     lng: -76.38660, lat: 8.26542, zoom: 22.0, pitch: 85, bearing: -90,
     duration: 2.0,
-    label: '🌳 Lote Lt 2 - Detalle Arquitectónico',
+    label: '🌳 Lote Lt 2 - Detalle',
     lotId: 1001,
-    narration: 'Observe los modelos de vivienda campestre con techos a dos aguas, terrazas cubiertas y acabados premium en cada fachada. Una inversión con proyección de valorización inmediata.',
-    narrationFallback: 'Observe la tipología arquitectónica sugerida para las viviendas campestres de la parcelación, diseñadas para el confort y la integración con el paisaje natural.'
+    narration: 'Espacios pensados para el descanso de su familia, con antejardines sombreados por árboles nativos y espacio de parqueo privado para su total comodidad.',
+    narrationFallback: 'Cada predio cuenta con linderos definidos y cotas medidas con precisión catastral para que construya con total tranquilidad técnica.'
   },
   {
     lng: -76.38715, lat: 8.26541, zoom: 21.8, pitch: 80, bearing: -120,
     duration: 1.8,
-    label: '🔚 Lote Lt 3 - Vista Posterior',
+    label: '🔚 Lote Lt 3 - Vistas',
     lotId: 1002,
-    narration: null
+    narration: 'Vistas ininterrumpidas a la naturaleza circundante. La inversión inteligente que protege su capital y le regala a su familia el aire puro de Urabá.'
   },
-  // === ACT 4: LOOP & TRANSITION ===
+  // === ACT 4: RETORNO Y EXCLUSIVIDAD ===
   {
     lng: -76.38700, lat: 8.26580, zoom: 20.0, pitch: 72, bearing: -180,
     duration: 1.0,
-    label: '↩️ Retorno',
-    narration: 'De regreso por la vía principal. Las curvas de nivel en verde limón muestran el relieve suave y natural del terreno, ideal para construcción segura.'
+    label: '↩️ Vía de Retorno',
+    narration: 'Retornamos por la vía circular. Querube es un proyecto cerrado diseñado para blindar su seguridad jurídica y financiera desde el primer día.'
   },
   {
     lng: -76.38650, lat: 8.26582, zoom: 20.5, pitch: 75, bearing: 100,
@@ -73,15 +73,15 @@ export const flightWaypoints = [
     label: '🛤️ Vía Norte',
     narration: null
   },
-  // === ACT 5: MANZANA B & NORTH - CLOSE UP ===
+  // === ACT 5: LOTES EXCLUSIVOS ===
   {
     lng: -76.38560, lat: 8.26640, zoom: 21.5, pitch: 85, bearing: -55,
     duration: 2.0,
     label: '🏡 Lote Lt 24 - Manzana B',
     lotId: 1023,
     shortTour: true,
-    narration: 'Entramos a la Manzana B, una zona privilegiada en la parte alta del proyecto. La brisa del Urabá y las vistas panorámicas al campo hacen de este sector el más exclusivo.',
-    narrationFallback: 'Avanzamos hacia el sector central de la Manzana B, una zona privilegiada en la parte alta de la parcelación que goza de gran frescura y una espectacular vista natural.'
+    narration: 'En la Manzana B, los lotes de la zona alta disfrutan de una corriente de aire fresco continuo y una vista panorámica espectacular sobre todo el valle.',
+    narrationFallback: 'Avanzamos hacia el sector central de la Manzana B, una zona privilegiada que goza de gran frescura y una espectacular vista natural.'
   },
   {
     lng: -76.38629, lat: 8.26648, zoom: 22.0, pitch: 88, bearing: -90,
@@ -89,44 +89,28 @@ export const flightWaypoints = [
     label: '🌿 Lote Lt 25 - Premium',
     lotId: 1024,
     shortTour: true,
-    narration: 'Los lotes premium incluyen piscina, paneles solares y acabados de lujo. Una inversión con proyección de valorización inmediata.',
-    narrationFallback: 'Esta sección intermedia ofrece predios de topografía privilegiada ideales para albergar viviendas de diseño moderno con amplias zonas verdes y piscina.'
+    narration: 'Los lotes de esta zona son ideales para incorporar elementos sostenibles como paneles solares y piscinas privadas, maximizando el disfrute campestre.',
+    narrationFallback: 'Esta sección intermedia ofrece predios de topografía privilegiada ideales para albergar viviendas de diseño moderno con amplias zonas verdes.'
   },
   {
     lng: -76.38664, lat: 8.26647, zoom: 21.5, pitch: 80, bearing: -135,
     duration: 1.5,
-    label: '🔚 Lote Lt 26 - Detalle Final',
+    label: '🔚 Lote Lt 26 - Cierre',
     lotId: 1025,
-    narration: null
+    narration: 'Tu inversión trabaja mientras tú duermes. San Pedro de Urabá es la región con mayor proyección de crecimiento agroindustrial y residencial en Urabá.'
   },
-  // === ACT 6: NORTH EXTENSION ===
-  {
-    lng: -76.38540, lat: 8.26750, zoom: 20.5, pitch: 75, bearing: 15,
-    duration: 1.2,
-    label: '🏞️ Lote Lt 39 - Sector Norte',
-    lotId: 1038,
-    narration: 'El sector norte ofrece lotes de mayor extensión, ideales para proyectos familiares amplios y zonas verdes privadas.',
-    narrationFallback: 'El sector norte de la parcelación ofrece lotes de gran extensión rodeados de naturaleza, perfectos para quintas familiares amplias y huertas privadas.'
-  },
-  {
-    lng: -76.38513, lat: 8.26850, zoom: 21.0, pitch: 78, bearing: 10,
-    duration: 1.0,
-    label: '🌄 Lote Lt 42 - Extremo Norte',
-    lotId: 1041,
-    narration: null
-  },
-  // === ACT 7: CINEMATIC ASCENT & PANORAMA ===
+  // === ACT 6: VUELO DE RETORNO Y CIERRE ===
   {
     lng: -76.38580, lat: 8.26700, zoom: 19.0, pitch: 55, bearing: -60,
     duration: 1.5,
-    label: '🎬 Ascenso Panorámico',
-    narration: 'Ascendemos para una vista privilegiada del proyecto completo. San Pedro de Urabá: naturaleza, comodidad y futuro, en un solo lugar.'
+    label: '🎬 Ascenso Final',
+    narration: 'Ascendemos para contemplar este proyecto en su totalidad. San Pedro de Urabá: un futuro verde y próspero para ti y tus seres queridos.'
   },
   {
     lng: -76.38620, lat: 8.26580, zoom: 17.5, pitch: 40, bearing: -165,
     duration: 2.0,
-    label: '🌅 Cierre Cinematográfico',
-    narration: 'Gracias por acompañarnos en este recorrido virtual. ¡El lugar ideal para construir el hogar de sus sueños le espera!'
+    label: '🌅 Cierre del Recorrido',
+    narration: 'Gracias por acompañarnos. Tu lote ideal en la parcelación Querube te espera. Habla con un asesor en WhatsApp y hazlo tuyo hoy mismo.'
   }
 ];
 
