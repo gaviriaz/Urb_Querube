@@ -159,13 +159,15 @@ Ver lote: ${shareUrl}`;
 
   const shareUrl = `${window.location.origin}${window.location.pathname}#lote=${lot.id}`;
 
+  const isMobile = typeof window !== 'undefined' && window.innerWidth <= 768;
+
   return (
     <motion.div
       className="lot-detail-panel"
       key={lot.id}
-      initial={{ y: 30, opacity: 0 }}
-      animate={{ y: 0,  opacity: 1 }}
-      exit={{    y: 30, opacity: 0 }}
+      initial={isMobile ? { y: '100%', opacity: 1 } : { y: 30, opacity: 0 }}
+      animate={isMobile ? { y: 0, opacity: 1 } : { y: 0, opacity: 1 }}
+      exit={isMobile ? { y: '100%', opacity: 1 } : { y: 30, opacity: 0 }}
       transition={PANEL_SPRING}
       style={{ overflow: 'hidden', display: 'flex', flexDirection: 'column' }}
     >

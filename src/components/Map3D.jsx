@@ -562,6 +562,359 @@ const Map3D = forwardRef(({ onSelectLot, selectedLotId, adminOverrides, lotClick
     }
   }, [onFlightComplete, logFlightMetric, activeWaypoints]);
 
+  // Bounding box, centering and visual positioning (Módulo 2, Requirement 2 & 7)
+  const getLotsBounds = useCallback((geojson) => {
+    const activeGeojson = geojson || loteoGeojson;
+    if (!activeGeojson || !activeGeojson.features || activeGeojson.features.length === 0) return null;
+    let minLng = Infinity, minLat = Infinity, maxLng = -Infinity, maxLat = -Infinity;
+    activeGeojson.features.forEach(feat => {
+      if (feat.properties?.LOTE === 'REMANENTE') return; // skip remanente
+      const coords = feat.geometry.coordinates;
+      const collect = (arr) => {
+        if (Array.isArray(arr) && arr.length >= 2 && typeof arr[0] === 'number') {
+          const [lng, lat] = arr;
+          if (lng < minLng) minLng = lng;
+          if (lat < minLat) minLat = lat;
+          if (lng > maxLng) maxLng = lng;
+          if (lat > maxLat) maxLat = lat;
+          return;
+        }
+        if (Array.isArray(arr)) arr.forEach(collect);
+      };
+      collect(coords);
+    });
+    if (minLng === Infinity || minLat === Infinity) return null;
+    return [[minLng, minLat], [maxLng, maxLat]];
+  }, [loteoGeojson]);
+
+  const getLotsCenter = useCallback((geojson) => {
+    const bounds = getLotsBounds(geojson);
+    if (!bounds) return [centerLng, centerLat];
+    return [
+      (bounds[0][0] + bounds[1][0]) / 2,
+      (bounds[0][1] + bounds[1][1]) / 2
+    ];
+  }, [getLotsBounds, centerLng, centerLat]);
+
+  const fitViewToLots = useCallback((options = {}) => {
+    if (!mapRef.current) return;
+    const bounds = getLotsBounds(loteoGeojson);
+    if (!bounds) return;
+    const isMobile = window.innerWidth <= 768;
+    const padding = isMobile
+      ? { top: 80, right: 24, bottom: 240, left: 24 }
+      : { top: 100, right: 380, bottom: 100, left: 100 };
+
+    mapRef.current.fitBounds(bounds, {
+      padding: options.padding || padding,
+      pitch: options.pitch !== undefined ? options.pitch : 55,
+      bearing: options.bearing !== undefined ? options.bearing : -15,
+      duration: options.duration !== undefined ? options.duration : 1500,
+      essential: true
+    });
+  }, [getLotsBounds, loteoGeojson]);
+
+  const focusLot = useCallback((lotId) => {
+    if (!mapRef.current || !loteoGeojson) return;
+    const feat = loteoGeojson.features.find(f => {
+      const id = f.properties.fid || f.properties.OBJECTID || f.properties.GLOBALID;
+      return Number(id) === Number(lotId);
+    });
+    if (!feat) return;
+    const center = getCentroid(feat.geometry.coordinates, feat.geometry.type);
+    if (!center) return;
+    
+    const isMobile = window.innerWidth <= 768;
+    const zoom = isMobile ? 18.8 : 19.5;
+    const pitch = 65;
+    let finalCenter = [...center];
+    
+    if (isMobile) {
+      // Offset target center so the lot appears higher on screen, above the bottom sheet
+      const pixel = mapRef.current.project(center);
+      pixel.y += 100; // Shift lot up by moving target pixel down
+      const unproj = mapRef.current.unproject(pixel);
+      finalCenter = [unproj.lng, unproj.lat];
+    }
+
+    mapRef.current.flyTo({
+      center: finalCenter,
+      zoom: zoom,
+      pitch: pitch,
+      bearing: mapRef.current.getBearing(),
+      duration: 1500,
+      essential: true
+    });
+  }, [loteoGeojson]);
+
+  // Centered orbital flyover (Módulo 2, Requirement 3 & 5)
+  const orbitActiveRef = useRef(false);
+  const orbitTargetRef = useRef(null);
+  const orbitZoomRef = useRef(19.2);
+  const orbitPitchRef = useRef(65);
+  const orbitSpeedRef = useRef(15);
+  const orbitBearingRef = useRef(0);
+  const orbitRAFRef = useRef(null);
+  const lastOrbitTimeRef = useRef(null);
+
+  const runOrbitLoop = useCallback(() => {
+    if (!orbitActiveRef.current || !mapRef.current) return;
+
+    const now = performance.now();
+    if (!lastOrbitTimeRef.current) lastOrbitTimeRef.current = now;
+    const dt = (now - lastOrbitTimeRef.current) / 1000;
+    lastOrbitTimeRef.current = now;
+
+    // Increment bearing
+    orbitBearingRef.current = (orbitBearingRef.current + orbitSpeedRef.current * dt) % 360;
+
+    mapRef.current.jumpTo({
+      center: orbitTargetRef.current,
+      zoom: orbitZoomRef.current,
+      pitch: orbitPitchRef.current,
+      bearing: orbitBearingRef.current
+    });
+
+    orbitRAFRef.current = requestAnimationFrame(runOrbitLoop);
+  }, []);
+
+  const stopOrbit = useCallback(() => {
+    orbitActiveRef.current = false;
+    if (orbitRAFRef.current) {
+      cancelAnimationFrame(orbitRAFRef.current);
+      orbitRAFRef.current = null;
+    }
+    if (mapRef.current) {
+      mapRef.current.dragPan.enable();
+      mapRef.current.scrollZoom.enable();
+      mapRef.current.boxZoom.enable();
+      mapRef.current.dragRotate.enable();
+      mapRef.current.keyboard.enable();
+      mapRef.current.doubleClickZoom.enable();
+      mapRef.current.touchZoomRotate.enable();
+    }
+  }, []);
+
+  const startCenteredFlyover = useCallback((options = {}) => {
+    stopFlight(false);
+    stopOrbit();
+
+    orbitActiveRef.current = true;
+    let target = options.target;
+    if (!target) {
+      target = getLotsCenter(loteoGeojson);
+    }
+
+    orbitTargetRef.current = target;
+    orbitZoomRef.current = options.zoom || (options.isProject ? 17.6 : 19.5);
+    orbitPitchRef.current = options.pitch || 65;
+    orbitSpeedRef.current = options.speed || 12;
+    orbitBearingRef.current = mapRef.current ? mapRef.current.getBearing() : 0;
+
+    if (mapRef.current) {
+      // Disable manual controls during flyover
+      mapRef.current.dragPan.disable();
+      mapRef.current.scrollZoom.disable();
+      mapRef.current.boxZoom.disable();
+      mapRef.current.dragRotate.disable();
+      mapRef.current.keyboard.disable();
+      mapRef.current.doubleClickZoom.disable();
+      mapRef.current.touchZoomRotate.disable();
+
+      mapRef.current.flyTo({
+        center: target,
+        zoom: orbitZoomRef.current,
+        pitch: orbitPitchRef.current,
+        bearing: orbitBearingRef.current,
+        duration: 2000,
+        essential: true
+      });
+
+      setTimeout(() => {
+        if (!orbitActiveRef.current) return;
+        lastOrbitTimeRef.current = performance.now();
+        runOrbitLoop();
+      }, 2100);
+    }
+  }, [getLotsCenter, loteoGeojson, stopFlight, stopOrbit, runOrbitLoop]);
+
+  // Video Export recorder based on MediaRecorder (Módulo 3, Requirement 2 & 8)
+  const [isRecording, setIsRecording] = useState(false);
+  const [recordingProgress, setRecordingProgress] = useState(0);
+  const [recordingStatus, setRecordingStatus] = useState('');
+  const mediaRecorderRef = useRef(null);
+  const recordedChunksRef = useRef([]);
+  const videoBlobRef = useRef(null);
+  const recordingTimerRef = useRef(null);
+  const isRecordingRef = useRef(false);
+
+  const startVideoRecording = useCallback(async (options = {}) => {
+    if (isRecordingRef.current || !mapRef.current) return;
+    
+    recordedChunksRef.current = [];
+    videoBlobRef.current = null;
+    isRecordingRef.current = true;
+    setIsRecording(true);
+    setRecordingProgress(0);
+    setRecordingStatus('Preparando visor...');
+
+    const { resolution = '1920x1080', fps = 30, duration = 15, mode = 'cinematic', lotId = null } = options;
+
+    const [widthStr, heightStr] = resolution.split('x');
+    const targetWidth = parseInt(widthStr);
+    const targetHeight = parseInt(heightStr);
+
+    const originalWidth = mapContainerRef.current.style.width;
+    const originalHeight = mapContainerRef.current.style.height;
+
+    // Apply custom container layout size to trigger map buffer resize
+    mapContainerRef.current.style.width = `${targetWidth}px`;
+    mapContainerRef.current.style.height = `${targetHeight}px`;
+
+    if (options.onPrepare) options.onPrepare(true);
+    mapRef.current.resize();
+
+    // Give WebGL context time to re-buffer and redraw
+    await new Promise(resolve => setTimeout(resolve, 800));
+    setRecordingStatus('Grabando video...');
+
+    if (mode === 'orbit') {
+      if (lotId) {
+        const feat = loteoGeojson.features.find(f => {
+          const id = f.properties.fid || f.properties.OBJECTID || f.properties.GLOBALID;
+          return Number(id) === Number(lotId);
+        });
+        if (feat) {
+          const center = getCentroid(feat.geometry.coordinates, feat.geometry.type);
+          startCenteredFlyover({ target: center, zoom: 19.5, speed: 360 / duration });
+        } else {
+          startCenteredFlyover({ zoom: 17.6, speed: 360 / duration, isProject: true });
+        }
+      } else {
+        startCenteredFlyover({ zoom: 17.6, speed: 360 / duration, isProject: true });
+      }
+    } else if (mode === 'cinematic') {
+      startFlight();
+    } else {
+      startCenteredFlyover({ zoom: 17.6, speed: 360 / duration, isProject: true });
+    }
+
+    const canvas = mapRef.current.getCanvas();
+    const stream = canvas.captureStream(fps);
+
+    let optionsMime = { mimeType: 'video/webm;codecs=vp9' };
+    if (!MediaRecorder.isTypeSupported(optionsMime.mimeType)) {
+      optionsMime = { mimeType: 'video/webm;codecs=vp8' };
+    }
+    if (!MediaRecorder.isTypeSupported(optionsMime.mimeType)) {
+      optionsMime = { mimeType: 'video/webm' };
+    }
+    if (!MediaRecorder.isTypeSupported(optionsMime.mimeType)) {
+      optionsMime = {};
+    }
+
+    try {
+      const mediaRecorder = new MediaRecorder(stream, optionsMime);
+      mediaRecorderRef.current = mediaRecorder;
+
+      mediaRecorder.ondataavailable = (e) => {
+        if (e.data && e.data.size > 0) {
+          recordedChunksRef.current.push(e.data);
+        }
+      };
+
+      mediaRecorder.onstop = () => {
+        setRecordingStatus('Procesando descarga...');
+        const blob = new Blob(recordedChunksRef.current, { type: 'video/webm' });
+        videoBlobRef.current = blob;
+        
+        mapContainerRef.current.style.width = originalWidth || '100%';
+        mapContainerRef.current.style.height = originalHeight || '100%';
+        
+        if (options.onPrepare) options.onPrepare(false);
+        mapRef.current.resize();
+
+        setRecordingProgress(100);
+        setRecordingStatus('Listo');
+        setIsRecording(false);
+        isRecordingRef.current = false;
+
+        if (options.autoDownload) {
+          downloadGeneratedVideo(resolution);
+        }
+      };
+
+      mediaRecorder.start();
+
+      const totalSteps = duration * 10;
+      let currentStep = 0;
+      recordingTimerRef.current = setInterval(() => {
+        currentStep++;
+        const progress = Math.min(99, Math.round((currentStep / totalSteps) * 100));
+        setRecordingProgress(progress);
+
+        if (currentStep >= totalSteps) {
+          stopVideoRecording();
+        }
+      }, 100);
+
+    } catch (err) {
+      console.error("MediaRecorder failed:", err);
+      setRecordingStatus('Error al grabar');
+      setIsRecording(false);
+      isRecordingRef.current = false;
+      mapContainerRef.current.style.width = originalWidth || '100%';
+      mapContainerRef.current.style.height = originalHeight || '100%';
+      if (options.onPrepare) options.onPrepare(false);
+      mapRef.current.resize();
+    }
+  }, [loteoGeojson, startCenteredFlyover, stopFlight, stopOrbit]);
+
+  const stopVideoRecording = useCallback(() => {
+    if (recordingTimerRef.current) {
+      clearInterval(recordingTimerRef.current);
+      recordingTimerRef.current = null;
+    }
+    if (mediaRecorderRef.current && mediaRecorderRef.current.state !== 'inactive') {
+      mediaRecorderRef.current.stop();
+    }
+    stopFlight(false);
+    stopOrbit();
+  }, [stopFlight, stopOrbit]);
+
+  const downloadGeneratedVideo = useCallback((resolution = '1080p') => {
+    if (!videoBlobRef.current) return;
+    const url = URL.createObjectURL(videoBlobRef.current);
+    const a = document.createElement('a');
+    document.body.appendChild(a);
+    a.style = 'display: none';
+    a.href = url;
+    const dateStr = new Date().toISOString().split('T')[0];
+    a.download = `Urbanizacion_Querube_Sobrevuelo_${resolution}_${dateStr}.webm`;
+    a.click();
+    setTimeout(() => {
+      window.URL.revokeObjectURL(url);
+      document.body.removeChild(a);
+    }, 100);
+  }, []);
+
+  // Handle Resize and Orientation (Módulo 1, Requirement 1 & 9)
+  useEffect(() => {
+    const handleResize = () => {
+      if (mapRef.current) {
+        mapRef.current.resize();
+      }
+    };
+    window.addEventListener('resize', handleResize);
+    window.addEventListener('orientationchange', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      window.removeEventListener('orientationchange', handleResize);
+      if (recordingTimerRef.current) clearInterval(recordingTimerRef.current);
+      if (orbitRAFRef.current) cancelAnimationFrame(orbitRAFRef.current);
+    };
+  }, [mapLoaded]);
+
   // Expose map controls to parent (Accessibility controls)
   useImperativeHandle(ref, () => ({
     zoomIn: () => {
@@ -657,7 +1010,19 @@ const Map3D = forwardRef(({ onSelectLot, selectedLotId, adminOverrides, lotClick
     stopRoute: () => {
       stopRouteAnimation();
     },
-    isRouteActive: () => routeActive
+    isRouteActive: () => routeActive,
+    // Expose new modular APIs
+    getLotsBounds: () => getLotsBounds(loteoGeojson),
+    getLotsCenter: () => getLotsCenter(loteoGeojson),
+    fitViewToLots: (options) => fitViewToLots(options),
+    focusLot: (lotId) => focusLot(lotId),
+    startCenteredFlyover: (options) => startCenteredFlyover(options),
+    stopFlyover: () => { stopOrbit(); stopFlight(false); },
+    startVideoRecording: (options) => startVideoRecording(options),
+    stopVideoRecording: () => stopVideoRecording(),
+    downloadGeneratedVideo: (resolution) => downloadGeneratedVideo(resolution),
+    isRecording: () => isRecordingRef.current,
+    getRecordingProgress: () => ({ progress: recordingProgress, status: recordingStatus, active: isRecording })
   }));
 
   // Initialize Map
