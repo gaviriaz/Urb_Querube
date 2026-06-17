@@ -4,7 +4,7 @@ import { ambientAudio } from '../utils/ambientAudio';
 import {
   Layers, Compass, User, Volume2, VolumeX, Sun, CloudRain,
   ZoomIn, ZoomOut, RotateCcw, RotateCw, MapPin, Info,
-  Settings, ChevronRight, ChevronLeft, Leaf, Droplets
+  Settings, ChevronRight, ChevronLeft, Leaf, Droplets, TrendingUp
 } from 'lucide-react';
 
 const PANEL_SPRING = { type: 'spring', stiffness: 380, damping: 36 };
