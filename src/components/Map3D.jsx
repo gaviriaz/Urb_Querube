@@ -300,13 +300,50 @@ const RouteHUD = ({ vehicleType, cameraMode, progress, distance, onStop, onCycle
 };
 
 // ─────────────────────────────────────────────
+// Robust sun position calculator (Fase 4, Realismo Solar)
+// ─────────────────────────────────────────────
+const calculateSunPosition = (mode, latitude = 8.26) => {
+  const latRad = (latitude * Math.PI) / 180;
+  let azimuth = 0;
+  let altitude = 0;
+  
+  if (mode === 'sunrise') {
+    azimuth = 85;
+    altitude = 18;
+  } else if (mode === 'sunset') {
+    azimuth = 275;
+    altitude = 12;
+  } else if (mode === 'night') {
+    azimuth = 45;
+    altitude = 45;
+  } else { // midday
+    azimuth = 180;
+    altitude = 82;
+  }
+  
+  const azRad = (azimuth * Math.PI) / 180;
+  const altRad = (altitude * Math.PI) / 180;
+  
+  const x = Math.cos(altRad) * Math.sin(azRad);
+  const y = Math.cos(altRad) * Math.cos(azRad);
+  const z = Math.sin(altRad);
+  
+  return new THREE.Vector3(x, y, z).normalize();
+};
+
+// ─────────────────────────────────────────────
 // Main Map3D Component
 // ─────────────────────────────────────────────
-const Map3D = forwardRef(({ onSelectLot, selectedLotId, adminOverrides, viasGeojson, loteoGeojson, manzanaGeojson, predioGeojson, cotasGeojson, voiceEnabled, timeOfDay, environmentalLayer, cameraMode, setCameraMode, viewMode, performanceMode, sessionId, flightMode = 'full', onFlightComplete }, ref) => {
+const Map3D = forwardRef(({ onSelectLot, selectedLotId, adminOverrides, lotClicks = {}, viasGeojson, loteoGeojson, manzanaGeojson, predioGeojson, cotasGeojson, voiceEnabled, timeOfDay, environmentalLayer, cameraMode, setCameraMode, viewMode, performanceMode, sessionId, flightMode = 'full', onFlightComplete }, ref) => {
   const mapContainerRef = useRef(null);
   const mapRef = useRef(null);
   const [mapLoaded, setMapLoaded] = useState(false);
   const [hoveredLot, setHoveredLot] = useState(null);
+  const hoveredLotIdRef = useRef(null);
+
+  useEffect(() => {
+    hoveredLotIdRef.current = hoveredLot?.id || null;
+  }, [hoveredLot]);
   const [flightActive, setFlightActive] = useState(false);
   
   // Flight HUD state
@@ -895,7 +932,7 @@ const Map3D = forwardRef(({ onSelectLot, selectedLotId, adminOverrides, viasGeoj
         render: function (gl, matrix) {
           if (this.neighborhood) {
             if (typeof this.neighborhood.animate === 'function') {
-              this.neighborhood.animate();
+              this.neighborhood.animate(hoveredLotIdRef.current);
             }
             if (typeof this.neighborhood.updateLOD === 'function') {
               this.neighborhood.updateLOD(this.map.getZoom());
@@ -916,6 +953,7 @@ const Map3D = forwardRef(({ onSelectLot, selectedLotId, adminOverrides, viasGeoj
           
           this.scene.fog = null;
           const isLow = this.performanceMode === 'low';
+          const sunPos = calculateSunPosition(mode, 8.26);
 
           if (this.map && this.map.getLayer('satellite-base')) {
             if (mode === 'night') {
@@ -934,28 +972,28 @@ const Map3D = forwardRef(({ onSelectLot, selectedLotId, adminOverrides, viasGeoj
             this.ambientLight.intensity = 0.45;
             this.dirLight.color.setHex(0xffb703);
             this.dirLight.intensity = 0.65;
-            this.dirLight.position.set(-200, -100, 50).normalize();
+            this.dirLight.position.copy(sunPos).multiplyScalar(500);
             if (!isLow) this.scene.fog = new THREE.FogExp2(0xfef3c7, 0.005);
           } else if (mode === 'sunset') {
             this.ambientLight.color.setHex(0xffddcc);
             this.ambientLight.intensity = 0.45;
             this.dirLight.color.setHex(0xff5500);
             this.dirLight.intensity = 0.75;
-            this.dirLight.position.set(200, 100, 40).normalize();
+            this.dirLight.position.copy(sunPos).multiplyScalar(500);
             if (!isLow) this.scene.fog = new THREE.FogExp2(0xfed7aa, 0.004);
           } else if (mode === 'night') {
             this.ambientLight.color.setHex(0x0f172a);
             this.ambientLight.intensity = 0.25;
             this.dirLight.color.setHex(0x38bdf8);
             this.dirLight.intensity = 0.25;
-            this.dirLight.position.set(-100, 200, 150).normalize();
+            this.dirLight.position.copy(sunPos).multiplyScalar(500);
             if (!isLow) this.scene.fog = new THREE.FogExp2(0x020617, 0.007);
           } else {
             this.ambientLight.color.setHex(0xffffff);
             this.ambientLight.intensity = 0.85;
             this.dirLight.color.setHex(0xffffff);
             this.dirLight.intensity = 0.75;
-            this.dirLight.position.set(200, 300, 400).normalize();
+            this.dirLight.position.copy(sunPos).multiplyScalar(500);
           }
           
           if (this.neighborhood && typeof this.neighborhood.updateLightMode === 'function') {
@@ -1138,6 +1176,26 @@ const Map3D = forwardRef(({ onSelectLot, selectedLotId, adminOverrides, viasGeoj
 
     const hoveredLotId = hoveredLot?.id || null;
 
+    // Generate dynamic match expression for click popularities (heatmap)
+    const fillExpr = ['match', ['to-number', ['get', 'fid']]];
+    let hasClicks = false;
+    Object.keys(lotClicks).forEach(key => {
+      const count = lotClicks[key];
+      if (count > 0 && !soldLots.includes(Number(key)) && !reservedLots.includes(Number(key))) {
+        hasClicks = true;
+        let color = 'rgba(0,0,0,0)';
+        if (count >= 15) {
+          color = 'rgba(212, 168, 67, 0.35)'; // Highly popular (warm gold glow)
+        } else if (count >= 6) {
+          color = 'rgba(212, 168, 67, 0.2)'; // Popular (subtle gold)
+        } else {
+          color = 'rgba(212, 168, 67, 0.08)'; // Mildly popular
+        }
+        fillExpr.push(Number(key), color);
+      }
+    });
+    fillExpr.push('rgba(0,0,0,0)'); // Default fallback color
+
     map.setPaintProperty('loteo-fill', 'fill-color', [
       'case',
       ['==', ['to-number', ['get', 'fid']], Number(selectedLotId || -1)], 'rgba(2, 132, 199, 0.4)', // Selected: Blue
@@ -1149,7 +1207,7 @@ const Map3D = forwardRef(({ onSelectLot, selectedLotId, adminOverrides, viasGeoj
       ],
       ['in', ['to-number', ['get', 'fid']], ['literal', soldLots]], 'rgba(239, 68, 68, 0.15)', // Sold
       ['in', ['to-number', ['get', 'fid']], ['literal', reservedLots]], 'rgba(249, 115, 22, 0.15)', // Reserved
-      'rgba(0,0,0,0)' // Available: transparent
+      hasClicks ? fillExpr : 'rgba(0,0,0,0)' // Available click popularity heatmap
     ]);
 
     map.setPaintProperty('loteo-line-base', 'line-color', [
@@ -1178,7 +1236,81 @@ const Map3D = forwardRef(({ onSelectLot, selectedLotId, adminOverrides, viasGeoj
     if (housesLayer && housesLayer.implementation && typeof housesLayer.implementation.updateNeighborhood === 'function') {
       housesLayer.implementation.updateNeighborhood(loteoGeojson || normalizeLoteoGeojson, viasGeojson);
     }
-  }, [selectedLotId, adminOverrides, mapLoaded, normalizeLoteoGeojson, hoveredLot, loteoGeojson, viasGeojson]);
+  }, [selectedLotId, adminOverrides, mapLoaded, normalizeLoteoGeojson, hoveredLot, loteoGeojson, viasGeojson, lotClicks]);
+
+  // Scarcity Badges for manzanas with <= 3 available lots
+  const scarcityMarkersRef = useRef([]);
+  useEffect(() => {
+    if (!mapLoaded || !mapRef.current || !manzanaGeojson || !normalizeLoteoGeojson) return;
+    const map = mapRef.current;
+    
+    // Clear old markers
+    scarcityMarkersRef.current.forEach(m => m.remove());
+    scarcityMarkersRef.current = [];
+    
+    const manzanaAvailability = {};
+    
+    normalizeLoteoGeojson.features.forEach(feat => {
+      const props = feat.properties;
+      const mName = props.manzana || props.MANZANA;
+      if (!mName) return;
+      
+      const lotId = props.fid || props.OBJECTID || props.GLOBALID;
+      const override = adminOverrides[lotId] || {};
+      const status = override.status || 'Disponible';
+      
+      if (!manzanaAvailability[mName]) {
+        manzanaAvailability[mName] = { total: 0, available: 0 };
+      }
+      manzanaAvailability[mName].total++;
+      if (status === 'Disponible') {
+        manzanaAvailability[mName].available++;
+      }
+    });
+    
+    manzanaGeojson.features.forEach(feat => {
+      const props = feat.properties;
+      const mName = props.nombre || props.LABEL || props.manzana || props.MANZANA;
+      if (!mName) return;
+      
+      const stats = manzanaAvailability[mName];
+      if (stats && stats.available > 0 && stats.available <= 3) {
+        const geom = feat.geometry;
+        const centroid = getCentroid(geom.coordinates, geom.type);
+        if (!centroid) return;
+        
+        const el = document.createElement('div');
+        el.className = 'scarcity-badge';
+        el.innerHTML = `<div class="scarcity-badge-inner">Últimos ${stats.available} disponibles</div>`;
+        
+        Object.assign(el.style, {
+          background: 'rgba(239, 68, 68, 0.85)',
+          backdropFilter: 'blur(8px)',
+          border: '1px solid #d4a843',
+          borderRadius: '12px',
+          padding: '4px 10px',
+          color: '#ffffff',
+          fontFamily: 'var(--font-body, sans-serif)',
+          fontSize: '0.68rem',
+          fontWeight: 'bold',
+          boxShadow: '0 4px 10px rgba(0,0,0,0.5)',
+          whiteSpace: 'nowrap',
+          pointerEvents: 'none'
+        });
+        
+        const marker = new maplibregl.Marker({ element: el })
+          .setLngLat(centroid)
+          .addTo(map);
+          
+        scarcityMarkersRef.current.push(marker);
+      }
+    });
+    
+    return () => {
+      scarcityMarkersRef.current.forEach(m => m.remove());
+      scarcityMarkersRef.current = [];
+    };
+  }, [mapLoaded, manzanaGeojson, normalizeLoteoGeojson, adminOverrides]);
 
   // Handle 2D / 3D Mode changes
   useEffect(() => {

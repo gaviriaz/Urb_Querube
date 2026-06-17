@@ -52,6 +52,24 @@ function App() {
   const [showFlightCTA,       setShowFlightCTA]       = useState(false);
   const [catalogSearch,       setCatalogSearch]       = useState('');
   const [compareList,         setCompareList]         = useState([]);
+  const [lotClicks,           setLotClicks]           = useState({});
+
+  useEffect(() => {
+    const fetchClicks = async () => {
+      try {
+        const res = await fetch('/api/clicks');
+        if (res.ok) {
+          const data = await res.json();
+          setLotClicks(data);
+        }
+      } catch (e) {
+        console.warn("No se pudo cargar clicks:", e);
+      }
+    };
+    fetchClicks();
+    const interval = setInterval(fetchClicks, 30000);
+    return () => clearInterval(interval);
+  }, []);
   const [showComparator,      setShowComparator]      = useState(false);
 
   const handleCompareLot = (lotData) => {
@@ -180,8 +198,16 @@ function App() {
   /* ─ Lot interaction ─ */
   const handleSelectLot = (lotData, isAutomated = false) => {
     setSelectedLot(prev => (prev?.id === lotData.id ? prev : lotData));
-    if (!isAutomated && map3dRef.current && lotData.geomCoordinates)
+    if (!isAutomated && map3dRef.current && lotData.geomCoordinates) {
       map3dRef.current.flyToLot(lotData.id, lotData.geomCoordinates, lotData.geometryType);
+      
+      // Register click in DB to feed click heatmap in real-time
+      fetch(`/api/clicks/${lotData.id}`, { method: 'POST' })
+        .then(() => {
+          setLotClicks(prev => ({ ...prev, [lotData.id]: (prev[lotData.id] || 0) + 1 }));
+        })
+        .catch(err => console.error("Error logging click:", err));
+    }
   };
 
   const handleNavigateToLot = (lotData, vehicleType) => {
@@ -231,6 +257,7 @@ function App() {
           onSelectLot={handleSelectLot}
           selectedLotId={selectedLot?.id || null}
           adminOverrides={adminOverrides}
+          lotClicks={lotClicks}
           loteoGeojson={loteoGeojson}
           manzanaGeojson={manzanaGeojson}
           viasGeojson={viasGeojson}
