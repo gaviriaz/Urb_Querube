@@ -10,7 +10,7 @@ const STATUS_STYLE = {
 
 const PANEL_SPRING = { type: 'spring', stiffness: 340, damping: 36 };
 
-const LotDetails = ({ lot, adminOverrides, onClose }) => {
+const LotDetails = ({ lot, adminOverrides, sessionId, onClose }) => {
   const [copied, setCopied] = useState(false);
   const [requestedInfo, setRequestedInfo] = useState(false);
   const [projectionYears, setProjectionYears] = useState(3);
@@ -60,6 +60,18 @@ const LotDetails = ({ lot, adminOverrides, onClose }) => {
 
   const handleRequestInfo = () => {
     setRequestedInfo(true);
+
+    // Capture the lead on the backend
+    fetch('/api/leads', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        lot_id: lot.id,
+        session_id: sessionId
+      })
+    }).catch(err => console.error("Error logging lead:", err));
 
     const phoneNumber = import.meta.env.VITE_WHATSAPP_NUMBER || "573123456789"; // Sales advisor WhatsApp number
     const lotLabel = lot.label;

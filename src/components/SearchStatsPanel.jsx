@@ -2,6 +2,7 @@ import { useState, useMemo, useRef, useCallback, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Search, X, Navigation, ChevronLeft, ChevronRight, TrendingUp, User, Car, Bike, Award } from 'lucide-react';
 import { extractLotInfo } from '../utils/lotUtils.js';
+import QuerubeLogo from './QuerubeLogo';
 
 /* ─ Spring config ─────────────────────────────────────────────── */
 const PANEL_SPRING = { type: 'spring', stiffness: 340, damping: 34 };
@@ -19,10 +20,10 @@ const getStatus = (s) => STATUS_META[s] || STATUS_META.Disponible;
 const SearchStatsPanel = ({
   loteoGeojson, adminOverrides, onSelectLot,
   onNavigateToLot, selectedLotId, isCollapsed, setIsCollapsed,
+  searchTerm, setSearchTerm,
+  statusFilter, setStatusFilter,
+  areaFilter, setAreaFilter,
 }) => {
-  const [searchTerm,   setSearchTerm]   = useState('');
-  const [statusFilter, setStatusFilter] = useState('Todos');
-  const [areaFilter,   setAreaFilter]   = useState('Todos');
   const [navMenuLotId, setNavMenuLotId] = useState(null);
   const searchRef = useRef(null);
 
@@ -155,11 +156,7 @@ const SearchStatsPanel = ({
             background: 'rgba(255,255,255,0.03)', border: '1px solid var(--glass-border)',
             display: 'flex', alignItems: 'center', justifyContent: 'center'
           }}>
-            <svg width="22" height="22" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="46" cy="44" r="30" stroke="var(--gold-400, #d4a843)" strokeWidth="9" />
-              <path d="M68 66 L88 86" stroke="var(--gold-400, #d4a843)" strokeWidth="12" strokeLinecap="round" />
-              <path d="M46 25 C46 25 54 33 54 44 C54 55 46 63 46 63 C46 63 38 55 38 44 C38 33 46 25 46 25 Z" fill="var(--gold-400, #d4a843)" opacity="0.95" />
-            </svg>
+            <QuerubeLogo width={22} height={22} />
           </div>
           <div>
             <div className="catalog-title" style={{ fontSize: '1.15rem' }}>Querube</div>

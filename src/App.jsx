@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Map, SlidersHorizontal, Compass } from 'lucide-react';
 import Map3D from './components/Map3D';
 import AccessibilityControls from './components/AccessibilityControls';
@@ -8,10 +8,30 @@ import LotDetails from './components/LotDetails';
 import AdminPortal from './components/AdminPortal';
 import CookieBanner from './components/CookieBanner';
 import WelcomeOverlay from './components/WelcomeOverlay';
+import QuerubeLogo from './components/QuerubeLogo';
 import { extractLotInfo } from './utils/lotUtils';
+import { ErrorBoundary, detectWebGLContext, WebGLFallbackScreen } from './components/ErrorBoundary';
 
 function App() {
   const map3dRef = useRef(null);
+
+  // Generate a unique anonymous session ID for tracing leads/flight metrics
+  const [sessionId] = useState(() => {
+    let sId = sessionStorage.getItem('querube_session_id');
+    if (!sId) {
+      sId = Math.random().toString(36).substring(2, 15) + '_' + Date.now();
+      sessionStorage.setItem('querube_session_id', sId);
+    }
+    return sId;
+  });
+
+  const [webglSupported, setWebglSupported] = useState(true);
+
+  useEffect(() => {
+    if (!detectWebGLContext()) {
+      setWebglSupported(false);
+    }
+  }, []);
 
   /* ─ GeoJSON data ─ */
   const [loteoGeojson,   setLoteoGeojson]   = useState(null);
@@ -25,6 +45,11 @@ function App() {
   const [fontSize,            setFontSize]           = useState('normal');
   const [voiceEnabled,        setVoiceEnabled]       = useState(false);
   const [flightActive,        setFlightActive]       = useState(false);
+  const [flightMode,          setFlightMode]         = useState('full'); // 'full' or 'short'
+  const [showFlightCTA,       setShowFlightCTA]       = useState(false);
+  const [catalogSearch,       setCatalogSearch]       = useState('');
+  const [catalogStatus,       setCatalogStatus]       = useState('Todos');
+  const [catalogArea,         setCatalogArea]         = useState('Todos');
   const [adminOpen,           setAdminOpen]          = useState(false);
   const [timeOfDay,           setTimeOfDay]          = useState('midday');
   const [viewMode,            setViewMode]           = useState('3d');
@@ -146,36 +171,59 @@ function App() {
   };
 
   const handleToggleFlight = () => {
-    if (flightActive) { map3dRef.current?.stopStreetFlight();  setFlightActive(false); }
-    else              { setSelectedLot(null); map3dRef.current?.startStreetFlight(); setFlightActive(true); }
+    if (flightActive) {
+      map3dRef.current?.stopStreetFlight();
+      setFlightActive(false);
+    } else {
+      setShowFlightCTA(false);
+      setSelectedLot(null);
+      map3dRef.current?.startStreetFlight();
+      setFlightActive(true);
+    }
   };
 
   /* ─ Controls panel left offset ─ */
   const ctrlLeft = searchCollapsed ? '80px' : '356px';
 
+  if (!webglSupported) {
+    return <WebGLFallbackScreen />;
+  }
+
   return (
     <div style={{ position: 'relative', width: '100vw', height: '100vh', overflow: 'hidden' }}>
 
       {/* ── 3D Map canvas — full screen background ── */}
-      <Map3D
-        ref={map3dRef}
-        onSelectLot={handleSelectLot}
-        selectedLotId={selectedLot?.id || null}
-        adminOverrides={adminOverrides}
-        loteoGeojson={loteoGeojson}
-        manzanaGeojson={manzanaGeojson}
-        viasGeojson={viasGeojson}
-        predioGeojson={predioGeojson}
-        cotasGeojson={cotasGeojson}
-        voiceEnabled={voiceEnabled}
-        timeOfDay={timeOfDay}
-        environmentalLayer={environmentalLayer}
-        cameraMode={cameraMode}
-        setCameraMode={setCameraMode}
-        viewMode={viewMode}
-        setViewMode={setViewMode}
-        performanceMode={performanceMode}
-      />
+      <ErrorBoundary>
+        <Map3D
+          ref={map3dRef}
+          onSelectLot={handleSelectLot}
+          selectedLotId={selectedLot?.id || null}
+          adminOverrides={adminOverrides}
+          loteoGeojson={loteoGeojson}
+          manzanaGeojson={manzanaGeojson}
+          viasGeojson={viasGeojson}
+          predioGeojson={predioGeojson}
+          cotasGeojson={cotasGeojson}
+          voiceEnabled={voiceEnabled}
+          timeOfDay={timeOfDay}
+          environmentalLayer={environmentalLayer}
+          cameraMode={cameraMode}
+          setCameraMode={setCameraMode}
+          viewMode={viewMode}
+          setViewMode={setViewMode}
+          performanceMode={performanceMode}
+          sessionId={sessionId}
+          flightMode={flightMode}
+          onFlightComplete={() => {
+            setFlightActive(false);
+            setCatalogStatus('Disponible');
+            setCatalogArea('Grande');
+            setCatalogSearch('');
+            setSearchCollapsed(false);
+            setShowFlightCTA(true);
+          }}
+        />
+      </ErrorBoundary>
 
       {/* ── Top Navbar ── */}
       <nav className="vr-navbar">
@@ -186,11 +234,7 @@ function App() {
             background: 'rgba(255,255,255,0.03)', border: '1px solid var(--glass-border)',
             borderRadius: 6, width: 34, height: 34
           }}>
-            <svg width="22" height="22" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="46" cy="44" r="30" stroke="var(--gold-400, #d4a843)" strokeWidth="9" />
-              <path d="M68 66 L88 86" stroke="var(--gold-400, #d4a843)" strokeWidth="12" strokeLinecap="round" />
-              <path d="M46 25 C46 25 54 33 54 44 C54 55 46 63 46 63 C46 63 38 55 38 44 C38 33 46 25 46 25 Z" fill="var(--gold-400, #d4a843)" opacity="0.95" />
-            </svg>
+            <QuerubeLogo width={22} height={22} />
           </div>
           <div>
             <div className="vr-brand-name">Querube</div>
@@ -213,13 +257,42 @@ function App() {
           </button>
 
           {/* Drone */}
-          <button
-            className={`vr-nav-btn ${flightActive ? 'gold' : ''}`}
-            onClick={handleToggleFlight}
-          >
-            <Compass size={13} className={flightActive ? 'animate-spin' : ''} />
-            {flightActive ? 'Detener Sobrevuelo' : 'Sobrevuelo 3D'}
-          </button>
+          {flightActive ? (
+            <button
+              className="vr-nav-btn gold"
+              onClick={handleToggleFlight}
+            >
+              <Compass size={13} className="animate-spin" />
+              Detener ({flightMode === 'short' ? 'Rápido' : 'Completo'})
+            </button>
+          ) : (
+            <div style={{ display: 'flex', alignItems: 'center' }}>
+              <button
+                className="vr-nav-btn"
+                onClick={handleToggleFlight}
+                style={{ borderTopRightRadius: 0, borderBottomRightRadius: 0, borderRight: '1px solid rgba(255,255,255,0.1)' }}
+              >
+                <Compass size={13} />
+                Sobrevuelo {flightMode === 'short' ? 'Rápido' : 'Completo'}
+              </button>
+              <button
+                className="vr-nav-btn"
+                onClick={() => setFlightMode(m => m === 'full' ? 'short' : 'full')}
+                style={{
+                  borderTopLeftRadius: 0, borderBottomLeftRadius: 0,
+                  paddingLeft: 10, paddingRight: 10,
+                  fontSize: '0.62rem',
+                  fontWeight: 800,
+                  color: 'var(--gold-400)',
+                  backgroundColor: 'rgba(212,168,67,0.05)',
+                  borderLeft: 'none'
+                }}
+                title="Cambiar a recorrido rápido (30s) / completo (2m)"
+              >
+                {flightMode === 'full' ? '⚡ RÁPIDO' : '⏳ COMPLETO'}
+              </button>
+            </div>
+          )}
 
           {/* Admin — hidden behind double-click (Ctrl+A) */}
         </div>
@@ -237,6 +310,12 @@ function App() {
             selectedLotId={selectedLot?.id || null}
             isCollapsed={false}
             setIsCollapsed={setSearchCollapsed}
+            searchTerm={catalogSearch}
+            setSearchTerm={setCatalogSearch}
+            statusFilter={catalogStatus}
+            setStatusFilter={setCatalogStatus}
+            areaFilter={catalogArea}
+            setAreaFilter={setCatalogArea}
           />
         )}
       </AnimatePresence>
@@ -284,6 +363,12 @@ function App() {
             selectedLotId={selectedLot?.id || null}
             isCollapsed={true}
             setIsCollapsed={setSearchCollapsed}
+            searchTerm={catalogSearch}
+            setSearchTerm={setCatalogSearch}
+            statusFilter={catalogStatus}
+            setStatusFilter={setCatalogStatus}
+            areaFilter={catalogArea}
+            setAreaFilter={setCatalogArea}
           />
         )}
       </AnimatePresence>
@@ -296,6 +381,7 @@ function App() {
             lot={selectedLot}
             adminOverrides={adminOverrides}
             voiceEnabled={voiceEnabled}
+            sessionId={sessionId}
             onClose={() => setSelectedLot(null)}
           />
         )}
@@ -317,6 +403,132 @@ function App() {
       {/* Hidden admin opener — Ctrl+Shift+A ── */}
       <HiddenAdminTrigger onOpen={() => setAdminOpen(true)} />
 
+      {/* ── Peak-End Flight CTA Modal ── */}
+      <AnimatePresence>
+        {showFlightCTA && (
+          <motion.div
+            className="admin-login-overlay"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            style={{
+              position: 'absolute',
+              top: 0, left: 0, width: '100%', height: '100%',
+              backgroundColor: 'rgba(3, 7, 4, 0.82)',
+              zIndex: 10000,
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              padding: '20px'
+            }}
+          >
+            <motion.div
+              className="glass-panel"
+              initial={{ scale: 0.9, y: 20 }}
+              animate={{ scale: 1, y: 0 }}
+              exit={{ scale: 0.9, y: 20 }}
+              transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+              style={{
+                width: '100%',
+                maxWidth: '460px',
+                padding: '30px',
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '20px',
+                boxShadow: '0 20px 50px rgba(0,0,0,0.6)',
+                borderRadius: '8px',
+                textAlign: 'center'
+              }}
+            >
+              <div>
+                <div style={{
+                  margin: '0 auto 16px auto',
+                  width: 50, height: 50, borderRadius: '50%',
+                  background: 'rgba(199, 168, 109, 0.08)',
+                  border: '1px solid rgba(199, 168, 109, 0.25)',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center'
+                }}>
+                  <QuerubeLogo width={28} height={28} />
+                </div>
+                <h2 style={{ fontSize: '1.45rem', color: 'var(--gold-300)', marginBottom: '8px', fontFamily: 'var(--font-header)' }}>
+                  ¿Te gustó el recorrido?
+                </h2>
+                <p style={{ fontSize: '0.88rem', color: 'var(--text-200)', lineHeight: '1.4' }}>
+                  Hable con un asesor de ventas de Querube ahora para recibir información catastral personalizada o coordinar una visita.
+                </p>
+              </div>
+
+              <hr style={{ border: '0', borderTop: '1px solid var(--glass-border)', margin: 0 }} />
+
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                <button
+                  onClick={() => {
+                    // Trigger lead metrics log
+                    fetch('/api/leads', {
+                      method: 'POST',
+                      headers: { 'Content-Type': 'application/json' },
+                      body: JSON.stringify({ lot_id: 'flight_cta', session_id: sessionId })
+                    }).catch(err => console.error("Error logging flight CTA lead:", err));
+
+                    const phoneNumber = import.meta.env.VITE_WHATSAPP_NUMBER || "573123456789";
+                    const message = `Hola, acabo de terminar el sobrevuelo virtual en 3D de Querube. Me gustaría recibir asesoría sobre la disponibilidad de lotes y las facilidades de financiación.`;
+                    window.open(`https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`, '_blank');
+                    setShowFlightCTA(false);
+                  }}
+                  className="glass-panel-interactive"
+                  style={{
+                    padding: '12px',
+                    borderRadius: '6px',
+                    backgroundColor: 'var(--gold-500, #d4a843)',
+                    color: '#020617',
+                    fontWeight: 'bold',
+                    fontSize: '0.88rem',
+                    display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px'
+                  }}
+                >
+                  Hablar con un Asesor
+                </button>
+
+                <button
+                  onClick={() => {
+                    setCatalogStatus('Disponible');
+                    setCatalogArea('Grande'); // Show Available featured lots
+                    setCatalogSearch('');
+                    setSearchCollapsed(false);
+                    setShowFlightCTA(false);
+                  }}
+                  className="glass-panel-interactive"
+                  style={{
+                    padding: '12px',
+                    borderRadius: '6px',
+                    backgroundColor: 'rgba(255, 255, 255, 0.03)',
+                    border: '1px solid var(--glass-border)',
+                    color: 'var(--text-100)',
+                    fontSize: '0.88rem',
+                    fontWeight: 600
+                  }}
+                >
+                  Explorar Lotes Disponibles
+                </button>
+
+                <button
+                  onClick={() => setShowFlightCTA(false)}
+                  style={{
+                    background: 'none',
+                    border: 'none',
+                    color: 'var(--text-400)',
+                    fontSize: '0.78rem',
+                    textDecoration: 'underline',
+                    cursor: 'pointer',
+                    marginTop: '4px'
+                  }}
+                >
+                  Volver al mapa interactivo
+                </button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       {/* Cookie Consent Banner */}
       <CookieBanner />
 
@@ -331,11 +543,7 @@ function App() {
           alignItems: 'center', justifyContent: 'center', gap: 20
         }}>
           <div style={{ animation: 'pulse 1.5s infinite alternate' }}>
-            <svg width="60" height="60" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="46" cy="44" r="30" stroke="var(--gold-400, #d4a843)" strokeWidth="9" />
-              <path d="M68 66 L88 86" stroke="var(--gold-400, #d4a843)" strokeWidth="12" strokeLinecap="round" />
-              <path d="M46 25 C46 25 54 33 54 44 C54 55 46 63 46 63 C46 63 38 55 38 44 C38 33 46 25 46 25 Z" fill="var(--gold-400, #d4a843)" opacity="0.95" />
-            </svg>
+            <QuerubeLogo width={60} height={60} />
           </div>
           <div style={{ textAlign: 'center', fontFamily: 'var(--font-header)', color: 'var(--text-100)' }}>
             <div style={{ fontSize: '1.2rem', fontWeight: 800, color: 'var(--gold-300)', letterSpacing: '0.04em' }}>Querube 3D</div>
