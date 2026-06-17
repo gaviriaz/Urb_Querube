@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { API_BASE_URL } from '../utils/config';
 
 const AdminPortal = ({ 
   loteoGeojson, 
@@ -45,7 +46,7 @@ const AdminPortal = ({
     e.preventDefault();
     setLoginError('');
     try {
-      const res = await fetch('/api/login', {
+      const res = await fetch(`${API_BASE_URL}/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ password })
@@ -94,7 +95,7 @@ const AdminPortal = ({
     };
 
     try {
-      const res = await fetch(`/api/overrides/${selectedLotId}`, {
+      const res = await fetch(`${API_BASE_URL}/overrides/${selectedLotId}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

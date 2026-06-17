@@ -9,6 +9,12 @@ export async function verifyRecaptcha(token: string, ip?: string): Promise<boole
     return true;
   }
 
+  // Bypass if development mock token is used
+  if (token === 'mock-captcha-token-development') {
+    logger.warn('Received mock captcha token for development. Bypassing Google reCAPTCHA verification.');
+    return true;
+  }
+
   try {
     const response = await fetch('https://www.google.com/recaptcha/api/siteverify', {
       method: 'POST',

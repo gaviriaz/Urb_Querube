@@ -5,6 +5,7 @@ import ValueProposition from './ValueProposition';
 import TestimonialsCarousel from './TestimonialsCarousel';
 import UrgencyBar from './UrgencyBar';
 import PushPullSlider from './PushPullSlider';
+import { API_BASE_URL } from '../utils/config';
 
 export default function HeroLanding({ onEnterExplorer }) {
   const [stats, setStats] = useState({ activeSessions: 3, soldCount: 12, soldThisMonth: 3 });
@@ -13,7 +14,7 @@ export default function HeroLanding({ onEnterExplorer }) {
   useEffect(() => {
     const fetchStats = async () => {
       try {
-        const res = await fetch('/api/stats');
+        const res = await fetch(`${API_BASE_URL}/stats`);
         if (res.ok) {
           const data = await res.json();
           setStats(data);

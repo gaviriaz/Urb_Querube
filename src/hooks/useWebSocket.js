@@ -1,4 +1,5 @@
 import { useEffect, useState, useRef } from 'react';
+import { WS_BASE_URL } from '../utils/config';
 
 export function useWebSocket() {
   const [connected, setConnected] = useState(false);
@@ -10,11 +11,7 @@ export function useWebSocket() {
     let ws = null;
 
     function connect() {
-      const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
-      const host = window.location.host; // resolves e.g. localhost:5173 or querube.com
-      const wsUrl = `${protocol}//${host}/ws`;
-
-      ws = new WebSocket(wsUrl);
+      ws = new WebSocket(WS_BASE_URL);
 
       ws.onopen = () => {
         setConnected(true);
