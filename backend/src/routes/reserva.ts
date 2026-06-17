@@ -2,6 +2,7 @@ import { Router } from 'express';
 import { prisma } from '../utils/db';
 import { logger } from '../utils/logger';
 import { verifyRecaptcha } from '../utils/recaptcha';
+import { sendReservationConfirmation, sendAdminNotification } from '../utils/email';
 
 const router = Router();
 
@@ -88,6 +89,17 @@ router.post('/', async (req, res) => {
         loteId: parsedLoteId,
         estado: 'RESERVADO'
       });
+    }
+
+    // Enviar correos de notificación de forma asíncrona pero manejando errores
+    try {
+      logger.info(`Enviando correos de reserva del Lote ${lote.numero}...`);
+      await Promise.all([
+        sendReservationConfirmation(email, nombre, lote.numero, lote.metraje),
+        sendAdminNotification(nombre, email, phone, lote.numero, lote.metraje)
+      ]);
+    } catch (mailErr) {
+      logger.error('Error enviando notificaciones por correo de SendGrid:', mailErr);
     }
 
     res.json({ success: true, reservaId: reserva.id });
