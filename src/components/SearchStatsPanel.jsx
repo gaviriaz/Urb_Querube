@@ -134,13 +134,15 @@ const SearchStatsPanel = ({
     );
   }
 
+  const isMobile = typeof window !== 'undefined' && window.innerWidth <= 768;
+
   return (
     <motion.div
       key="catalog-panel"
       className="catalog-panel"
-      initial={{ x: -340, opacity: 0 }}
-      animate={{ x: 0,    opacity: 1 }}
-      exit={{    x: -340, opacity: 0 }}
+      initial={isMobile ? { y: '100%', x: 0, opacity: 1 } : { x: -340, opacity: 0 }}
+      animate={isMobile ? { y: 0, x: 0, opacity: 1 } : { x: 0, opacity: 1 }}
+      exit={isMobile ? { y: '100%', x: 0, opacity: 1 } : { x: -340, opacity: 0 }}
       transition={PANEL_SPRING}
     >
       {/* Collapse tab */}

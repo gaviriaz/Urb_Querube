@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Map, SlidersHorizontal, Compass, X } from 'lucide-react';
+import { Map, SlidersHorizontal, Compass, X, Film } from 'lucide-react';
 import LotComparator from './components/LotComparator';
 import Map3D from './components/Map3D';
 import AccessibilityControls from './components/AccessibilityControls';
@@ -10,6 +10,7 @@ import AdminPortal from './components/AdminPortal';
 import CookieBanner from './components/CookieBanner';
 import WelcomeOverlay from './components/WelcomeOverlay';
 import HeroLanding from './components/HeroLanding';
+import VideoExportPanel from './components/VideoExportPanel';
 import QuerubeLogo from './components/QuerubeLogo';
 import { extractLotInfo } from './utils/lotUtils';
 import { ErrorBoundary, detectWebGLContext, WebGLFallbackScreen } from './components/ErrorBoundary';
@@ -51,8 +52,9 @@ function App() {
   const [flightMode,          setFlightMode]         = useState('full'); // 'full' or 'short'
   const [showFlightCTA,       setShowFlightCTA]       = useState(false);
   const [catalogSearch,       setCatalogSearch]       = useState('');
-  const [compareList,         setCompareList]         = useState([]);
   const [lotClicks,           setLotClicks]           = useState({});
+  const [videoPanelOpen,      setVideoPanelOpen]      = useState(false);
+  const [isPreparingRecording, setIsPreparingRecording] = useState(false);
 
   useEffect(() => {
     const fetchClicks = async () => {
@@ -285,81 +287,87 @@ function App() {
       </ErrorBoundary>
 
       {/* ── Top Navbar ── */}
-      <nav className="vr-navbar">
-        {/* Brand */}
-        <div className="vr-brand">
-          <div style={{
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-            background: 'rgba(255,255,255,0.03)', border: '1px solid var(--glass-border)',
-            borderRadius: 6, width: 34, height: 34
-          }}>
-            <QuerubeLogo width={22} height={22} />
-          </div>
-          <div>
-            <div className="vr-brand-name">Querube</div>
-            <div className="vr-brand-sub">Parcelación · San Pedro de Urabá</div>
-          </div>
-        </div>
-
-        {/* Actions */}
-        <div className="vr-navbar-actions">
-          {/* Catalog toggle */}
-          <button className="vr-nav-btn" onClick={() => setSearchCollapsed(s => !s)}>
-            <Map size={13} />
-            {searchCollapsed ? 'Catálogo' : 'Ocultar'}
-          </button>
-
-          {/* Controls toggle */}
-          <button className="vr-nav-btn" onClick={() => setAccessCollapsed(s => !s)}>
-            <SlidersHorizontal size={13} />
-            {accessCollapsed ? 'Controles' : 'Ocultar'}
-          </button>
-
-          {/* Drone */}
-          {flightActive ? (
-            <button
-              className="vr-nav-btn gold"
-              onClick={handleToggleFlight}
-            >
-              <Compass size={13} className="animate-spin" />
-              Detener ({flightMode === 'short' ? 'Rápido' : 'Completo'})
-            </button>
-          ) : (
-            <div style={{ display: 'flex', alignItems: 'center' }}>
-              <button
-                className="vr-nav-btn"
-                onClick={handleToggleFlight}
-                style={{ borderTopRightRadius: 0, borderBottomRightRadius: 0, borderRight: '1px solid rgba(255,255,255,0.1)' }}
-              >
-                <Compass size={13} />
-                Sobrevuelo {flightMode === 'short' ? 'Rápido' : 'Completo'}
-              </button>
-              <button
-                className="vr-nav-btn"
-                onClick={() => setFlightMode(m => m === 'full' ? 'short' : 'full')}
-                style={{
-                  borderTopLeftRadius: 0, borderBottomLeftRadius: 0,
-                  paddingLeft: 10, paddingRight: 10,
-                  fontSize: '0.62rem',
-                  fontWeight: 800,
-                  color: 'var(--gold-400)',
-                  backgroundColor: 'rgba(212,168,67,0.05)',
-                  borderLeft: 'none'
-                }}
-                title="Cambiar a recorrido rápido (30s) / completo (2m)"
-              >
-                {flightMode === 'full' ? '⚡ RÁPIDO' : '⏳ COMPLETO'}
-              </button>
+      {!isPreparingRecording && (
+        <nav className="vr-navbar">
+          {/* Brand */}
+          <div className="vr-brand">
+            <div style={{
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              background: 'rgba(255,255,255,0.03)', border: '1px solid var(--glass-border)',
+              borderRadius: 6, width: 34, height: 34
+            }}>
+              <QuerubeLogo width={22} height={22} />
             </div>
-          )}
+            <div>
+              <div className="vr-brand-name">Querube</div>
+              <div className="vr-brand-sub">Parcelación · San Pedro de Urabá</div>
+            </div>
+          </div>
 
-          {/* Admin — hidden behind double-click (Ctrl+A) */}
-        </div>
-      </nav>
+          {/* Actions */}
+          <div className="vr-navbar-actions">
+            {/* Catalog toggle */}
+            <button className="vr-nav-btn" onClick={() => setSearchCollapsed(s => !s)}>
+              <Map size={13} />
+              {searchCollapsed ? 'Catálogo' : 'Ocultar'}
+            </button>
+
+            {/* Controls toggle */}
+            <button className="vr-nav-btn" onClick={() => setAccessCollapsed(s => !s)}>
+              <SlidersHorizontal size={13} />
+              {accessCollapsed ? 'Controles' : 'Ocultar'}
+            </button>
+
+            {/* Video export toggle */}
+            <button className="vr-nav-btn" onClick={() => setVideoPanelOpen(s => !s)}>
+              <Film size={13} />
+              <span>Generar Video</span>
+            </button>
+
+            {/* Drone */}
+            {flightActive ? (
+              <button
+                className="vr-nav-btn gold"
+                onClick={handleToggleFlight}
+              >
+                <Compass size={13} className="animate-spin" />
+                Detener ({flightMode === 'short' ? 'Rápido' : 'Completo'})
+              </button>
+            ) : (
+              <div style={{ display: 'flex', alignItems: 'center' }}>
+                <button
+                  className="vr-nav-btn"
+                  onClick={handleToggleFlight}
+                  style={{ borderTopRightRadius: 0, borderBottomRightRadius: 0, borderRight: '1px solid rgba(255,255,255,0.1)' }}
+                >
+                  <Compass size={13} />
+                  Sobrevuelo {flightMode === 'short' ? 'Rápido' : 'Completo'}
+                </button>
+                <button
+                  className="vr-nav-btn"
+                  onClick={() => setFlightMode(m => m === 'full' ? 'short' : 'full')}
+                  style={{
+                    borderTopLeftRadius: 0, borderBottomLeftRadius: 0,
+                    paddingLeft: 10, paddingRight: 10,
+                    fontSize: '0.62rem',
+                    fontWeight: 800,
+                    color: 'var(--gold-400)',
+                    backgroundColor: 'rgba(212,168,67,0.05)',
+                    borderLeft: 'none'
+                  }}
+                  title="Cambiar a recorrido rápido (30s) / completo (2m)"
+                >
+                  {flightMode === 'full' ? '⚡ RÁPIDO' : '⏳ COMPLETO'}
+                </button>
+              </div>
+            )}
+          </div>
+        </nav>
+      )}
 
       {/* ── Catalog Side Panel ── */}
       <AnimatePresence>
-        {!searchCollapsed && (
+        {!isPreparingRecording && !searchCollapsed && (
           <SearchStatsPanel
             key="catalog"
             loteoGeojson={loteoGeojson}
@@ -381,7 +389,7 @@ function App() {
 
       {/* ── Controls Panel ── */}
       <AnimatePresence>
-        {!accessCollapsed && (
+        {!isPreparingRecording && !accessCollapsed && (
           <AccessibilityControls
             key="controls"
             mapRef={map3dRef}
@@ -412,7 +420,7 @@ function App() {
 
       {/* Catalog collapsed FAB */}
       <AnimatePresence>
-        {searchCollapsed && (
+        {!isPreparingRecording && searchCollapsed && (
           <SearchStatsPanel
             key="catalog-fab"
             loteoGeojson={loteoGeojson}
@@ -434,7 +442,7 @@ function App() {
 
       {/* ── Lot Detail Panel ── */}
       <AnimatePresence>
-        {selectedLot && (
+        {!isPreparingRecording && selectedLot && (
           <LotDetails
             key={selectedLot.id}
             lot={selectedLot}
@@ -450,7 +458,7 @@ function App() {
 
       {/* ── Floating Compare Bar ── */}
       <AnimatePresence>
-        {compareList.length > 0 && (
+        {!isPreparingRecording && compareList.length > 0 && (
           <motion.div
             initial={{ y: 80, opacity: 0, x: '-50%' }}
             animate={{ y: 0, opacity: 1, x: '-50%' }}
@@ -546,7 +554,7 @@ function App() {
 
       {/* ── Lot Comparator Modal ── */}
       <AnimatePresence>
-        {showComparator && (
+        {!isPreparingRecording && showComparator && (
           <LotComparator
             lots={compareList}
             adminOverrides={adminOverrides}
@@ -561,7 +569,7 @@ function App() {
 
       {/* ── Admin Portal ── */}
       <AnimatePresence>
-        {adminOpen && (
+        {!isPreparingRecording && adminOpen && (
           <AdminPortal
             key="admin"
             loteoGeojson={loteoGeojson}
@@ -703,6 +711,19 @@ function App() {
 
       {/* Cookie Consent Banner */}
       <CookieBanner />
+
+      {/* ── Video Export Panel ── */}
+      <AnimatePresence>
+        {videoPanelOpen && (
+          <VideoExportPanel
+            mapRef={map3dRef}
+            loteoGeojson={loteoGeojson}
+            selectedLotId={selectedLot?.id || null}
+            onClose={() => setVideoPanelOpen(false)}
+            onPrepareRecording={setIsPreparingRecording}
+          />
+        )}
+      </AnimatePresence>
 
       {/* Welcome Intro Overlay (only if hero is NOT showing) */}
       {!showHeroLanding && <WelcomeOverlay />}

@@ -962,3 +962,170 @@ input[type="text"]:focus, select:focus {
 .map-tooltip-value {
   font-weight: 600;
 }
+
+/* ─────────────────────────────────────────────
+   MÓDULO 1 — RESPONSIVIDAD MOBILE COMPLETA
+   ───────────────────────────────────────────── */
+canvas {
+  width: 100vw !important;
+  height: 100vh !important;
+  display: block;
+  touch-action: none;
+}
+
+body, html {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background: #0a0a0a;
+}
+
+/* Mobile Devices (max-width: 768px) */
+@media (max-width: 768px) {
+  .vr-navbar {
+    padding: 10px 14px;
+    height: auto;
+    flex-direction: column;
+    gap: 8px;
+    border-bottom: 1px solid var(--glass-border);
+  }
+  .vr-brand {
+    align-self: center;
+  }
+  .vr-brand-sub {
+    display: none; /* Hide sub-heading to save space on mobile */
+  }
+  .vr-navbar-actions {
+    width: 100%;
+    justify-content: center;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+  .vr-nav-btn {
+    padding: 8px 12px;
+    font-size: 0.72rem;
+    flex: 1 1 auto;
+    justify-content: center;
+    border-radius: var(--r-sm);
+  }
+
+  /* Catalog Bottom Sheet */
+  .catalog-panel {
+    top: auto; left: 0; right: 0; bottom: 0;
+    width: 100vw;
+    height: 48vh;
+    border-right: none;
+    border-top: 1px solid var(--glass-border);
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    box-shadow: 0 -8px 32px rgba(0,0,0,0.5);
+  }
+  .catalog-toggle-btn {
+    display: none; /* Hide side tab toggle on mobile */
+  }
+  .catalog-header {
+    padding: 16px 16px 8px;
+  }
+  .catalog-title {
+    font-size: 1.15rem;
+  }
+  .catalog-search-container {
+    margin: 8px 0;
+  }
+  .stats-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 6px !important;
+  }
+  .stat-card {
+    padding: 6px !important;
+  }
+  .stat-val {
+    font-size: 0.9rem !important;
+  }
+  .stat-lbl {
+    font-size: 0.55rem !important;
+  }
+  .lot-list {
+    padding: 0 16px 16px;
+  }
+
+  /* Lot Details Bottom Sheet */
+  .lot-detail-panel {
+    top: auto; left: 0; right: 0; bottom: 0;
+    width: 100vw;
+    max-height: 55vh;
+    border-left: none;
+    border-top: 1px solid var(--glass-border);
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    box-shadow: 0 -8px 32px rgba(0,0,0,0.6);
+  }
+  .lot-detail-panel::before {
+    left: 20px; right: 20px;
+  }
+  .detail-hero {
+    padding: 16px 20px 10px;
+  }
+  .detail-close {
+    width: 28px; height: 28px;
+  }
+  .detail-body {
+    padding: 12px 20px 20px;
+  }
+  .detail-title {
+    font-size: 1.4rem;
+  }
+  .btn-cta-principal {
+    width: 100%;
+    padding: 14px;
+    font-size: 0.9rem;
+  }
+
+  /* Floating Compare Bar adjustments for mobile safe area */
+  div[style*="bottom: 24px"][style*="left: 50%"] {
+    bottom: 16px !important;
+    padding: 6px 16px !important;
+    font-size: 0.76rem !important;
+    width: 90% !important;
+    border-radius: 20px !important;
+    justify-content: space-between;
+  }
+
+  /* Mobile controls overlay layout adjustment */
+  .accessibility-controls-panel {
+    top: auto !important;
+    left: 12px !important;
+    right: 12px !important;
+    bottom: 76px !important;
+    width: auto !important;
+    max-height: 40vh;
+    border-radius: 12px !important;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.5) !important;
+  }
+}
+
+/* Tablet Devices (769px a 1024px) */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .catalog-panel {
+    width: 300px;
+  }
+  .lot-detail-panel {
+    width: 320px;
+  }
+  .accessibility-controls-panel {
+    width: 280px !important;
+  }
+}
+
+/* Safe Area Insets for iPhones and Modern Bezel-less Devices */
+@supports (padding: env(safe-area-inset-bottom)) {
+  @media (max-width: 768px) {
+    .catalog-panel, .lot-detail-panel {
+      padding-bottom: env(safe-area-inset-bottom);
+    }
+    .vr-navbar {
+      padding-top: max(10px, env(safe-area-inset-top));
+    }
+  }
+}
+
