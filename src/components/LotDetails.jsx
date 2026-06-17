@@ -22,6 +22,18 @@ const LotDetails = ({ lot, adminOverrides, sessionId, onClose, onCompare, compar
   const [showQualifier, setShowQualifier] = useState(false);
   const [showShareMenu, setShowShareMenu] = useState(false);
   const [showCommitment, setShowCommitment] = useState(false);
+  const [customLotName, setCustomLotName] = useState(() => {
+    return localStorage.getItem(`querube_custom_name_${lot.id}`) || '';
+  });
+
+  const handleSaveCustomName = (name) => {
+    setCustomLotName(name);
+    if (name.trim()) {
+      localStorage.setItem(`querube_custom_name_${lot.id}`, name);
+    } else {
+      localStorage.removeItem(`querube_custom_name_${lot.id}`);
+    }
+  };
 
   // Play lot select chime on mount
   useEffect(() => {
@@ -119,13 +131,14 @@ const LotDetails = ({ lot, adminOverrides, sessionId, onClose, onCompare, compar
       body: JSON.stringify({
         lot_id: lot.id,
         session_id: sessionId,
-        qualifier: answers
+        qualifier: answers,
+        custom_name: customLotName || null
       })
     }).catch(err => console.error("Error logging lead:", err));
 
     // Track analytics lead event
     if (window.trackEvent) {
-      window.trackEvent('whatsapp_clicked', { lot_id: lot.id, qualifier_answers: answers });
+      window.trackEvent('whatsapp_clicked', { lot_id: lot.id, qualifier_answers: answers, custom_name: customLotName || null });
     }
 
     // Rotación de Asesores por Manzana
@@ -141,7 +154,9 @@ const LotDetails = ({ lot, adminOverrides, sessionId, onClose, onCompare, compar
     const lotManzana = lot.manzana || "—";
     const shareUrl = `${window.location.origin}${window.location.pathname}#lote=${lot.id}`;
 
-    const message = `Hola ${advisor.name}, me interesa el lote *${lotLabel}* (Manzana: ${lotManzana}) de ${lotArea} m² en Querube.
+    const customNameText = customLotName ? `\nProyecto: "*${customLotName.trim()}*"` : '';
+
+    const message = `Hola ${advisor.name}, me interesa el lote *${lotLabel}* (Manzana: ${lotManzana}) de ${lotArea} m² en Querube.${customNameText}
 Propósito: ${answers.q1}
 Decisión: ${answers.q2}
 Financiamiento: ${answers.q3}
@@ -253,6 +268,31 @@ Ver lote: ${shareUrl}`;
         >
           {lot.label}
         </motion.div>
+
+        {/* Nombra tu lote (Endowment Effect) */}
+        <div style={{ marginTop: 8, display: 'flex', flexDirection: 'column', gap: 4, zIndex: 10 }}>
+          <label style={{ fontSize: '0.62rem', color: 'var(--gold-400)', textTransform: 'uppercase', fontWeight: 700, letterSpacing: '0.04em', display: 'flex', alignItems: 'center', gap: 4 }}>
+            <Sparkles size={11} /> Nombra tu futuro proyecto:
+          </label>
+          <input
+            type="text"
+            value={customLotName}
+            onChange={(e) => handleSaveCustomName(e.target.value)}
+            placeholder="Ej: Villa Hermosa, Mi Cabaña..."
+            maxLength={32}
+            style={{
+              background: 'rgba(255,255,255,0.02)',
+              border: '1px solid var(--glass-border)',
+              borderRadius: 6,
+              padding: '6px 10px',
+              color: '#fff',
+              fontSize: '0.78rem',
+              outline: 'none',
+              width: '100%',
+              transition: 'border-color 0.2s'
+            }}
+          />
+        </div>
 
         <div className="detail-status-row">
           <span className="detail-status-badge" style={{

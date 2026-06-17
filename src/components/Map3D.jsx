@@ -1159,7 +1159,8 @@ const Map3D = forwardRef(({ onSelectLot, selectedLotId, adminOverrides, lotClick
       bearing: -15,
       antialias: true,
       maxPitch: 85,
-      maxZoom: 22
+      maxZoom: 22,
+      pixelRatio: window.innerWidth <= 768 ? Math.min(window.devicePixelRatio, 1.2) : Math.min(window.devicePixelRatio, 2.0)
     });
 
     mapRef.current = map;

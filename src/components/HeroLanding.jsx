@@ -4,6 +4,7 @@ import QuerubeLogo from './QuerubeLogo';
 import ValueProposition from './ValueProposition';
 import TestimonialsCarousel from './TestimonialsCarousel';
 import UrgencyBar from './UrgencyBar';
+import PushPullSlider from './PushPullSlider';
 
 export default function HeroLanding({ onEnterExplorer }) {
   const [stats, setStats] = useState({ activeSessions: 3, soldCount: 12, soldThisMonth: 3 });
@@ -206,6 +207,9 @@ export default function HeroLanding({ onEnterExplorer }) {
 
       {/* Value Proposition Block */}
       <ValueProposition />
+
+      {/* Push Pull Contrast Slider */}
+      <PushPullSlider />
 
       {/* Testimonials Carousel Block */}
       <div style={{ padding: '40px 0', background: 'rgba(10, 16, 9, 0.94)' }}>

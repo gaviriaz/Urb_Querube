@@ -7,11 +7,13 @@ export default function QuickQualifier({ onClose, onComplete }) {
   const [q2, setQ2] = useState('');
   const [q3, setQ3] = useState('');
   const [step, setStep] = useState(1);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleNext = () => {
     if (step < 3) {
       setStep(step + 1);
     } else {
+      setIsSubmitting(true);
       onComplete({ q1, q2, q3 });
     }
   };
@@ -190,13 +192,13 @@ export default function QuickQualifier({ onClose, onComplete }) {
         )}
         <button
           onClick={handleNext}
-          disabled={isNextDisabled()}
+          disabled={isNextDisabled() || isSubmitting}
           style={{
             flex: 2,
             padding: '10px',
             borderRadius: 6,
-            background: isNextDisabled() ? 'rgba(255,255,255,0.05)' : 'var(--gold-400)',
-            color: isNextDisabled() ? 'var(--text-600)' : '#020617',
+            background: (isNextDisabled() || isSubmitting) ? 'rgba(255,255,255,0.05)' : 'var(--gold-400)',
+            color: (isNextDisabled() || isSubmitting) ? 'var(--text-600)' : '#020617',
             fontSize: '0.8rem',
             fontWeight: 700,
             display: 'flex',
@@ -205,7 +207,9 @@ export default function QuickQualifier({ onClose, onComplete }) {
             gap: 6
           }}
         >
-          {step === 3 ? (
+          {isSubmitting ? (
+            'Enviando...'
+          ) : step === 3 ? (
             <>
               <span>Contactar Asesor</span>
               <Send size={12} />
