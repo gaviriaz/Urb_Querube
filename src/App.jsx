@@ -52,6 +52,7 @@ function App() {
   const [flightMode,          setFlightMode]         = useState('full'); // 'full' or 'short'
   const [showFlightCTA,       setShowFlightCTA]       = useState(false);
   const [catalogSearch,       setCatalogSearch]       = useState('');
+  const [compareList,         setCompareList]         = useState([]);
   const [lotClicks,           setLotClicks]           = useState({});
   const [videoPanelOpen,      setVideoPanelOpen]      = useState(false);
   const [isPreparingRecording, setIsPreparingRecording] = useState(false);
