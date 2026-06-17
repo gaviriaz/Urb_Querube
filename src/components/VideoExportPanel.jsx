@@ -244,6 +244,7 @@ export default function VideoExportPanel({
             >
               <option value="cinematic" style={{ background: '#0a1009' }}>Vuelo Cinemático (Dron)</option>
               <option value="orbit" style={{ background: '#0a1009' }}>Órbita Centrada</option>
+              <option value="sequential" style={{ background: '#0a1009' }}>Tour Secuencial (Lotes Disponibles)</option>
             </select>
           </div>
 

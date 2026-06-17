@@ -738,6 +738,70 @@ const Map3D = forwardRef(({ onSelectLot, selectedLotId, adminOverrides, lotClick
     }
   }, [getLotsCenter, loteoGeojson, stopFlight, stopOrbit, runOrbitLoop]);
 
+  // Sequential available lots tour loop (Módulo 2, Requirement 10)
+  const sequentialTourActiveRef = useRef(false);
+  const sequentialTourTimerRef = useRef(null);
+
+  const startSequentialLotsTour = useCallback((options = {}) => {
+    stopFlight(false);
+    stopOrbit();
+    if (sequentialTourTimerRef.current) clearTimeout(sequentialTourTimerRef.current);
+
+    sequentialTourActiveRef.current = true;
+    const durationPerLot = options.durationPerLot || 5000; // default 5 seconds per lot
+    
+    // Get all available lots
+    const availableLots = loteoGeojson.features.filter(f => {
+      if (f.properties?.LOTE === 'REMANENTE') return false;
+      const id = f.properties.fid || f.properties.OBJECTID || f.properties.GLOBALID;
+      const override = adminOverrides[id] || {};
+      return (override.status || 'Disponible') === 'Disponible';
+    });
+
+    if (availableLots.length === 0) {
+      if (options.onComplete) options.onComplete();
+      return;
+    }
+
+    let index = 0;
+    const runNext = () => {
+      if (!sequentialTourActiveRef.current || index >= availableLots.length) {
+        stopSequentialLotsTour();
+        if (options.onComplete) options.onComplete();
+        return;
+      }
+
+      const feat = availableLots[index];
+      const id = feat.properties.fid || feat.properties.OBJECTID || feat.properties.GLOBALID;
+      const center = getCentroid(feat.geometry.coordinates, feat.geometry.type);
+      
+      // Select the lot in parent so UI updates
+      onSelectLot(extractLotInfo(feat));
+
+      // Orbit around this lot
+      startCenteredFlyover({
+        target: center,
+        zoom: window.innerWidth <= 768 ? 18.8 : 19.5,
+        speed: 18, // slightly faster speed for tour overview
+        pitch: 65
+      });
+
+      index++;
+      sequentialTourTimerRef.current = setTimeout(runNext, durationPerLot);
+    };
+
+    runNext();
+  }, [loteoGeojson, adminOverrides, onSelectLot, startCenteredFlyover]);
+
+  const stopSequentialLotsTour = useCallback(() => {
+    sequentialTourActiveRef.current = false;
+    if (sequentialTourTimerRef.current) {
+      clearTimeout(sequentialTourTimerRef.current);
+      sequentialTourTimerRef.current = null;
+    }
+    stopOrbit();
+  }, [stopOrbit]);
+
   // Video Export recorder based on MediaRecorder (Módulo 3, Requirement 2 & 8)
   const [isRecording, setIsRecording] = useState(false);
   const [recordingProgress, setRecordingProgress] = useState(0);
@@ -793,6 +857,23 @@ const Map3D = forwardRef(({ onSelectLot, selectedLotId, adminOverrides, lotClick
       } else {
         startCenteredFlyover({ zoom: 17.6, speed: 360 / duration, isProject: true });
       }
+    } else if (mode === 'sequential') {
+      // Start sequential tour of all available lots
+      const availableLotsCount = loteoGeojson.features.filter(f => {
+        if (f.properties?.LOTE === 'REMANENTE') return false;
+        const id = f.properties.fid || f.properties.OBJECTID || f.properties.GLOBALID;
+        const override = adminOverrides[id] || {};
+        return (override.status || 'Disponible') === 'Disponible';
+      }).length;
+      
+      const timePerLot = availableLotsCount > 0 ? Math.max(3000, Math.floor((duration * 1000) / availableLotsCount)) : 4000;
+      
+      startSequentialLotsTour({
+        durationPerLot: timePerLot,
+        onComplete: () => {
+          stopVideoRecording();
+        }
+      });
     } else if (mode === 'cinematic') {
       startFlight();
     } else {
@@ -868,7 +949,7 @@ const Map3D = forwardRef(({ onSelectLot, selectedLotId, adminOverrides, lotClick
       if (options.onPrepare) options.onPrepare(false);
       mapRef.current.resize();
     }
-  }, [loteoGeojson, startCenteredFlyover, stopFlight, stopOrbit]);
+  }, [loteoGeojson, adminOverrides, startCenteredFlyover, startSequentialLotsTour, stopVideoRecording]);
 
   const stopVideoRecording = useCallback(() => {
     if (recordingTimerRef.current) {
@@ -880,7 +961,8 @@ const Map3D = forwardRef(({ onSelectLot, selectedLotId, adminOverrides, lotClick
     }
     stopFlight(false);
     stopOrbit();
-  }, [stopFlight, stopOrbit]);
+    stopSequentialLotsTour();
+  }, [stopFlight, stopOrbit, stopSequentialLotsTour]);
 
   const downloadGeneratedVideo = useCallback((resolution = '1080p') => {
     if (!videoBlobRef.current) return;
@@ -1017,7 +1099,9 @@ const Map3D = forwardRef(({ onSelectLot, selectedLotId, adminOverrides, lotClick
     fitViewToLots: (options) => fitViewToLots(options),
     focusLot: (lotId) => focusLot(lotId),
     startCenteredFlyover: (options) => startCenteredFlyover(options),
-    stopFlyover: () => { stopOrbit(); stopFlight(false); },
+    stopFlyover: () => { stopOrbit(); stopFlight(false); stopSequentialLotsTour(); },
+    startSequentialLotsTour: (options) => startSequentialLotsTour(options),
+    stopSequentialLotsTour: () => stopSequentialLotsTour(),
     startVideoRecording: (options) => startVideoRecording(options),
     stopVideoRecording: () => stopVideoRecording(),
     downloadGeneratedVideo: (resolution) => downloadGeneratedVideo(resolution),
