@@ -34,7 +34,8 @@ db.exec(`
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     lot_id TEXT,
     timestamp INTEGER,
-    session_id TEXT
+    session_id TEXT,
+    qualifier TEXT
   );
 
   CREATE TABLE IF NOT EXISTS flight_metrics (
@@ -43,6 +44,16 @@ db.exec(`
     station_index INTEGER,
     station_label TEXT,
     session_id TEXT,
+    timestamp INTEGER
+  );
+
+  CREATE TABLE IF NOT EXISTS lot_clicks (
+    lot_id TEXT PRIMARY KEY,
+    click_count INTEGER DEFAULT 0
+  );
+
+  CREATE TABLE IF NOT EXISTS session_heartbeats (
+    session_id TEXT PRIMARY KEY,
     timestamp INTEGER
   );
 `);
@@ -288,14 +299,14 @@ export default async function handleLocalApi(req, res) {
     // POST /api/leads
     if (req.method === 'POST' && pathParts[0] === 'api' && pathParts[1] === 'leads' && pathParts.length === 2) {
       const body = await parseJsonBody(req);
-      const { lot_id, session_id } = body;
+      const { lot_id, session_id, qualifier } = body;
       if (!lot_id) {
         res.statusCode = 400;
         res.end(JSON.stringify({ error: "lot_id es requerido." }));
         return;
       }
-      db.prepare("INSERT INTO leads (lot_id, timestamp, session_id) VALUES (?, ?, ?)")
-        .run(lot_id, Date.now(), session_id || 'anonymous');
+      db.prepare("INSERT INTO leads (lot_id, timestamp, session_id, qualifier) VALUES (?, ?, ?, ?)")
+        .run(lot_id, Date.now(), session_id || 'anonymous', qualifier ? JSON.stringify(qualifier) : null);
 
       res.statusCode = 200;
       res.end(JSON.stringify({ success: true }));
@@ -316,6 +327,81 @@ export default async function handleLocalApi(req, res) {
 
       res.statusCode = 200;
       res.end(JSON.stringify({ success: true }));
+      return;
+    }
+
+    // GET /api/clicks
+    if (req.method === 'GET' && pathParts[0] === 'api' && pathParts[1] === 'clicks' && pathParts.length === 2) {
+      const rows = db.prepare("SELECT * FROM lot_clicks").all();
+      const clicksMap = {};
+      rows.forEach(row => {
+        clicksMap[row.lot_id] = row.click_count;
+      });
+      res.statusCode = 200;
+      res.end(JSON.stringify(clicksMap));
+      return;
+    }
+
+    // POST /api/clicks/:lotId
+    if (req.method === 'POST' && pathParts[0] === 'api' && pathParts[1] === 'clicks' && pathParts.length === 3) {
+      const lotId = pathParts[2];
+      db.prepare(`
+        INSERT INTO lot_clicks (lot_id, click_count)
+        VALUES (?, 1)
+        ON CONFLICT(lot_id) DO UPDATE SET click_count = click_count + 1
+      `).run(lotId);
+      res.statusCode = 200;
+      res.end(JSON.stringify({ success: true }));
+      return;
+    }
+
+    // POST /api/heartbeat
+    if (req.method === 'POST' && pathParts[0] === 'api' && pathParts[1] === 'heartbeat' && pathParts.length === 2) {
+      const body = await parseJsonBody(req);
+      const { session_id } = body;
+      if (session_id) {
+        db.prepare(`
+          INSERT INTO session_heartbeats (session_id, timestamp)
+          VALUES (?, ?)
+          ON CONFLICT(session_id) DO UPDATE SET timestamp = excluded.timestamp
+        `).run(session_id, Date.now());
+      }
+      res.statusCode = 200;
+      res.end(JSON.stringify({ success: true }));
+      return;
+    }
+
+    // GET /api/stats
+    if (req.method === 'GET' && pathParts[0] === 'api' && pathParts[1] === 'stats' && pathParts.length === 2) {
+      const now = Date.now();
+      
+      // Clean old heartbeats (older than 35s)
+      db.prepare("DELETE FROM session_heartbeats WHERE timestamp < ?").run(now - 35000);
+      
+      // Count active heartbeats
+      const activeCountRow = db.prepare("SELECT COUNT(*) as cnt FROM session_heartbeats").get();
+      const rawActive = activeCountRow ? activeCountRow.cnt : 0;
+      // Social proof fallback: at least 3 active sessions simulated if no real activity
+      const activeSessions = Math.max(3, rawActive + Math.floor(Math.random() * 3));
+
+      // Count sold/reserved lots from overrides
+      const soldRow = db.prepare("SELECT COUNT(*) as cnt FROM overrides WHERE status = 'Vendido'").get();
+      const reservedRow = db.prepare("SELECT COUNT(*) as cnt FROM overrides WHERE status = 'Reservado'").get();
+      const soldCount = (soldRow ? soldRow.cnt : 0) + (reservedRow ? reservedRow.cnt : 0);
+
+      // Sold this month (updated_at is in current calendar month)
+      const currentMonthStart = new Date(new Date().getFullYear(), new Date().getMonth(), 1).getTime();
+      const monthlyRow = db.prepare("SELECT COUNT(*) as cnt FROM overrides WHERE (status = 'Vendido' OR status = 'Reservado') AND updated_at >= ?").get(currentMonthStart);
+      
+      // Fallback: if no real sales this month, say 3 sold for nice social proof
+      const soldThisMonth = Math.max(3, monthlyRow ? monthlyRow.cnt : 0);
+
+      res.statusCode = 200;
+      res.end(JSON.stringify({
+        activeSessions,
+        soldCount,
+        soldThisMonth
+      }));
       return;
     }
 

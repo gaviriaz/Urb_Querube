@@ -99,11 +99,13 @@ const sampleViasForStreetlights = (viasGeojson, mapInstance, spacingMeters = 30)
   return points;
 };
 
-export const createProceduralNeighborhood = (scene, mapInstance, loteoGeojson, viasGeojson, lowPerformance = false) => {
+export const createProceduralNeighborhood = (scene, mapInstance, loteoGeojson, viasGeojson, lowPerformance = false, adminOverrides = {}) => {
   if (lowPerformance) {
     return {
       toggle3DMode: () => {},
       updateLightMode: () => {},
+      animate: () => {},
+      updateLOD: () => {},
       dispose: () => {}
     };
   }
@@ -683,47 +685,74 @@ export const createProceduralNeighborhood = (scene, mapInstance, loteoGeojson, v
     instancedSlBulb.setMatrixAt(slIdx, matrix);
   });
 
-  // 7. Update bounds/matrices
-  instancedLawn.instanceMatrix.needsUpdate = true;
-  instancedDriveway.instanceMatrix.needsUpdate = true;
-  instancedFoundation.instanceMatrix.needsUpdate = true;
-  instancedWallClassic.instanceMatrix.needsUpdate = true;
-  instancedWallAccent.instanceMatrix.needsUpdate = true;
-  instancedRoofBase.instanceMatrix.needsUpdate = true;
-  instancedRoofClassic.instanceMatrix.needsUpdate = true;
-  instancedRoofOverhang.instanceMatrix.needsUpdate = true;
-  instancedDoorClassic.instanceMatrix.needsUpdate = true;
-  instancedDoorFrame.instanceMatrix.needsUpdate = true;
-  instancedWindowClassic.instanceMatrix.needsUpdate = true;
-  instancedWindowFrame.instanceMatrix.needsUpdate = true;
-  instancedWallPremium.instanceMatrix.needsUpdate = true;
-  instancedWallBase.instanceMatrix.needsUpdate = true;
-  instancedWallCap.instanceMatrix.needsUpdate = true;
-  instancedRoofPremium.instanceMatrix.needsUpdate = true;
-  instancedRoofEdge.instanceMatrix.needsUpdate = true;
-  instancedDoorPremium.instanceMatrix.needsUpdate = true;
-  instancedDoorFramePremium.instanceMatrix.needsUpdate = true;
-  instancedWindowPremium.instanceMatrix.needsUpdate = true;
-  instancedWindowFramePremium.instanceMatrix.needsUpdate = true;
-  instancedPoolBorder.instanceMatrix.needsUpdate = true;
-  instancedPoolEdge.instanceMatrix.needsUpdate = true;
-  instancedPoolWater.instanceMatrix.needsUpdate = true;
-  instancedSolarPanel.instanceMatrix.needsUpdate = true;
-  instancedSolarFrame.instanceMatrix.needsUpdate = true;
-  instancedTrunk.instanceMatrix.needsUpdate = true;
-  instancedFoliage.instanceMatrix.needsUpdate = true;
-  instancedFoliageLow.instanceMatrix.needsUpdate = true;
-  instancedShrub.instanceMatrix.needsUpdate = true;
-  instancedShrubSmall.instanceMatrix.needsUpdate = true;
-  
+  // 7. Update bounds/matrices and enable frustum culling
+  const allInstancedMeshes = [
+    instancedLawn, instancedDriveway, instancedFoundation,
+    instancedWallClassic, instancedWallAccent, instancedRoofBase, instancedRoofClassic, instancedRoofOverhang,
+    instancedDoorClassic, instancedDoorFrame, instancedWindowClassic, instancedWindowFrame,
+    instancedWallPremium, instancedWallBase, instancedWallCap, instancedRoofPremium, instancedRoofEdge,
+    instancedDoorPremium, instancedDoorFramePremium, instancedWindowPremium, instancedWindowFramePremium,
+    instancedPoolBorder, instancedPoolEdge, instancedPoolWater, instancedSolarPanel, instancedSolarFrame,
+    instancedTrunk, instancedFoliage, instancedFoliageLow, instancedShrub, instancedShrubSmall
+  ];
   if (slCount > 0) {
-    instancedSlPole.instanceMatrix.needsUpdate = true;
-    instancedSlBase.instanceMatrix.needsUpdate = true;
-    instancedSlArm.instanceMatrix.needsUpdate = true;
-    instancedSlArmJoint.instanceMatrix.needsUpdate = true;
-    instancedSlBulb.instanceMatrix.needsUpdate = true;
-    instancedSlReflector.instanceMatrix.needsUpdate = true;
+    allInstancedMeshes.push(instancedSlPole, instancedSlBase, instancedSlArm, instancedSlArmJoint, instancedSlBulb, instancedSlReflector);
   }
+
+  allInstancedMeshes.forEach(m => {
+    m.instanceMatrix.needsUpdate = true;
+    m.computeBoundingBox();
+    m.computeBoundingSphere();
+    m.frustumCulled = true;
+  });
+
+  // Create green pulses for available lots (Visual Salience Engine)
+  const pulseMeshes = [];
+  const pulseGeom = new THREE.RingGeometry(0.1, 7.5, 32); // Flat circle
+  
+  features.forEach((feat) => {
+    const lotId = feat.properties.fid || feat.properties.OBJECTID || 0;
+    const override = adminOverrides[lotId] || {};
+    const status = override.status || 'Disponible';
+    
+    if (status === 'Disponible') {
+      const coords = feat.geometry.coordinates;
+      const centroid = getCentroid(coords);
+      const elevation = mapInstance.getTerrain() ? mapInstance.queryTerrainElevation(centroid) : 0;
+      const mercator = maplibregl.MercatorCoordinate.fromLngLat(centroid, elevation);
+      const scaleFactor = mercator.meterInMercatorCoordinateUnits();
+      
+      const position = new THREE.Vector3(mercator.x, mercator.y, mercator.z + 0.15); // slightly elevated above grass
+      
+      let angle = 0;
+      const outerRing = Array.isArray(coords[0][0][0]) ? coords[0][0] : coords[0];
+      if (outerRing && outerRing.length >= 2) {
+        const p1 = maplibregl.MercatorCoordinate.fromLngLat(outerRing[0], 0);
+        const p2 = maplibregl.MercatorCoordinate.fromLngLat(outerRing[1], 0);
+        angle = -Math.atan2(p2.y - p1.y, p2.x - p1.x) + Math.PI / 2;
+      }
+      const rotation = new THREE.Quaternion().setFromEuler(new THREE.Euler(Math.PI / 2, 0, angle));
+      
+      const pulseMat = new THREE.MeshBasicMaterial({
+        color: 0x10b981,
+        transparent: true,
+        opacity: 0.6,
+        depthWrite: false,
+        side: THREE.DoubleSide
+      });
+      const pulseMesh = new THREE.Mesh(pulseGeom, pulseMat);
+      pulseMesh.position.copy(position);
+      pulseMesh.rotation.setFromQuaternion(rotation);
+      pulseMesh.scale.set(scaleFactor, scaleFactor, scaleFactor);
+      
+      scene.add(pulseMesh);
+      pulseMeshes.push({
+        mesh: pulseMesh,
+        material: pulseMat,
+        baseScale: scaleFactor
+      });
+    }
+  });
 
   // 8. Add to Scene
   scene.add(instancedLawn);
@@ -864,6 +893,66 @@ export const createProceduralNeighborhood = (scene, mapInstance, loteoGeojson, v
       slBulbMat.needsUpdate = true;
       slReflectorMat.needsUpdate = true;
     },
+    animate: () => {
+      const elapsed = (Date.now() % 4000) / 4000;
+      const scaleVal = 0.1 + elapsed * 1.7;
+      const opacityVal = 0.6 * (1 - elapsed);
+      pulseMeshes.forEach(p => {
+        p.mesh.scale.set(p.baseScale * scaleVal, p.baseScale * scaleVal, p.baseScale);
+        p.material.opacity = opacityVal;
+      });
+    },
+    updateLOD: (zoom) => {
+      const showAll = zoom >= 17.8;
+      const showMedium = zoom >= 16.2;
+      
+      const detailsVisible = showAll;
+      instancedDoorClassic.visible = detailsVisible;
+      instancedDoorFrame.visible = detailsVisible;
+      instancedWindowClassic.visible = detailsVisible;
+      instancedWindowFrame.visible = detailsVisible;
+      instancedDoorPremium.visible = detailsVisible;
+      instancedDoorFramePremium.visible = detailsVisible;
+      instancedWindowPremium.visible = detailsVisible;
+      instancedWindowFramePremium.visible = detailsVisible;
+      instancedSolarPanel.visible = detailsVisible;
+      instancedSolarFrame.visible = detailsVisible;
+      instancedPoolBorder.visible = detailsVisible;
+      instancedPoolEdge.visible = detailsVisible;
+      instancedPoolWater.visible = detailsVisible;
+      
+      instancedTrunk.visible = detailsVisible;
+      instancedFoliage.visible = detailsVisible;
+      instancedFoliageLow.visible = detailsVisible;
+      instancedShrub.visible = detailsVisible;
+      instancedShrubSmall.visible = detailsVisible;
+      
+      if (slCount > 0) {
+        instancedSlPole.visible = detailsVisible;
+        instancedSlBase.visible = detailsVisible;
+        instancedSlArm.visible = detailsVisible;
+        instancedSlArmJoint.visible = detailsVisible;
+        instancedSlBulb.visible = detailsVisible;
+        instancedSlReflector.visible = detailsVisible;
+      }
+      
+      const housesVisible = showMedium;
+      instancedFoundation.visible = housesVisible;
+      instancedWallClassic.visible = housesVisible;
+      instancedWallAccent.visible = housesVisible;
+      instancedRoofBase.visible = housesVisible;
+      instancedRoofClassic.visible = housesVisible;
+      instancedRoofOverhang.visible = housesVisible;
+      instancedWallPremium.visible = housesVisible;
+      instancedWallBase.visible = housesVisible;
+      instancedWallCap.visible = housesVisible;
+      instancedRoofPremium.visible = housesVisible;
+      instancedRoofEdge.visible = housesVisible;
+      
+      const lawnsVisible = zoom >= 15.0;
+      instancedLawn.visible = lawnsVisible;
+      instancedDriveway.visible = lawnsVisible;
+    },
     dispose: () => {
       // Remove from scene
       scene.remove(instancedLawn);
@@ -905,6 +994,13 @@ export const createProceduralNeighborhood = (scene, mapInstance, loteoGeojson, v
         scene.remove(instancedSlBulb);
         scene.remove(instancedSlReflector);
       }
+
+      // Dispose pulses
+      pulseMeshes.forEach(p => {
+        scene.remove(p.mesh);
+        p.material.dispose();
+      });
+      pulseGeom.dispose();
 
       // Dispose geometries
       lawnGeom.dispose();

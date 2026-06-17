@@ -1,0 +1,21 @@
+{
+  "name": "Querube — Tu Lote en 3D",
+  "short_name": "Querube",
+  "description": "Explora y compra tu lote en la Urbanización Querube, San Pedro de Urabá",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0a1009",
+  "theme_color": "#c7a86d",
+  "orientation": "any",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ],
+  "categories": ["real estate", "business"],
+  "lang": "es",
+  "dir": "ltr"
+}

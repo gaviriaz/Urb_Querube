@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400&family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400&family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&display=swap');
 
 /* ─── Reset ──────────────────────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -56,10 +56,11 @@
   --transition-smooth: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
   --transition-bounce: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 
-  /* Fonts - Professional GIS sans-serif */
+  /* Fonts - Professional GIS sans-serif + Luxury serif */
   --font-display: 'Outfit', system-ui, sans-serif;
   --font-header:  'Outfit', system-ui, sans-serif;
   --font-body:    'Inter', system-ui, sans-serif;
+  --font-luxury:  'Cormorant Garamond', 'Playfair Display', Georgia, serif;
 
   /* Font scale */
   --font-scale-base: 14px;
@@ -133,6 +134,47 @@ h1,h2,h3,h4,h5,h6 { font-family: var(--font-header); line-height: 1.2; letter-sp
   background-color: rgba(212,168,67,0.05) !important;
 }
 .glass-panel-interactive:active { transform: translateY(0) scale(0.99); }
+
+/* Premium glassmorphism variant for featured cards */
+.glass-panel-premium {
+  background: linear-gradient(135deg, rgba(199, 168, 109, 0.06) 0%, rgba(10, 16, 9, 0.96) 50%, rgba(199, 168, 109, 0.04) 100%);
+  backdrop-filter: blur(40px) saturate(1.8);
+  -webkit-backdrop-filter: blur(40px) saturate(1.8);
+  border: 1px solid rgba(199, 168, 109, 0.18);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(199, 168, 109, 0.08);
+  border-radius: var(--r-lg);
+  color: var(--text-100);
+}
+
+/* ─── Time-of-Day Color Themes ─────────────────────────────────── */
+body[data-time="sunrise"] {
+  --gold-300: #f5c76a;
+  --gold-400: #e8a94c;
+  --glass-bg: rgba(30, 22, 12, 0.94);
+  --ink-950: #1a150c;
+}
+body[data-time="sunset"] {
+  --gold-300: #ff9f43;
+  --gold-400: #e67e22;
+  --glass-bg: rgba(25, 12, 8, 0.94);
+  --ink-950: #160d08;
+}
+body[data-time="night"] {
+  --gold-300: #94a3b8;
+  --gold-400: #64748b;
+  --glass-bg: rgba(2, 6, 23, 0.96);
+  --ink-950: #020617;
+}
+
+/* ─── Custom Desktop Cursor ───────────────────────────────────── */
+@media (hover: hover) and (pointer: fine) {
+  body {
+    cursor: crosshair;
+  }
+  a, button, [role="button"], .glass-panel-interactive {
+    cursor: pointer;
+  }
+}
 
 /* ─── Navbar (top) ────────────────────────────────────────────────── */
 .vr-navbar {

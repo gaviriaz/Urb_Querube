@@ -874,7 +874,7 @@ const Map3D = forwardRef(({ onSelectLot, selectedLotId, adminOverrides, viasGeoj
           this.hemiLight = new THREE.HemisphereLight(0x87ceeb, 0x362907, 0.4);
           this.scene.add(this.hemiLight);
 
-          this.neighborhood = createProceduralNeighborhood(this.scene, mapInstance, loteoGeojson, viasGeojson, isLow);
+          this.neighborhood = createProceduralNeighborhood(this.scene, mapInstance, loteoGeojson, viasGeojson, isLow, adminOverrides);
           if (this.neighborhood && typeof this.neighborhood.toggle3DMode === 'function') {
             this.neighborhood.toggle3DMode(viewMode === '3d');
           }
@@ -893,6 +893,14 @@ const Map3D = forwardRef(({ onSelectLot, selectedLotId, adminOverrides, viasGeoj
           this.renderer.outputColorSpace = THREE.SRGBColorSpace;
         },
         render: function (gl, matrix) {
+          if (this.neighborhood) {
+            if (typeof this.neighborhood.animate === 'function') {
+              this.neighborhood.animate();
+            }
+            if (typeof this.neighborhood.updateLOD === 'function') {
+              this.neighborhood.updateLOD(this.map.getZoom());
+            }
+          }
           this.camera.projectionMatrix = new THREE.Matrix4().fromArray(matrix);
           this.renderer.resetState();
           this.renderer.render(this.scene, this.camera);
@@ -959,7 +967,7 @@ const Map3D = forwardRef(({ onSelectLot, selectedLotId, adminOverrides, viasGeoj
           if (this.neighborhood) this.neighborhood.dispose();
           if (this.scene && this.map) {
             const isLow = this.performanceMode === 'low';
-            this.neighborhood = createProceduralNeighborhood(this.scene, this.map, newLoteoGeojson, newViasGeojson || viasGeojson, isLow);
+            this.neighborhood = createProceduralNeighborhood(this.scene, this.map, newLoteoGeojson, newViasGeojson || viasGeojson, isLow, adminOverrides);
             this.setTimeOfDay(this.currentTimeOfDay || 'midday');
           }
         }
@@ -1164,7 +1172,13 @@ const Map3D = forwardRef(({ onSelectLot, selectedLotId, adminOverrides, viasGeoj
       ['==', ['to-number', ['get', 'fid']], Number(hoveredLotId || -1)], 2.5,
       1.5
     ]);
-  }, [selectedLotId, adminOverrides, mapLoaded, normalizeLoteoGeojson, hoveredLot]);
+
+    // Update 3D neighborhood layers when overrides/availability change
+    const housesLayer = map.getLayer('3d-houses-layer');
+    if (housesLayer && housesLayer.implementation && typeof housesLayer.implementation.updateNeighborhood === 'function') {
+      housesLayer.implementation.updateNeighborhood(loteoGeojson || normalizeLoteoGeojson, viasGeojson);
+    }
+  }, [selectedLotId, adminOverrides, mapLoaded, normalizeLoteoGeojson, hoveredLot, loteoGeojson, viasGeojson]);
 
   // Handle 2D / 3D Mode changes
   useEffect(() => {
