@@ -812,6 +812,35 @@ const Map3D = forwardRef(({ onSelectLot, selectedLotId, adminOverrides, lotClick
   const recordingTimerRef = useRef(null);
   const isRecordingRef = useRef(false);
 
+  const downloadGeneratedVideo = useCallback((resolution = '1080p') => {
+    if (!videoBlobRef.current) return;
+    const url = URL.createObjectURL(videoBlobRef.current);
+    const a = document.createElement('a');
+    document.body.appendChild(a);
+    a.style = 'display: none';
+    a.href = url;
+    const dateStr = new Date().toISOString().split('T')[0];
+    a.download = `Urbanizacion_Querube_Sobrevuelo_${resolution}_${dateStr}.webm`;
+    a.click();
+    setTimeout(() => {
+      window.URL.revokeObjectURL(url);
+      document.body.removeChild(a);
+    }, 100);
+  }, []);
+
+  const stopVideoRecording = useCallback(() => {
+    if (recordingTimerRef.current) {
+      clearInterval(recordingTimerRef.current);
+      recordingTimerRef.current = null;
+    }
+    if (mediaRecorderRef.current && mediaRecorderRef.current.state !== 'inactive') {
+      mediaRecorderRef.current.stop();
+    }
+    stopFlight(false);
+    stopOrbit();
+    stopSequentialLotsTour();
+  }, [stopFlight, stopOrbit, stopSequentialLotsTour]);
+
   const startVideoRecording = useCallback(async (options = {}) => {
     if (isRecordingRef.current || !mapRef.current) return;
     
@@ -949,36 +978,7 @@ const Map3D = forwardRef(({ onSelectLot, selectedLotId, adminOverrides, lotClick
       if (options.onPrepare) options.onPrepare(false);
       mapRef.current.resize();
     }
-  }, [loteoGeojson, adminOverrides, startCenteredFlyover, startSequentialLotsTour, stopVideoRecording]);
-
-  const stopVideoRecording = useCallback(() => {
-    if (recordingTimerRef.current) {
-      clearInterval(recordingTimerRef.current);
-      recordingTimerRef.current = null;
-    }
-    if (mediaRecorderRef.current && mediaRecorderRef.current.state !== 'inactive') {
-      mediaRecorderRef.current.stop();
-    }
-    stopFlight(false);
-    stopOrbit();
-    stopSequentialLotsTour();
-  }, [stopFlight, stopOrbit, stopSequentialLotsTour]);
-
-  const downloadGeneratedVideo = useCallback((resolution = '1080p') => {
-    if (!videoBlobRef.current) return;
-    const url = URL.createObjectURL(videoBlobRef.current);
-    const a = document.createElement('a');
-    document.body.appendChild(a);
-    a.style = 'display: none';
-    a.href = url;
-    const dateStr = new Date().toISOString().split('T')[0];
-    a.download = `Urbanizacion_Querube_Sobrevuelo_${resolution}_${dateStr}.webm`;
-    a.click();
-    setTimeout(() => {
-      window.URL.revokeObjectURL(url);
-      document.body.removeChild(a);
-    }, 100);
-  }, []);
+  }, [loteoGeojson, adminOverrides, startCenteredFlyover, startSequentialLotsTour, stopVideoRecording, downloadGeneratedVideo]);
 
   // Handle Resize and Orientation (Módulo 1, Requirement 1 & 9)
   useEffect(() => {
