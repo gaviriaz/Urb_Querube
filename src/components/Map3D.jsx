@@ -632,12 +632,13 @@ const Map3D = forwardRef(({ onSelectLot, selectedLotId, adminOverrides, viasGeoj
       
       map.addLayer({
         id: 'loteo-fill',
-        type: 'fill',
+        type: 'fill-extrusion',
         source: 'loteo',
         filter: ['==', ['to-number', ['get', 'fid']], -1],
         paint: {
-          'fill-color': 'rgba(0,0,0,0)',
-          'fill-opacity': 0.0
+          'fill-extrusion-color': 'rgba(0,0,0,0)',
+          'fill-extrusion-opacity': 0.85,
+          'fill-extrusion-height': 0
         }
       });
 
