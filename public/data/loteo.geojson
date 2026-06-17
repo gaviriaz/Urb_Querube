@@ -1,0 +1,6220 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "OBJECTID": 362690,
+        "FICHA": 20101939,
+        "CIRULO": "034",
+        "MATRICULA": "14856",
+        "CIRCULO_MA": "034-14856",
+        "CARACTERIS": "NPH (0)",
+        "NPN": "056650001000000040023000000000",
+        "DIRECCION": "QUERUBE",
+        "SECTOR": "RURAL",
+        "TERRENO_CO": "056650001000000040023000000000",
+        "AVALUO_TER": null,
+        "AVALUO_COM": null,
+        "DIMENSION": 0,
+        "ETIQUETA": "1",
+        "RELACION_S": 0,
+        "ESPACIO_DE": null,
+        "LOCAL_ID": "6652001000000400023",
+        "CREATED_US": "GISANT",
+        "CREATED_DA": "2026/05/02 01:03:50.000",
+        "LAST_EDITE": "GISANT",
+        "LAST_EDI_1": "2026/05/02 01:03:50.000",
+        "GLOBALID": "{2AE71931-794C-4BE0-9195-933529561A58}",
+        "MUNICIPIO": "665",
+        "LLAVE_GLOB": "M665{37422971-3F2C-43F2-B4B0-0AD8FF01D642}",
+        "VEREDA": "66520010000004",
+        "PRIORIDAD": 3,
+        "SHAPE.AREA": 132.47962907608598,
+        "SHAPE.LEN": 5584.092362934251,
+        "LOTE": "LT",
+        "Manzana": "MZ-001",
+        "_LABEL": "Lt 1",
+        "_MANZANA": "MZ-001",
+        "fid": 1000
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                -76.38579527394623,
+                8.266482037098283
+              ],
+              [
+                -76.38565095861682,
+                8.266489131518428
+              ],
+              [
+                -76.38568877082686,
+                8.266403414731245
+              ],
+              [
+                -76.38582541057669,
+                8.266413737708998
+              ],
+              [
+                -76.38579527394623,
+                8.266482037098283
+              ]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "OBJECTID": 362690,
+        "FICHA": 20101939,
+        "CIRULO": "034",
+        "MATRICULA": "14856",
+        "CIRCULO_MA": "034-14856",
+        "CARACTERIS": "NPH (0)",
+        "NPN": "056650001000000040023000000000",
+        "DIRECCION": "QUERUBE",
+        "SECTOR": "RURAL",
+        "TERRENO_CO": "056650001000000040023000000000",
+        "AVALUO_TER": null,
+        "AVALUO_COM": null,
+        "DIMENSION": 0,
+        "ETIQUETA": "2",
+        "RELACION_S": 0,
+        "ESPACIO_DE": null,
+        "LOCAL_ID": "6652001000000400023",
+        "CREATED_US": "GISANT",
+        "CREATED_DA": "2026/05/02 01:03:50.000",
+        "LAST_EDITE": "GISANT",
+        "LAST_EDI_1": "2026/05/02 01:03:50.000",
+        "GLOBALID": "{2AE71931-794C-4BE0-9195-933529561A58}",
+        "MUNICIPIO": "665",
+        "LLAVE_GLOB": "M665{37422971-3F2C-43F2-B4B0-0AD8FF01D642}",
+        "VEREDA": "66520010000004",
+        "PRIORIDAD": 3,
+        "SHAPE.AREA": 115.10396780679002,
+        "SHAPE.LEN": 5584.092362934251,
+        "LOTE": "LT",
+        "Manzana": "MZ-001",
+        "_LABEL": "Lt 2",
+        "_MANZANA": "MZ-001",
+        "fid": 1001
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                -76.38568877082686,
+                8.266403414731245
+              ],
+              [
+                -76.38571828508461,
+                8.266336508621034
+              ],
+              [
+                -76.38585492480728,
+                8.266346831597694
+              ],
+              [
+                -76.38582541057669,
+                8.266413737708998
+              ],
+              [
+                -76.38568877082686,
+                8.266403414731245
+              ]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "OBJECTID": 362690,
+        "FICHA": 20101939,
+        "CIRULO": "034",
+        "MATRICULA": "14856",
+        "CIRCULO_MA": "034-14856",
+        "CARACTERIS": "NPH (0)",
+        "NPN": "056650001000000040023000000000",
+        "DIRECCION": "QUERUBE",
+        "SECTOR": "RURAL",
+        "TERRENO_CO": "056650001000000040023000000000",
+        "AVALUO_TER": null,
+        "AVALUO_COM": null,
+        "DIMENSION": 0,
+        "ETIQUETA": "3",
+        "RELACION_S": 0,
+        "ESPACIO_DE": null,
+        "LOCAL_ID": "6652001000000400023",
+        "CREATED_US": "GISANT",
+        "CREATED_DA": "2026/05/02 01:03:50.000",
+        "LAST_EDITE": "GISANT",
+        "LAST_EDI_1": "2026/05/02 01:03:50.000",
+        "GLOBALID": "{2AE71931-794C-4BE0-9195-933529561A58}",
+        "MUNICIPIO": "665",
+        "LLAVE_GLOB": "M665{37422971-3F2C-43F2-B4B0-0AD8FF01D642}",
+        "VEREDA": "66520010000004",
+        "PRIORIDAD": 3,
+        "SHAPE.AREA": 115.10395092982799,
+        "SHAPE.LEN": 5584.092362934251,
+        "LOTE": "LT",
+        "Manzana": "MZ-001",
+        "_LABEL": "Lt 3",
+        "_MANZANA": "MZ-001",
+        "fid": 1002
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                -76.38571828508461,
+                8.266336508621034
+              ],
+              [
+                -76.38574779933607,
+                8.266269602512475
+              ],
+              [
+                -76.3858844390316,
+                8.26627992548804
+              ],
+              [
+                -76.38585492480728,
+                8.266346831597694
+              ],
+              [
+                -76.38571828508461,
+                8.266336508621034
+              ]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "OBJECTID": 362690,
+        "FICHA": 20101939,
+        "CIRULO": "034",
+        "MATRICULA": "14856",
+        "CIRCULO_MA": "034-14856",
+        "CARACTERIS": "NPH (0)",
+        "NPN": "056650001000000040023000000000",
+        "DIRECCION": "QUERUBE",
+        "SECTOR": "RURAL",
+        "TERRENO_CO": "056650001000000040023000000000",
+        "AVALUO_TER": null,
+        "AVALUO_COM": null,
+        "DIMENSION": 0,
+        "ETIQUETA": "4",
+        "RELACION_S": 0,
+        "ESPACIO_DE": null,
+        "LOCAL_ID": "6652001000000400023",
+        "CREATED_US": "GISANT",
+        "CREATED_DA": "2026/05/02 01:03:50.000",
+        "LAST_EDITE": "GISANT",
+        "LAST_EDI_1": "2026/05/02 01:03:50.000",
+        "GLOBALID": "{2AE71931-794C-4BE0-9195-933529561A58}",
+        "MUNICIPIO": "665",
+        "LLAVE_GLOB": "M665{37422971-3F2C-43F2-B4B0-0AD8FF01D642}",
+        "VEREDA": "66520010000004",
+        "PRIORIDAD": 3,
+        "SHAPE.AREA": 115.10394122637808,
+        "SHAPE.LEN": 5584.092362934251,
+        "LOTE": "LT",
+        "Manzana": "MZ-001",
+        "_LABEL": "Lt 4",
+        "_MANZANA": "MZ-001",
+        "fid": 1003
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                -76.38574779933607,
+                8.266269602512475
+              ],
+              [
+                -76.38577731358127,
+                8.266202696405566
+              ],
+              [
+                -76.38591395324963,
+                8.266213019380041
+              ],
+              [
+                -76.3858844390316,
+                8.26627992548804
+              ],
+              [
+                -76.38574779933607,
+                8.266269602512475
+              ]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "OBJECTID": 362690,
+        "FICHA": 20101939,
+        "CIRULO": "034",
+        "MATRICULA": "14856",
+        "CIRCULO_MA": "034-14856",
+        "CARACTERIS": "NPH (0)",
+        "NPN": "056650001000000040023000000000",
+        "DIRECCION": "QUERUBE",
+        "SECTOR": "RURAL",
+        "TERRENO_CO": "056650001000000040023000000000",
+        "AVALUO_TER": null,
+        "AVALUO_COM": null,
+        "DIMENSION": 0,
+        "ETIQUETA": "5",
+        "RELACION_S": 0,
+        "ESPACIO_DE": null,
+        "LOCAL_ID": "6652001000000400023",
+        "CREATED_US": "GISANT",
+        "CREATED_DA": "2026/05/02 01:03:50.000",
+        "LAST_EDITE": "GISANT",
+        "LAST_EDI_1": "2026/05/02 01:03:50.000",
+        "GLOBALID": "{2AE71931-794C-4BE0-9195-933529561A58}",
+        "MUNICIPIO": "665",
+        "LLAVE_GLOB": "M665{37422971-3F2C-43F2-B4B0-0AD8FF01D642}",
+        "VEREDA": "66520010000004",
+        "PRIORIDAD": 3,
+        "SHAPE.AREA": 115.10393848456442,
+        "SHAPE.LEN": 5584.092362934251,
+        "LOTE": "LT",
+        "Manzana": "MZ-001",
+        "_LABEL": "Lt 5",
+        "_MANZANA": "MZ-001",
+        "fid": 1004
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                -76.38577731358127,
+                8.266202696405566
+              ],
+              [
+                -76.38580682782016,
+                8.26613579030031
+              ],
+              [
+                -76.38594346746139,
+                8.26614611327369
+              ],
+              [
+                -76.38591395324963,
+                8.266213019380041
+              ],
+              [
+                -76.38577731358127,
+                8.266202696405566
+              ]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "OBJECTID": 362690,
+        "FICHA": 20101939,
+        "CIRULO": "034",
+        "MATRICULA": "14856",
+        "CIRCULO_MA": "034-14856",
+        "CARACTERIS": "NPH (0)",
+        "NPN": "056650001000000040023000000000",
+        "DIRECCION": "QUERUBE",
+        "SECTOR": "RURAL",
+        "TERRENO_CO": "056650001000000040023000000000",
+        "AVALUO_TER": null,
+        "AVALUO_COM": null,
+        "DIMENSION": 0,
+        "ETIQUETA": "6",
+        "RELACION_S": 0,
+        "ESPACIO_DE": null,
+        "LOCAL_ID": "6652001000000400023",
+        "CREATED_US": "GISANT",
+        "CREATED_DA": "2026/05/02 01:03:50.000",
+        "LAST_EDITE": "GISANT",
+        "LAST_EDI_1": "2026/05/02 01:03:50.000",
+        "GLOBALID": "{2AE71931-794C-4BE0-9195-933529561A58}",
+        "MUNICIPIO": "665",
+        "LLAVE_GLOB": "M665{37422971-3F2C-43F2-B4B0-0AD8FF01D642}",
+        "VEREDA": "66520010000004",
+        "PRIORIDAD": 3,
+        "SHAPE.AREA": 115.10394186293706,
+        "SHAPE.LEN": 5584.092362934251,
+        "LOTE": "LT",
+        "Manzana": "MZ-001",
+        "_LABEL": "Lt 6",
+        "_MANZANA": "MZ-001",
+        "fid": 1005
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                -76.38580682782016,
+                8.26613579030031
+              ],
+              [
+                -76.38583634205281,
+                8.266068884196702
+              ],
+              [
+                -76.38597298166687,
+                8.266079207168994
+              ],
+              [
+                -76.38594346746139,
+                8.26614611327369
+              ],
+              [
+                -76.38580682782016,
+                8.26613579030031
+              ]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "OBJECTID": 362690,
+        "FICHA": 20101939,
+        "CIRULO": "034",
+        "MATRICULA": "14856",
+        "CIRCULO_MA": "034-14856",
+        "CARACTERIS": "NPH (0)",
+        "NPN": "056650001000000040023000000000",
+        "DIRECCION": "QUERUBE",
+        "SECTOR": "RURAL",
+        "TERRENO_CO": "056650001000000040023000000000",
+        "AVALUO_TER": null,
+        "AVALUO_COM": null,
+        "DIMENSION": 0,
+        "ETIQUETA": "7",
+        "RELACION_S": 0,
+        "ESPACIO_DE": null,
+        "LOCAL_ID": "6652001000000400023",
+        "CREATED_US": "GISANT",
+        "CREATED_DA": "2026/05/02 01:03:50.000",
+        "LAST_EDITE": "GISANT",
+        "LAST_EDI_1": "2026/05/02 01:03:50.000",
+        "GLOBALID": "{2AE71931-794C-4BE0-9195-933529561A58}",
+        "MUNICIPIO": "665",
+        "LLAVE_GLOB": "M665{37422971-3F2C-43F2-B4B0-0AD8FF01D642}",
+        "VEREDA": "66520010000004",
+        "PRIORIDAD": 3,
+        "SHAPE.AREA": 116.3811298669935,
+        "SHAPE.LEN": 5584.092362934251,
+        "LOTE": "LT",
+        "Manzana": "MZ-001",
+        "_LABEL": "Lt 7",
+        "_MANZANA": "MZ-001",
+        "fid": 1006
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                -76.38597298166687,
+                8.266079207168994
+              ],
+              [
+                -76.38583634205281,
+                8.266068884196702
+              ],
+              [
+                -76.38586585627915,
+                8.266001978094748
+              ],
+              [
+                -76.3860031511663,
+                8.266010816489961
+              ],
+              [
+                -76.38600315116098,
+                8.266010816502051
+              ],
+              [
+                -76.38597298166687,
+                8.266079207168994
+              ]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "OBJECTID": 362690,
+        "FICHA": 20101939,
+        "CIRULO": "034",
+        "MATRICULA": "14856",
+        "CIRCULO_MA": "034-14856",
+        "CARACTERIS": "NPH (0)",
+        "NPN": "056650001000000040023000000000",
+        "DIRECCION": "QUERUBE",
+        "SECTOR": "RURAL",
+        "TERRENO_CO": "056650001000000040023000000000",
+        "AVALUO_TER": null,
+        "AVALUO_COM": null,
+        "DIMENSION": 0,
+        "ETIQUETA": "8",
+        "RELACION_S": 0,
+        "ESPACIO_DE": null,
+        "LOCAL_ID": "6652001000000400023",
+        "CREATED_US": "GISANT",
+        "CREATED_DA": "2026/05/02 01:03:50.000",
+        "LAST_EDITE": "GISANT",
+        "LAST_EDI_1": "2026/05/02 01:03:50.000",
+        "GLOBALID": "{2AE71931-794C-4BE0-9195-933529561A58}",
+        "MUNICIPIO": "665",
+        "LLAVE_GLOB": "M665{37422971-3F2C-43F2-B4B0-0AD8FF01D642}",
+        "VEREDA": "66520010000004",
+        "PRIORIDAD": 3,
+        "SHAPE.AREA": 118.65926109760396,
+        "SHAPE.LEN": 5584.092362934251,
+        "LOTE": "LT",
+        "Manzana": "MZ-001",
+        "_LABEL": "Lt 8",
+        "_MANZANA": "MZ-001",
+        "fid": 1007
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                -76.38610962126916,
+                8.266089530091575
+              ],
+              [
+                -76.38597298166687,
+                8.266079207168994
+              ],
+              [
+                -76.38600315116098,
+                8.266010816502051
+              ],
+              [
+                -76.3860031511663,
+                8.266010816489961
+              ],
+              [
+                -76.38613981584385,
+                8.266019614291485
+              ],
+              [
+                -76.38610962126916,
+                8.266089530091575
+              ]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "OBJECTID": 362690,
+        "FICHA": 20101939,
+        "CIRULO": "034",
+        "MATRICULA": "14856",
+        "CIRCULO_MA": "034-14856",
+        "CARACTERIS": "NPH (0)",
+        "NPN": "056650001000000040023000000000",
+        "DIRECCION": "QUERUBE",
+        "SECTOR": "RURAL",
+        "TERRENO_CO": "056650001000000040023000000000",
+        "AVALUO_TER": null,
+        "AVALUO_COM": null,
+        "DIMENSION": 0,
+        "ETIQUETA": "9",
+        "RELACION_S": 0,
+        "ESPACIO_DE": null,
+        "LOCAL_ID": "6652001000000400023",
+        "CREATED_US": "GISANT",
+        "CREATED_DA": "2026/05/02 01:03:50.000",
+        "LAST_EDITE": "GISANT",
+        "LAST_EDI_1": "2026/05/02 01:03:50.000",
+        "GLOBALID": "{2AE71931-794C-4BE0-9195-933529561A58}",
+        "MUNICIPIO": "665",
+        "LLAVE_GLOB": "M665{37422971-3F2C-43F2-B4B0-0AD8FF01D642}",
+        "VEREDA": "66520010000004",
+        "PRIORIDAD": 3,
+        "SHAPE.AREA": 115.1039006439969,
+        "SHAPE.LEN": 5584.092362934251,
+        "LOTE": "LT",
+        "Manzana": "MZ-001",
+        "_LABEL": "Lt 9",
+        "_MANZANA": "MZ-001",
+        "fid": 1008
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                -76.38594346746139,
+                8.26614611327369
+              ],
+              [
+                -76.38597298166687,
+                8.266079207168994
+              ],
+              [
+                -76.38610962126916,
+                8.266089530091575
+              ],
+              [
+                -76.38608010709083,
+                8.266156436197365
+              ],
+              [
+                -76.38594346746139,
+                8.26614611327369
+              ]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "OBJECTID": 362690,
+        "FICHA": 20101939,
+        "CIRULO": "034",
+        "MATRICULA": "14856",
+        "CIRCULO_MA": "034-14856",
+        "CARACTERIS": "NPH (0)",
+        "NPN": "056650001000000040023000000000",
+        "DIRECCION": "QUERUBE",
+        "SECTOR": "RURAL",
+        "TERRENO_CO": "056650001000000040023000000000",
+        "AVALUO_TER": null,
+        "AVALUO_COM": null,
+        "DIMENSION": 0,
+        "ETIQUETA": "10",
+        "RELACION_S": 0,
+        "ESPACIO_DE": null,
+        "LOCAL_ID": "6652001000000400023",
+        "CREATED_US": "GISANT",
+        "CREATED_DA": "2026/05/02 01:03:50.000",
+        "LAST_EDITE": "GISANT",
+        "LAST_EDI_1": "2026/05/02 01:03:50.000",
+        "GLOBALID": "{2AE71931-794C-4BE0-9195-933529561A58}",
+        "MUNICIPIO": "665",
+        "LLAVE_GLOB": "M665{37422971-3F2C-43F2-B4B0-0AD8FF01D642}",
+        "VEREDA": "66520010000004",
+        "PRIORIDAD": 3,
+        "SHAPE.AREA": 115.10389020573348,
+        "SHAPE.LEN": 5584.092362934251,
+        "LOTE": "LT",
+        "Manzana": "MZ-001",
+        "_LABEL": "Lt 10",
+        "_MANZANA": "MZ-001",
+        "fid": 1009
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                -76.38591395324963,
+                8.266213019380041
+              ],
+              [
+                -76.38594346746139,
+                8.26614611327369
+              ],
+              [
+                -76.38608010709083,
+                8.266156436197365
+              ],
+              [
+                -76.38605059290623,
+                8.266223342304809
+              ],
+              [
+                -76.38591395324963,
+                8.266213019380041
+              ]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "OBJECTID": 362690,
+        "FICHA": 20101939,
+        "CIRULO": "034",
+        "MATRICULA": "14856",
+        "CIRCULO_MA": "034-14856",
+        "CARACTERIS": "NPH (0)",
+        "NPN": "056650001000000040023000000000",
+        "DIRECCION": "QUERUBE",
+        "SECTOR": "RURAL",
+        "TERRENO_CO": "056650001000000040023000000000",
+        "AVALUO_TER": null,
+        "AVALUO_COM": null,
+        "DIMENSION": 0,
+        "ETIQUETA": "11",
+        "RELACION_S": 0,
+        "ESPACIO_DE": null,
+        "LOCAL_ID": "6652001000000400023",
+        "CREATED_US": "GISANT",
+        "CREATED_DA": "2026/05/02 01:03:50.000",
+        "LAST_EDITE": "GISANT",
+        "LAST_EDI_1": "2026/05/02 01:03:50.000",
+        "GLOBALID": "{2AE71931-794C-4BE0-9195-933529561A58}",
+        "MUNICIPIO": "665",
+        "LLAVE_GLOB": "M665{37422971-3F2C-43F2-B4B0-0AD8FF01D642}",
+        "VEREDA": "66520010000004",
+        "PRIORIDAD": 3,
+        "SHAPE.AREA": 115.10390986315906,
+        "SHAPE.LEN": 5584.092362934251,
+        "LOTE": "LT",
+        "Manzana": "MZ-001",
+        "_LABEL": "Lt 11",
+        "_MANZANA": "MZ-001",
+        "fid": 1010
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                -76.3858844390316,
+                8.26627992548804
+              ],
+              [
+                -76.38591395324963,
+                8.266213019380041
+              ],
+              [
+                -76.38605059290623,
+                8.266223342304809
+              ],
+              [
+                -76.38602107871534,
+                8.266290248413899
+              ],
+              [
+                -76.3858844390316,
+                8.26627992548804
+              ]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "OBJECTID": 362690,
+        "FICHA": 20101939,
+        "CIRULO": "034",
+        "MATRICULA": "14856",
+        "CIRCULO_MA": "034-14856",
+        "CARACTERIS": "NPH (0)",
+        "NPN": "056650001000000040023000000000",
+        "DIRECCION": "QUERUBE",
+        "SECTOR": "RURAL",
+        "TERRENO_CO": "056650001000000040023000000000",
+        "AVALUO_TER": null,
+        "AVALUO_COM": null,
+        "DIMENSION": 0,
+        "ETIQUETA": "12",
+        "RELACION_S": 0,
+        "ESPACIO_DE": null,
+        "LOCAL_ID": "6652001000000400023",
+        "CREATED_US": "GISANT",
+        "CREATED_DA": "2026/05/02 01:03:50.000",
+        "LAST_EDITE": "GISANT",
+        "LAST_EDI_1": "2026/05/02 01:03:50.000",
+        "GLOBALID": "{2AE71931-794C-4BE0-9195-933529561A58}",
+        "MUNICIPIO": "665",
+        "LLAVE_GLOB": "M665{37422971-3F2C-43F2-B4B0-0AD8FF01D642}",
+        "VEREDA": "66520010000004",
+        "PRIORIDAD": 3,
+        "SHAPE.AREA": 115.10389832081273,
+        "SHAPE.LEN": 5584.092362934251,
+        "LOTE": "LT",
+        "Manzana": "MZ-001",
+        "_LABEL": "Lt 12",
+        "_MANZANA": "MZ-001",
+        "fid": 1011
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                -76.38585492480728,
+                8.266346831597694
+              ],
+              [
+                -76.3858844390316,
+                8.26627992548804
+              ],
+              [
+                -76.38602107871534,
+                8.266290248413899
+              ],
+              [
+                -76.38599156451818,
+                8.266357154524645
+              ],
+              [
+                -76.38585492480728,
+                8.266346831597694
+              ]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "OBJECTID": 362690,
+        "FICHA": 20101939,
+        "CIRULO": "034",
+        "MATRICULA": "14856",
+        "CIRCULO_MA": "034-14856",
+        "CARACTERIS": "NPH (0)",
+        "NPN": "056650001000000040023000000000",
+        "DIRECCION": "QUERUBE",
+        "SECTOR": "RURAL",
+        "TERRENO_CO": "056650001000000040023000000000",
+        "AVALUO_TER": null,
+        "AVALUO_COM": null,
+        "DIMENSION": 0,
+        "ETIQUETA": "13",
+        "RELACION_S": 0,
+        "ESPACIO_DE": null,
+        "LOCAL_ID": "6652001000000400023",
+        "CREATED_US": "GISANT",
+        "CREATED_DA": "2026/05/02 01:03:50.000",
+        "LAST_EDITE": "GISANT",
+        "LAST_EDI_1": "2026/05/02 01:03:50.000",
+        "GLOBALID": "{2AE71931-794C-4BE0-9195-933529561A58}",
+        "MUNICIPIO": "665",
+        "LLAVE_GLOB": "M665{37422971-3F2C-43F2-B4B0-0AD8FF01D642}",
+        "VEREDA": "66520010000004",
+        "PRIORIDAD": 3,
+        "SHAPE.AREA": 115.10392416734248,
+        "SHAPE.LEN": 5584.092362934251,
+        "LOTE": "LT",
+        "Manzana": "MZ-001",
+        "_LABEL": "Lt 13",
+        "_MANZANA": "MZ-001",
+        "fid": 1012
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                -76.38582541057669,
+                8.266413737708998
+              ],
+              [
+                -76.38585492480728,
+                8.266346831597694
+              ],
+              [
+                -76.38599156451818,
+                8.266357154524645
+              ],
+              [
+                -76.38596205031476,
+                8.266424060637041
+              ],
+              [
+                -76.38582541057669,
+                8.266413737708998
+              ]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "OBJECTID": 362690,
+        "FICHA": 20101939,
+        "CIRULO": "034",
+        "MATRICULA": "14856",
+        "CIRCULO_MA": "034-14856",
+        "CARACTERIS": "NPH (0)",
+        "NPN": "056650001000000040023000000000",
+        "DIRECCION": "QUERUBE",
+        "SECTOR": "RURAL",
+        "TERRENO_CO": "056650001000000040023000000000",
+        "AVALUO_TER": null,
+        "AVALUO_COM": null,
+        "DIMENSION": 0,
+        "ETIQUETA": "14",
+        "RELACION_S": 0,
+        "ESPACIO_DE": null,
+        "LOCAL_ID": "6652001000000400023",
+        "CREATED_US": "GISANT",
+        "CREATED_DA": "2026/05/02 01:03:50.000",
+        "LAST_EDITE": "GISANT",
+        "LAST_EDI_1": "2026/05/02 01:03:50.000",
+        "GLOBALID": "{2AE71931-794C-4BE0-9195-933529561A58}",
+        "MUNICIPIO": "665",
+        "LLAVE_GLOB": "M665{37422971-3F2C-43F2-B4B0-0AD8FF01D642}",
+        "VEREDA": "66520010000004",
+        "PRIORIDAD": 3,
+        "SHAPE.AREA": 102.52085325913504,
+        "SHAPE.LEN": 5584.092362934251,
+        "LOTE": "LT",
+        "Manzana": "MZ-001",
+        "_LABEL": "Lt 14",
+        "_MANZANA": "MZ-001",
+        "fid": 1013
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                -76.3859396051516,
+                8.26647494184623
+              ],
+              [
+                -76.38579527394623,
+                8.266482037098283
+              ],
+              [
+                -76.38582541057669,
+                8.266413737708998
+              ],
+              [
+                -76.38596205031476,
+                8.266424060637041
+              ],
+              [
+                -76.3859396051516,
+                8.26647494184623
+              ]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "OBJECTID": 362690,
+        "FICHA": 20101939,
+        "CIRULO": "034",
+        "MATRICULA": "14856",
+        "CIRCULO_MA": "034-14856",
+        "CARACTERIS": "NPH (0)",
+        "NPN": "056650001000000040023000000000",
+        "DIRECCION": "QUERUBE",
+        "SECTOR": "RURAL",
+        "TERRENO_CO": "056650001000000040023000000000",
+        "AVALUO_TER": null,
+        "AVALUO_COM": null,
+        "DIMENSION": 0,
+        "ETIQUETA": "15",
+        "RELACION_S": 0,
+        "ESPACIO_DE": null,
+        "LOCAL_ID": "6652001000000400023",
+        "CREATED_US": "GISANT",
+        "CREATED_DA": "2026/05/02 01:03:50.000",
+        "LAST_EDITE": "GISANT",
+        "LAST_EDI_1": "2026/05/02 01:03:50.000",
+        "GLOBALID": "{2AE71931-794C-4BE0-9195-933529561A58}",
+        "MUNICIPIO": "665",
+        "LLAVE_GLOB": "M665{37422971-3F2C-43F2-B4B0-0AD8FF01D642}",
+        "VEREDA": "66520010000004",
+        "PRIORIDAD": 3,
+        "SHAPE.AREA": 146.1223439075984,
+        "SHAPE.LEN": 5584.092362934251,
+        "LOTE": "LT",
+        "Manzana": "MZ-002",
+        "_LABEL": "Lt 15",
+        "_MANZANA": "MZ-002",
+        "fid": 1014
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                -76.38614115268248,
+                8.266465033755482
+              ],
+              [
+                -76.38618247284334,
+                8.266371393301537
+              ],
+              [
+                -76.38631911252598,
+                8.26638171610935
+              ],
+              [
+                -76.38628549270099,
+                8.266457937946836
+              ],
+              [
+                -76.38614115268248,
+                8.266465033755482
+              ]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "OBJECTID": 362690,
+        "FICHA": 20101939,
+        "CIRULO": "034",
+        "MATRICULA": "14856",
+        "CIRCULO_MA": "034-14856",
+        "CARACTERIS": "NPH (0)",
+        "NPN": "056650001000000040023000000000",
+        "DIRECCION": "QUERUBE",
+        "SECTOR": "RURAL",
+        "TERRENO_CO": "056650001000000040023000000000",
+        "AVALUO_TER": null,
+        "AVALUO_COM": null,
+        "DIMENSION": 0,
+        "ETIQUETA": "16",
+        "RELACION_S": 0,
+        "ESPACIO_DE": null,
+        "LOCAL_ID": "6652001000000400023",
+        "CREATED_US": "GISANT",
+        "CREATED_DA": "2026/05/02 01:03:50.000",
+        "LAST_EDITE": "GISANT",
+        "LAST_EDI_1": "2026/05/02 01:03:50.000",
+        "GLOBALID": "{2AE71931-794C-4BE0-9195-933529561A58}",
+        "MUNICIPIO": "665",
+        "LLAVE_GLOB": "M665{37422971-3F2C-43F2-B4B0-0AD8FF01D642}",
+        "VEREDA": "66520010000004",
+        "PRIORIDAD": 3,
+        "SHAPE.AREA": 176.064877695404,
+        "SHAPE.LEN": 5584.092362934251,
+        "LOTE": "LT",
+        "Manzana": "MZ-002",
+        "_LABEL": "Lt 16",
+        "_MANZANA": "MZ-002",
+        "fid": 1015
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                -76.38599685218826,
+                8.266472127569648
+              ],
+              [
+                -76.38604583314894,
+                8.266361070444013
+              ],
+              [
+                -76.38618247284334,
+                8.266371393301537
+              ],
+              [
+                -76.38614115268248,
+                8.266465033755482
+              ],
+              [
+                -76.38599685218826,
+                8.266472127569648
+              ]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "OBJECTID": 362690,
+        "FICHA": 20101939,
+        "CIRULO": "034",
+        "MATRICULA": "14856",
+        "CIRCULO_MA": "034-14856",
+        "CARACTERIS": "NPH (0)",
+        "NPN": "056650001000000040023000000000",
+        "DIRECCION": "QUERUBE",
+        "SECTOR": "RURAL",
+        "TERRENO_CO": "056650001000000040023000000000",
+        "AVALUO_TER": null,
+        "AVALUO_COM": null,
+        "DIMENSION": 0,
+        "ETIQUETA": "17",
+        "RELACION_S": 0,
+        "ESPACIO_DE": null,
+        "LOCAL_ID": "6652001000000400023",
+        "CREATED_US": "GISANT",
+        "CREATED_DA": "2026/05/02 01:03:50.000",
+        "LAST_EDITE": "GISANT",
+        "LAST_EDI_1": "2026/05/02 01:03:50.000",
+        "GLOBALID": "{2AE71931-794C-4BE0-9195-933529561A58}",
+        "MUNICIPIO": "665",
+        "LLAVE_GLOB": "M665{37422971-3F2C-43F2-B4B0-0AD8FF01D642}",
+        "VEREDA": "66520010000004",
+        "PRIORIDAD": 3,
+        "SHAPE.AREA": 115.10386151773855,
+        "SHAPE.LEN": 5584.092362934251,
+        "LOTE": "LT",
+        "Manzana": "MZ-002",
+        "_LABEL": "Lt 17",
+        "_MANZANA": "MZ-002",
+        "fid": 1016
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                -76.38604583314894,
+                8.266361070444013
+              ],
+              [
+                -76.38607534733532,
+                8.26629416433284
+              ],
+              [
+                -76.38621198700257,
+                8.266304487189272
+              ],
+              [
+                -76.38618247284334,
+                8.266371393301537
+              ],
+              [
+                -76.38604583314894,
+                8.266361070444013
+              ]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "OBJECTID": 362690,
+        "FICHA": 20101939,
+        "CIRULO": "034",
+        "MATRICULA": "14856",
+        "CIRCULO_MA": "034-14856",
+        "CARACTERIS": "NPH (0)",
+        "NPN": "056650001000000040023000000000",
+        "DIRECCION": "QUERUBE",
+        "SECTOR": "RURAL",
+        "TERRENO_CO": "056650001000000040023000000000",
+        "AVALUO_TER": null,
+        "AVALUO_COM": null,
+        "DIMENSION": 0,
+        "ETIQUETA": "18",
+        "RELACION_S": 0,
+        "ESPACIO_DE": null,
+        "LOCAL_ID": "6652001000000400023",
+        "CREATED_US": "GISANT",
+        "CREATED_DA": "2026/05/02 01:03:50.000",
+        "LAST_EDITE": "GISANT",
+        "LAST_EDI_1": "2026/05/02 01:03:50.000",
+        "GLOBALID": "{2AE71931-794C-4BE0-9195-933529561A58}",
+        "MUNICIPIO": "665",
+        "LLAVE_GLOB": "M665{37422971-3F2C-43F2-B4B0-0AD8FF01D642}",
+        "VEREDA": "66520010000004",
+        "PRIORIDAD": 3,
+        "SHAPE.AREA": 115.10387866059318,
+        "SHAPE.LEN": 5584.092362934251,
+        "LOTE": "LT",
+        "Manzana": "MZ-002",
+        "_LABEL": "Lt 18",
+        "_MANZANA": "MZ-002",
+        "fid": 1017
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                -76.38607534733532,
+                8.26629416433284
+              ],
+              [
+                -76.38610486151542,
+                8.266227258223317
+              ],
+              [
+                -76.38624150115551,
+                8.26623758107866
+              ],
+              [
+                -76.38621198700257,
+                8.266304487189272
+              ],
+              [
+                -76.38607534733532,
+                8.26629416433284
+              ]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "OBJECTID": 362690,
+        "FICHA": 20101939,
+        "CIRULO": "034",
+        "MATRICULA": "14856",
+        "CIRCULO_MA": "034-14856",
+        "CARACTERIS": "NPH (0)",
+        "NPN": "056650001000000040023000000000",
+        "DIRECCION": "QUERUBE",
+        "SECTOR": "RURAL",
+        "TERRENO_CO": "056650001000000040023000000000",
+        "AVALUO_TER": null,
+        "AVALUO_COM": null,
+        "DIMENSION": 0,
+        "ETIQUETA": "19",
+        "RELACION_S": 0,
+        "ESPACIO_DE": null,
+        "LOCAL_ID": "6652001000000400023",
+        "CREATED_US": "GISANT",
+        "CREATED_DA": "2026/05/02 01:03:50.000",
+        "LAST_EDITE": "GISANT",
+        "LAST_EDI_1": "2026/05/02 01:03:50.000",
+        "GLOBALID": "{2AE71931-794C-4BE0-9195-933529561A58}",
+        "MUNICIPIO": "665",
+        "LLAVE_GLOB": "M665{37422971-3F2C-43F2-B4B0-0AD8FF01D642}",
+        "VEREDA": "66520010000004",
+        "PRIORIDAD": 3,
+        "SHAPE.AREA": 115.10387104330584,
+        "SHAPE.LEN": 5584.092362934251,
+        "LOTE": "LT",
+        "Manzana": "MZ-002",
+        "_LABEL": "Lt 19",
+        "_MANZANA": "MZ-002",
+        "fid": 1018
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                -76.38610486151542,
+                8.266227258223317
+              ],
+              [
+                -76.38613437568922,
+                8.266160352115445
+              ],
+              [
+                -76.38627101530217,
+                8.266170674969695
+              ],
+              [
+                -76.38624150115551,
+                8.26623758107866
+              ],
+              [
+                -76.38610486151542,
+                8.266227258223317
+              ]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "OBJECTID": 362690,
+        "FICHA": 20101939,
+        "CIRULO": "034",
+        "MATRICULA": "14856",
+        "CIRCULO_MA": "034-14856",
+        "CARACTERIS": "NPH (0)",
+        "NPN": "056650001000000040023000000000",
+        "DIRECCION": "QUERUBE",
+        "SECTOR": "RURAL",
+        "TERRENO_CO": "056650001000000040023000000000",
+        "AVALUO_TER": null,
+        "AVALUO_COM": null,
+        "DIMENSION": 0,
+        "ETIQUETA": "20",
+        "RELACION_S": 0,
+        "ESPACIO_DE": null,
+        "LOCAL_ID": "6652001000000400023",
+        "CREATED_US": "GISANT",
+        "CREATED_DA": "2026/05/02 01:03:50.000",
+        "LAST_EDITE": "GISANT",
+        "LAST_EDI_1": "2026/05/02 01:03:50.000",
+        "GLOBALID": "{2AE71931-794C-4BE0-9195-933529561A58}",
+        "MUNICIPIO": "665",
+        "LLAVE_GLOB": "M665{37422971-3F2C-43F2-B4B0-0AD8FF01D642}",
+        "VEREDA": "66520010000004",
+        "PRIORIDAD": 3,
+        "SHAPE.AREA": 115.10386039642617,
+        "SHAPE.LEN": 5584.092362934251,
+        "LOTE": "LT",
+        "Manzana": "MZ-002",
+        "_LABEL": "Lt 20",
+        "_MANZANA": "MZ-002",
+        "fid": 1019
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                -76.38613437568922,
+                8.266160352115445
+              ],
+              [
+                -76.38616388985677,
+                8.26609344600923
+              ],
+              [
+                -76.38630052944256,
+                8.266103768862388
+              ],
+              [
+                -76.38627101530217,
+                8.266170674969695
+              ],
+              [
+                -76.38613437568922,
+                8.266160352115445
+              ]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "OBJECTID": 362690,
+        "FICHA": 20101939,
+        "CIRULO": "034",
+        "MATRICULA": "14856",
+        "CIRCULO_MA": "034-14856",
+        "CARACTERIS": "NPH (0)",
+        "NPN": "056650001000000040023000000000",
+        "DIRECCION": "QUERUBE",
+        "SECTOR": "RURAL",
+        "TERRENO_CO": "056650001000000040023000000000",
+        "AVALUO_TER": null,
+        "AVALUO_COM": null,
+        "DIMENSION": 0,
+        "ETIQUETA": "21",
+        "RELACION_S": 0,
+        "ESPACIO_DE": null,
+        "LOCAL_ID": "6652001000000400023",
+        "CREATED_US": "GISANT",
+        "CREATED_DA": "2026/05/02 01:03:50.000",
+        "LAST_EDITE": "GISANT",
+        "LAST_EDI_1": "2026/05/02 01:03:50.000",
+        "GLOBALID": "{2AE71931-794C-4BE0-9195-933529561A58}",
+        "MUNICIPIO": "665",
+        "LLAVE_GLOB": "M665{37422971-3F2C-43F2-B4B0-0AD8FF01D642}",
+        "VEREDA": "66520010000004",
+        "PRIORIDAD": 3,
+        "SHAPE.AREA": 116.3810677932959,
+        "SHAPE.LEN": 5584.092362934251,
+        "LOTE": "LT",
+        "Manzana": "MZ-002",
+        "_LABEL": "Lt 21",
+        "_MANZANA": "MZ-002",
+        "fid": 1020
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                -76.38630052944256,
+                8.266103768862388
+              ],
+              [
+                -76.38616388985677,
+                8.26609344600923
+              ],
+              [
+                -76.38619340401803,
+                8.266026539904662
+              ],
+              [
+                -76.38633069887548,
+                8.266035378180689
+              ],
+              [
+                -76.38633069887014,
+                8.266035378192775
+              ],
+              [
+                -76.38630052944256,
+                8.266103768862388
+              ]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "OBJECTID": 362690,
+        "FICHA": 20101939,
+        "CIRULO": "034",
+        "MATRICULA": "14856",
+        "CIRCULO_MA": "034-14856",
+        "CARACTERIS": "NPH (0)",
+        "NPN": "056650001000000040023000000000",
+        "DIRECCION": "QUERUBE",
+        "SECTOR": "RURAL",
+        "TERRENO_CO": "056650001000000040023000000000",
+        "AVALUO_TER": null,
+        "AVALUO_COM": null,
+        "DIMENSION": 0,
+        "ETIQUETA": "22",
+        "RELACION_S": 0,
+        "ESPACIO_DE": null,
+        "LOCAL_ID": "6652001000000400023",
+        "CREATED_US": "GISANT",
+        "CREATED_DA": "2026/05/02 01:03:50.000",
+        "LAST_EDITE": "GISANT",
+        "LAST_EDI_1": "2026/05/02 01:03:50.000",
+        "GLOBALID": "{2AE71931-794C-4BE0-9195-933529561A58}",
+        "MUNICIPIO": "665",
+        "LLAVE_GLOB": "M665{37422971-3F2C-43F2-B4B0-0AD8FF01D642}",
+        "VEREDA": "66520010000004",
+        "PRIORIDAD": 3,
+        "SHAPE.AREA": 118.65918529877328,
+        "SHAPE.LEN": 5584.092362934251,
+        "LOTE": "LT",
+        "Manzana": "MZ-002",
+        "_LABEL": "Lt 22",
+        "_MANZANA": "MZ-002",
+        "fid": 1021
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                -76.38643716901659,
+                8.26611409166584
+              ],
+              [
+                -76.38630052944256,
+                8.266103768862388
+              ],
+              [
+                -76.38633069887014,
+                8.266035378192775
+              ],
+              [
+                -76.38633069887548,
+                8.266035378180689
+              ],
+              [
+                -76.38646736352344,
+                8.266044175863572
+              ],
+              [
+                -76.38643716901659,
+                8.26611409166584
+              ]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "OBJECTID": 362690,
+        "FICHA": 20101939,
+        "CIRULO": "034",
+        "MATRICULA": "14856",
+        "CIRCULO_MA": "034-14856",
+        "CARACTERIS": "NPH (0)",
+        "NPN": "056650001000000040023000000000",
+        "DIRECCION": "QUERUBE",
+        "SECTOR": "RURAL",
+        "TERRENO_CO": "056650001000000040023000000000",
+        "AVALUO_TER": null,
+        "AVALUO_COM": null,
+        "DIMENSION": 0,
+        "ETIQUETA": "23",
+        "RELACION_S": 0,
+        "ESPACIO_DE": null,
+        "LOCAL_ID": "6652001000000400023",
+        "CREATED_US": "GISANT",
+        "CREATED_DA": "2026/05/02 01:03:50.000",
+        "LAST_EDITE": "GISANT",
+        "LAST_EDI_1": "2026/05/02 01:03:50.000",
+        "GLOBALID": "{2AE71931-794C-4BE0-9195-933529561A58}",
+        "MUNICIPIO": "665",
+        "LLAVE_GLOB": "M665{37422971-3F2C-43F2-B4B0-0AD8FF01D642}",
+        "VEREDA": "66520010000004",
+        "PRIORIDAD": 3,
+        "SHAPE.AREA": 115.10381039138883,
+        "SHAPE.LEN": 5584.092362934251,
+        "LOTE": "LT",
+        "Manzana": "MZ-002",
+        "_LABEL": "Lt 23",
+        "_MANZANA": "MZ-002",
+        "fid": 1022
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                -76.38627101530217,
+                8.266170674969695
+              ],
+              [
+                -76.38630052944256,
+                8.266103768862388
+              ],
+              [
+                -76.38643716901659,
+                8.26611409166584
+              ],
+              [
+                -76.38640765490335,
+                8.266180997774242
+              ],
+              [
+                -76.38627101530217,
+                8.266170674969695
+              ]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "OBJECTID": 362690,
+        "FICHA": 20101939,
+        "CIRULO": "034",
+        "MATRICULA": "14856",
+        "CIRCULO_MA": "034-14856",
+        "CARACTERIS": "NPH (0)",
+        "NPN": "056650001000000040023000000000",
+        "DIRECCION": "QUERUBE",
+        "SECTOR": "RURAL",
+        "TERRENO_CO": "056650001000000040023000000000",
+        "AVALUO_TER": null,
+        "AVALUO_COM": null,
+        "DIMENSION": 0,
+        "ETIQUETA": "24",
+        "RELACION_S": 0,
+        "ESPACIO_DE": null,
+        "LOCAL_ID": "6652001000000400023",
+        "CREATED_US": "GISANT",
+        "CREATED_DA": "2026/05/02 01:03:50.000",
+        "LAST_EDITE": "GISANT",
+        "LAST_EDI_1": "2026/05/02 01:03:50.000",
+        "GLOBALID": "{2AE71931-794C-4BE0-9195-933529561A58}",
+        "MUNICIPIO": "665",
+        "LLAVE_GLOB": "M665{37422971-3F2C-43F2-B4B0-0AD8FF01D642}",
+        "VEREDA": "66520010000004",
+        "PRIORIDAD": 3,
+        "SHAPE.AREA": 115.10381413530558,
+        "SHAPE.LEN": 5584.092362934251,
+        "LOTE": "LT",
+        "Manzana": "MZ-002",
+        "_LABEL": "Lt 24",
+        "_MANZANA": "MZ-002",
+        "fid": 1023
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                -76.38624150115551,
+                8.26623758107866
+              ],
+              [
+                -76.38627101530217,
+                8.266170674969695
+              ],
+              [
+                -76.38640765490335,
+                8.266180997774242
+              ],
+              [
+                -76.38637814078385,
+                8.26624790388429
+              ],
+              [
+                -76.38624150115551,
+                8.26623758107866
+              ]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "OBJECTID": 362690,
+        "FICHA": 20101939,
+        "CIRULO": "034",
+        "MATRICULA": "14856",
+        "CIRCULO_MA": "034-14856",
+        "CARACTERIS": "NPH (0)",
+        "NPN": "056650001000000040023000000000",
+        "DIRECCION": "QUERUBE",
+        "SECTOR": "RURAL",
+        "TERRENO_CO": "056650001000000040023000000000",
+        "AVALUO_TER": null,
+        "AVALUO_COM": null,
+        "DIMENSION": 0,
+        "ETIQUETA": "25",
+        "RELACION_S": 0,
+        "ESPACIO_DE": null,
+        "LOCAL_ID": "6652001000000400023",
+        "CREATED_US": "GISANT",
+        "CREATED_DA": "2026/05/02 01:03:50.000",
+        "LAST_EDITE": "GISANT",
+        "LAST_EDI_1": "2026/05/02 01:03:50.000",
+        "GLOBALID": "{2AE71931-794C-4BE0-9195-933529561A58}",
+        "MUNICIPIO": "665",
+        "LLAVE_GLOB": "M665{37422971-3F2C-43F2-B4B0-0AD8FF01D642}",
+        "VEREDA": "66520010000004",
+        "PRIORIDAD": 3,
+        "SHAPE.AREA": 115.10382893076167,
+        "SHAPE.LEN": 5584.092362934251,
+        "LOTE": "LT",
+        "Manzana": "MZ-002",
+        "_LABEL": "Lt 25",
+        "_MANZANA": "MZ-002",
+        "fid": 1024
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                -76.38621198700257,
+                8.266304487189272
+              ],
+              [
+                -76.38624150115551,
+                8.26623758107866
+              ],
+              [
+                -76.38637814078385,
+                8.26624790388429
+              ],
+              [
+                -76.38634862665805,
+                8.266314809995999
+              ],
+              [
+                -76.38621198700257,
+                8.266304487189272
+              ]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "OBJECTID": 362690,
+        "FICHA": 20101939,
+        "CIRULO": "034",
+        "MATRICULA": "14856",
+        "CIRCULO_MA": "034-14856",
+        "CARACTERIS": "NPH (0)",
+        "NPN": "056650001000000040023000000000",
+        "DIRECCION": "QUERUBE",
+        "SECTOR": "RURAL",
+        "TERRENO_CO": "056650001000000040023000000000",
+        "AVALUO_TER": null,
+        "AVALUO_COM": null,
+        "DIMENSION": 0,
+        "ETIQUETA": "26",
+        "RELACION_S": 0,
+        "ESPACIO_DE": null,
+        "LOCAL_ID": "6652001000000400023",
+        "CREATED_US": "GISANT",
+        "CREATED_DA": "2026/05/02 01:03:50.000",
+        "LAST_EDITE": "GISANT",
+        "LAST_EDI_1": "2026/05/02 01:03:50.000",
+        "GLOBALID": "{2AE71931-794C-4BE0-9195-933529561A58}",
+        "MUNICIPIO": "665",
+        "LLAVE_GLOB": "M665{37422971-3F2C-43F2-B4B0-0AD8FF01D642}",
+        "VEREDA": "66520010000004",
+        "PRIORIDAD": 3,
+        "SHAPE.AREA": 115.1038461131975,
+        "SHAPE.LEN": 5584.092362934251,
+        "LOTE": "LT",
+        "Manzana": "MZ-002",
+        "_LABEL": "Lt 26",
+        "_MANZANA": "MZ-002",
+        "fid": 1025
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                -76.38618247284334,
+                8.266371393301537
+              ],
+              [
+                -76.38621198700257,
+                8.266304487189272
+              ],
+              [
+                -76.38634862665805,
+                8.266314809995999
+              ],
+              [
+                -76.38631911252598,
+                8.26638171610935
+              ],
+              [
+                -76.38618247284334,
+                8.266371393301537
+              ]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "OBJECTID": 362690,
+        "FICHA": 20101939,
+        "CIRULO": "034",
+        "MATRICULA": "14856",
+        "CIRCULO_MA": "034-14856",
+        "CARACTERIS": "NPH (0)",
+        "NPN": "056650001000000040023000000000",
+        "DIRECCION": "QUERUBE",
+        "SECTOR": "RURAL",
+        "TERRENO_CO": "056650001000000040023000000000",
+        "AVALUO_TER": null,
+        "AVALUO_COM": null,
+        "DIMENSION": 0,
+        "ETIQUETA": "27",
+        "RELACION_S": 0,
+        "ESPACIO_DE": null,
+        "LOCAL_ID": "6652001000000400023",
+        "CREATED_US": "GISANT",
+        "CREATED_DA": "2026/05/02 01:03:50.000",
+        "LAST_EDITE": "GISANT",
+        "LAST_EDI_1": "2026/05/02 01:03:50.000",
+        "GLOBALID": "{2AE71931-794C-4BE0-9195-933529561A58}",
+        "MUNICIPIO": "665",
+        "LLAVE_GLOB": "M665{37422971-3F2C-43F2-B4B0-0AD8FF01D642}",
+        "VEREDA": "66520010000004",
+        "PRIORIDAD": 3,
+        "SHAPE.AREA": 104.72730329912156,
+        "SHAPE.LEN": 5584.092362934251,
+        "LOTE": "LT",
+        "Manzana": "MZ-003",
+        "_LABEL": "Lt 27",
+        "_MANZANA": "MZ-003",
+        "fid": 1026
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                -76.38648701649635,
+                8.266448030902259
+              ],
+              [
+                -76.38634268285524,
+                8.266455126548184
+              ],
+              [
+                -76.38637338739699,
+                8.266385545039435
+              ],
+              [
+                -76.3865100270631,
+                8.266395867777835
+              ],
+              [
+                -76.38648701649635,
+                8.266448030902259
+              ]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "OBJECTID": 362690,
+        "FICHA": 20101939,
+        "CIRULO": "034",
+        "MATRICULA": "14856",
+        "CIRCULO_MA": "034-14856",
+        "CARACTERIS": "NPH (0)",
+        "NPN": "056650001000000040023000000000",
+        "DIRECCION": "QUERUBE",
+        "SECTOR": "RURAL",
+        "TERRENO_CO": "056650001000000040023000000000",
+        "AVALUO_TER": null,
+        "AVALUO_COM": null,
+        "DIMENSION": 0,
+        "ETIQUETA": "28",
+        "RELACION_S": 0,
+        "ESPACIO_DE": null,
+        "LOCAL_ID": "6652001000000400023",
+        "CREATED_US": "GISANT",
+        "CREATED_DA": "2026/05/02 01:03:50.000",
+        "LAST_EDITE": "GISANT",
+        "LAST_EDI_1": "2026/05/02 01:03:50.000",
+        "GLOBALID": "{2AE71931-794C-4BE0-9195-933529561A58}",
+        "MUNICIPIO": "665",
+        "LLAVE_GLOB": "M665{37422971-3F2C-43F2-B4B0-0AD8FF01D642}",
+        "VEREDA": "66520010000004",
+        "PRIORIDAD": 3,
+        "SHAPE.AREA": 115.10378400003538,
+        "SHAPE.LEN": 5584.092362934251,
+        "LOTE": "LT",
+        "Manzana": "MZ-003",
+        "_LABEL": "Lt 28",
+        "_MANZANA": "MZ-003",
+        "fid": 1027
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                -76.38637338739699,
+                8.266385545039435
+              ],
+              [
+                -76.38640290151827,
+                8.266318638925652
+              ],
+              [
+                -76.38653954115722,
+                8.266328961662962
+              ],
+              [
+                -76.3865100270631,
+                8.266395867777835
+              ],
+              [
+                -76.38637338739699,
+                8.266385545039435
+              ]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "OBJECTID": 362690,
+        "FICHA": 20101939,
+        "CIRULO": "034",
+        "MATRICULA": "14856",
+        "CIRCULO_MA": "034-14856",
+        "CARACTERIS": "NPH (0)",
+        "NPN": "056650001000000040023000000000",
+        "DIRECCION": "QUERUBE",
+        "SECTOR": "RURAL",
+        "TERRENO_CO": "056650001000000040023000000000",
+        "AVALUO_TER": null,
+        "AVALUO_COM": null,
+        "DIMENSION": 0,
+        "ETIQUETA": "29",
+        "RELACION_S": 0,
+        "ESPACIO_DE": null,
+        "LOCAL_ID": "6652001000000400023",
+        "CREATED_US": "GISANT",
+        "CREATED_DA": "2026/05/02 01:03:50.000",
+        "LAST_EDITE": "GISANT",
+        "LAST_EDI_1": "2026/05/02 01:03:50.000",
+        "GLOBALID": "{2AE71931-794C-4BE0-9195-933529561A58}",
+        "MUNICIPIO": "665",
+        "LLAVE_GLOB": "M665{37422971-3F2C-43F2-B4B0-0AD8FF01D642}",
+        "VEREDA": "66520010000004",
+        "PRIORIDAD": 3,
+        "SHAPE.AREA": 115.10377793572843,
+        "SHAPE.LEN": 5584.092362934251,
+        "LOTE": "LT",
+        "Manzana": "MZ-003",
+        "_LABEL": "Lt 29",
+        "_MANZANA": "MZ-003",
+        "fid": 1028
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                -76.38640290151827,
+                8.266318638925652
+              ],
+              [
+                -76.38643241563328,
+                8.266251732813524
+              ],
+              [
+                -76.38656905524506,
+                8.266262055549742
+              ],
+              [
+                -76.38653954115722,
+                8.266328961662962
+              ],
+              [
+                -76.38640290151827,
+                8.266318638925652
+              ]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "OBJECTID": 362690,
+        "FICHA": 20101939,
+        "CIRULO": "034",
+        "MATRICULA": "14856",
+        "CIRCULO_MA": "034-14856",
+        "CARACTERIS": "NPH (0)",
+        "NPN": "056650001000000040023000000000",
+        "DIRECCION": "QUERUBE",
+        "SECTOR": "RURAL",
+        "TERRENO_CO": "056650001000000040023000000000",
+        "AVALUO_TER": null,
+        "AVALUO_COM": null,
+        "DIMENSION": 0,
+        "ETIQUETA": "30",
+        "RELACION_S": 0,
+        "ESPACIO_DE": null,
+        "LOCAL_ID": "6652001000000400023",
+        "CREATED_US": "GISANT",
+        "CREATED_DA": "2026/05/02 01:03:50.000",
+        "LAST_EDITE": "GISANT",
+        "LAST_EDI_1": "2026/05/02 01:03:50.000",
+        "GLOBALID": "{2AE71931-794C-4BE0-9195-933529561A58}",
+        "MUNICIPIO": "665",
+        "LLAVE_GLOB": "M665{37422971-3F2C-43F2-B4B0-0AD8FF01D642}",
+        "VEREDA": "66520010000004",
+        "PRIORIDAD": 3,
+        "SHAPE.AREA": 115.10376400873065,
+        "SHAPE.LEN": 5584.092362934251,
+        "LOTE": "LT",
+        "Manzana": "MZ-003",
+        "_LABEL": "Lt 30",
+        "_MANZANA": "MZ-003",
+        "fid": 1029
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                -76.38643241563328,
+                8.266251732813524
+              ],
+              [
+                -76.386461929742,
+                8.266184826703045
+              ],
+              [
+                -76.38659856932664,
+                8.266195149438172
+              ],
+              [
+                -76.38656905524506,
+                8.266262055549742
+              ],
+              [
+                -76.38643241563328,
+                8.266251732813524
+              ]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "OBJECTID": 362690,
+        "FICHA": 20101939,
+        "CIRULO": "034",
+        "MATRICULA": "14856",
+        "CIRCULO_MA": "034-14856",
+        "CARACTERIS": "NPH (0)",
+        "NPN": "056650001000000040023000000000",
+        "DIRECCION": "QUERUBE",
+        "SECTOR": "RURAL",
+        "TERRENO_CO": "056650001000000040023000000000",
+        "AVALUO_TER": null,
+        "AVALUO_COM": null,
+        "DIMENSION": 0,
+        "ETIQUETA": "31",
+        "RELACION_S": 0,
+        "ESPACIO_DE": null,
+        "LOCAL_ID": "6652001000000400023",
+        "CREATED_US": "GISANT",
+        "CREATED_DA": "2026/05/02 01:03:50.000",
+        "LAST_EDITE": "GISANT",
+        "LAST_EDI_1": "2026/05/02 01:03:50.000",
+        "GLOBALID": "{2AE71931-794C-4BE0-9195-933529561A58}",
+        "MUNICIPIO": "665",
+        "LLAVE_GLOB": "M665{37422971-3F2C-43F2-B4B0-0AD8FF01D642}",
+        "VEREDA": "66520010000004",
+        "PRIORIDAD": 3,
+        "SHAPE.AREA": 115.10379474982619,
+        "SHAPE.LEN": 5584.092362934251,
+        "LOTE": "LT",
+        "Manzana": "MZ-003",
+        "_LABEL": "Lt 31",
+        "_MANZANA": "MZ-003",
+        "fid": 1030
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                -76.386461929742,
+                8.266184826703045
+              ],
+              [
+                -76.38649144384445,
+                8.26611792059422
+              ],
+              [
+                -76.38662808340193,
+                8.266128243328257
+              ],
+              [
+                -76.38659856932664,
+                8.266195149438172
+              ],
+              [
+                -76.386461929742,
+                8.266184826703045
+              ]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "OBJECTID": 362690,
+        "FICHA": 20101939,
+        "CIRULO": "034",
+        "MATRICULA": "14856",
+        "CIRCULO_MA": "034-14856",
+        "CARACTERIS": "NPH (0)",
+        "NPN": "056650001000000040023000000000",
+        "DIRECCION": "QUERUBE",
+        "SECTOR": "RURAL",
+        "TERRENO_CO": "056650001000000040023000000000",
+        "AVALUO_TER": null,
+        "AVALUO_COM": null,
+        "DIMENSION": 0,
+        "ETIQUETA": "32",
+        "RELACION_S": 0,
+        "ESPACIO_DE": null,
+        "LOCAL_ID": "6652001000000400023",
+        "CREATED_US": "GISANT",
+        "CREATED_DA": "2026/05/02 01:03:50.000",
+        "LAST_EDITE": "GISANT",
+        "LAST_EDI_1": "2026/05/02 01:03:50.000",
+        "GLOBALID": "{2AE71931-794C-4BE0-9195-933529561A58}",
+        "MUNICIPIO": "665",
+        "LLAVE_GLOB": "M665{37422971-3F2C-43F2-B4B0-0AD8FF01D642}",
+        "VEREDA": "66520010000004",
+        "PRIORIDAD": 3,
+        "SHAPE.AREA": 116.38096938975873,
+        "SHAPE.LEN": 5584.092362934251,
+        "LOTE": "LT",
+        "Manzana": "MZ-003",
+        "_LABEL": "Lt 32",
+        "_MANZANA": "MZ-003",
+        "fid": 1031
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                -76.38662808340193,
+                8.266128243328257
+              ],
+              [
+                -76.38649144384445,
+                8.26611792059422
+              ],
+              [
+                -76.38652095794062,
+                8.266051014487045
+              ],
+              [
+                -76.38665825276831,
+                8.266059852643895
+              ],
+              [
+                -76.38665825276297,
+                8.26605985265598
+              ],
+              [
+                -76.38662808340193,
+                8.266128243328257
+              ]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "OBJECTID": 362690,
+        "FICHA": 20101939,
+        "CIRULO": "034",
+        "MATRICULA": "14856",
+        "CIRCULO_MA": "034-14856",
+        "CARACTERIS": "NPH (0)",
+        "NPN": "056650001000000040023000000000",
+        "DIRECCION": "QUERUBE",
+        "SECTOR": "RURAL",
+        "TERRENO_CO": "056650001000000040023000000000",
+        "AVALUO_TER": null,
+        "AVALUO_COM": null,
+        "DIMENSION": 0,
+        "ETIQUETA": "33",
+        "RELACION_S": 0,
+        "ESPACIO_DE": null,
+        "LOCAL_ID": "6652001000000400023",
+        "CREATED_US": "GISANT",
+        "CREATED_DA": "2026/05/02 01:03:50.000",
+        "LAST_EDITE": "GISANT",
+        "LAST_EDI_1": "2026/05/02 01:03:50.000",
+        "GLOBALID": "{2AE71931-794C-4BE0-9195-933529561A58}",
+        "MUNICIPIO": "665",
+        "LLAVE_GLOB": "M665{37422971-3F2C-43F2-B4B0-0AD8FF01D642}",
+        "VEREDA": "66520010000004",
+        "PRIORIDAD": 3,
+        "SHAPE.AREA": 118.65909535163296,
+        "SHAPE.LEN": 5584.092362934251,
+        "LOTE": "LT",
+        "Manzana": "MZ-003",
+        "_LABEL": "Lt 33",
+        "_MANZANA": "MZ-003",
+        "fid": 1032
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                -76.38676472294766,
+                8.266138566012584
+              ],
+              [
+                -76.38662808340193,
+                8.266128243328257
+              ],
+              [
+                -76.38665825276297,
+                8.26605985265598
+              ],
+              [
+                -76.38665825276831,
+                8.266059852643895
+              ],
+              [
+                -76.38679491738665,
+                8.266068650208142
+              ],
+              [
+                -76.38676472294766,
+                8.266138566012584
+              ]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "OBJECTID": 362690,
+        "FICHA": 20101939,
+        "CIRULO": "034",
+        "MATRICULA": "14856",
+        "CIRCULO_MA": "034-14856",
+        "CARACTERIS": "NPH (0)",
+        "NPN": "056650001000000040023000000000",
+        "DIRECCION": "QUERUBE",
+        "SECTOR": "RURAL",
+        "TERRENO_CO": "056650001000000040023000000000",
+        "AVALUO_TER": null,
+        "AVALUO_COM": null,
+        "DIMENSION": 0,
+        "ETIQUETA": "34",
+        "RELACION_S": 0,
+        "ESPACIO_DE": null,
+        "LOCAL_ID": "6652001000000400023",
+        "CREATED_US": "GISANT",
+        "CREATED_DA": "2026/05/02 01:03:50.000",
+        "LAST_EDITE": "GISANT",
+        "LAST_EDI_1": "2026/05/02 01:03:50.000",
+        "GLOBALID": "{2AE71931-794C-4BE0-9195-933529561A58}",
+        "MUNICIPIO": "665",
+        "LLAVE_GLOB": "M665{37422971-3F2C-43F2-B4B0-0AD8FF01D642}",
+        "VEREDA": "66520010000004",
+        "PRIORIDAD": 3,
+        "SHAPE.AREA": 115.10372551018372,
+        "SHAPE.LEN": 5584.092362934251,
+        "LOTE": "LT",
+        "Manzana": "MZ-003",
+        "_LABEL": "Lt 34",
+        "_MANZANA": "MZ-003",
+        "fid": 1033
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                -76.38659856932664,
+                8.266195149438172
+              ],
+              [
+                -76.38662808340193,
+                8.266128243328257
+              ],
+              [
+                -76.38676472294766,
+                8.266138566012584
+              ],
+              [
+                -76.38673520889951,
+                8.266205472123591
+              ],
+              [
+                -76.38659856932664,
+                8.266195149438172
+              ]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "OBJECTID": 362690,
+        "FICHA": 20101939,
+        "CIRULO": "034",
+        "MATRICULA": "14856",
+        "CIRCULO_MA": "034-14856",
+        "CARACTERIS": "NPH (0)",
+        "NPN": "056650001000000040023000000000",
+        "DIRECCION": "QUERUBE",
+        "SECTOR": "RURAL",
+        "TERRENO_CO": "056650001000000040023000000000",
+        "AVALUO_TER": null,
+        "AVALUO_COM": null,
+        "DIMENSION": 0,
+        "ETIQUETA": "35",
+        "RELACION_S": 0,
+        "ESPACIO_DE": null,
+        "LOCAL_ID": "6652001000000400023",
+        "CREATED_US": "GISANT",
+        "CREATED_DA": "2026/05/02 01:03:50.000",
+        "LAST_EDITE": "GISANT",
+        "LAST_EDI_1": "2026/05/02 01:03:50.000",
+        "GLOBALID": "{2AE71931-794C-4BE0-9195-933529561A58}",
+        "MUNICIPIO": "665",
+        "LLAVE_GLOB": "M665{37422971-3F2C-43F2-B4B0-0AD8FF01D642}",
+        "VEREDA": "66520010000004",
+        "PRIORIDAD": 3,
+        "SHAPE.AREA": 115.10373353632167,
+        "SHAPE.LEN": 5584.092362934251,
+        "LOTE": "LT",
+        "Manzana": "MZ-003",
+        "_LABEL": "Lt 35",
+        "_MANZANA": "MZ-003",
+        "fid": 1034
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                -76.38656905524506,
+                8.266262055549742
+              ],
+              [
+                -76.38659856932664,
+                8.266195149438172
+              ],
+              [
+                -76.38673520889951,
+                8.266205472123591
+              ],
+              [
+                -76.3867056948451,
+                8.266272378236248
+              ],
+              [
+                -76.38656905524506,
+                8.266262055549742
+              ]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "OBJECTID": 362690,
+        "FICHA": 20101939,
+        "CIRULO": "034",
+        "MATRICULA": "14856",
+        "CIRCULO_MA": "034-14856",
+        "CARACTERIS": "NPH (0)",
+        "NPN": "056650001000000040023000000000",
+        "DIRECCION": "QUERUBE",
+        "SECTOR": "RURAL",
+        "TERRENO_CO": "056650001000000040023000000000",
+        "AVALUO_TER": null,
+        "AVALUO_COM": null,
+        "DIMENSION": 0,
+        "ETIQUETA": "36",
+        "RELACION_S": 0,
+        "ESPACIO_DE": null,
+        "LOCAL_ID": "6652001000000400023",
+        "CREATED_US": "GISANT",
+        "CREATED_DA": "2026/05/02 01:03:50.000",
+        "LAST_EDITE": "GISANT",
+        "LAST_EDI_1": "2026/05/02 01:03:50.000",
+        "GLOBALID": "{2AE71931-794C-4BE0-9195-933529561A58}",
+        "MUNICIPIO": "665",
+        "LLAVE_GLOB": "M665{37422971-3F2C-43F2-B4B0-0AD8FF01D642}",
+        "VEREDA": "66520010000004",
+        "PRIORIDAD": 3,
+        "SHAPE.AREA": 115.10376178147271,
+        "SHAPE.LEN": 5584.092362934251,
+        "LOTE": "LT",
+        "Manzana": "MZ-003",
+        "_LABEL": "Lt 36",
+        "_MANZANA": "MZ-003",
+        "fid": 1035
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                -76.38653954115722,
+                8.266328961662962
+              ],
+              [
+                -76.38656905524506,
+                8.266262055549742
+              ],
+              [
+                -76.3867056948451,
+                8.266272378236248
+              ],
+              [
+                -76.3866761807844,
+                8.266339284350563
+              ],
+              [
+                -76.38653954115722,
+                8.266328961662962
+              ]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "OBJECTID": 362690,
+        "FICHA": 20101939,
+        "CIRULO": "034",
+        "MATRICULA": "14856",
+        "CIRCULO_MA": "034-14856",
+        "CARACTERIS": "NPH (0)",
+        "NPN": "056650001000000040023000000000",
+        "DIRECCION": "QUERUBE",
+        "SECTOR": "RURAL",
+        "TERRENO_CO": "056650001000000040023000000000",
+        "AVALUO_TER": null,
+        "AVALUO_COM": null,
+        "DIMENSION": 0,
+        "ETIQUETA": "37",
+        "RELACION_S": 0,
+        "ESPACIO_DE": null,
+        "LOCAL_ID": "6652001000000400023",
+        "CREATED_US": "GISANT",
+        "CREATED_DA": "2026/05/02 01:03:50.000",
+        "LAST_EDITE": "GISANT",
+        "LAST_EDI_1": "2026/05/02 01:03:50.000",
+        "GLOBALID": "{2AE71931-794C-4BE0-9195-933529561A58}",
+        "MUNICIPIO": "665",
+        "LLAVE_GLOB": "M665{37422971-3F2C-43F2-B4B0-0AD8FF01D642}",
+        "VEREDA": "66520010000004",
+        "PRIORIDAD": 3,
+        "SHAPE.AREA": 115.10377735318616,
+        "SHAPE.LEN": 5584.092362934251,
+        "LOTE": "LT",
+        "Manzana": "MZ-003",
+        "_LABEL": "Lt 37",
+        "_MANZANA": "MZ-003",
+        "fid": 1036
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                -76.3865100270631,
+                8.266395867777835
+              ],
+              [
+                -76.38653954115722,
+                8.266328961662962
+              ],
+              [
+                -76.3866761807844,
+                8.266339284350563
+              ],
+              [
+                -76.38664666671743,
+                8.266406190466522
+              ],
+              [
+                -76.3865100270631,
+                8.266395867777835
+              ]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "OBJECTID": 362690,
+        "FICHA": 20101939,
+        "CIRULO": "034",
+        "MATRICULA": "14856",
+        "CIRCULO_MA": "034-14856",
+        "CARACTERIS": "NPH (0)",
+        "NPN": "056650001000000040023000000000",
+        "DIRECCION": "QUERUBE",
+        "SECTOR": "RURAL",
+        "TERRENO_CO": "056650001000000040023000000000",
+        "AVALUO_TER": null,
+        "AVALUO_COM": null,
+        "DIMENSION": 0,
+        "ETIQUETA": "38",
+        "RELACION_S": 0,
+        "ESPACIO_DE": null,
+        "LOCAL_ID": "6652001000000400023",
+        "CREATED_US": "GISANT",
+        "CREATED_DA": "2026/05/02 01:03:50.000",
+        "LAST_EDITE": "GISANT",
+        "LAST_EDI_1": "2026/05/02 01:03:50.000",
+        "GLOBALID": "{2AE71931-794C-4BE0-9195-933529561A58}",
+        "MUNICIPIO": "665",
+        "LLAVE_GLOB": "M665{37422971-3F2C-43F2-B4B0-0AD8FF01D642}",
+        "VEREDA": "66520010000004",
+        "PRIORIDAD": 3,
+        "SHAPE.AREA": 74.75766293215565,
+        "SHAPE.LEN": 5584.092362934251,
+        "LOTE": "LT",
+        "Manzana": "MZ-003",
+        "_LABEL": "Lt 38",
+        "_MANZANA": "MZ-003",
+        "fid": 1037
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                -76.38663133962439,
+                8.266440935800633
+              ],
+              [
+                -76.38648701649635,
+                8.266448030902259
+              ],
+              [
+                -76.3865100270631,
+                8.266395867777835
+              ],
+              [
+                -76.38664666671743,
+                8.266406190466522
+              ],
+              [
+                -76.38663133962439,
+                8.266440935800633
+              ]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "OBJECTID": 362690,
+        "FICHA": 20101939,
+        "CIRULO": "034",
+        "MATRICULA": "14856",
+        "CIRCULO_MA": "034-14856",
+        "CARACTERIS": "NPH (0)",
+        "NPN": "056650001000000040023000000000",
+        "DIRECCION": "QUERUBE",
+        "SECTOR": "RURAL",
+        "TERRENO_CO": "056650001000000040023000000000",
+        "AVALUO_TER": null,
+        "AVALUO_COM": null,
+        "DIMENSION": 0,
+        "ETIQUETA": "39",
+        "RELACION_S": 0,
+        "ESPACIO_DE": null,
+        "LOCAL_ID": "6652001000000400023",
+        "CREATED_US": "GISANT",
+        "CREATED_DA": "2026/05/02 01:03:50.000",
+        "LAST_EDITE": "GISANT",
+        "LAST_EDI_1": "2026/05/02 01:03:50.000",
+        "GLOBALID": "{2AE71931-794C-4BE0-9195-933529561A58}",
+        "MUNICIPIO": "665",
+        "LLAVE_GLOB": "M665{37422971-3F2C-43F2-B4B0-0AD8FF01D642}",
+        "VEREDA": "66520010000004",
+        "PRIORIDAD": 3,
+        "SHAPE.AREA": 117.68725985987112,
+        "SHAPE.LEN": 5584.092362934251,
+        "LOTE": "LT",
+        "Manzana": "MZ-004",
+        "_LABEL": "Lt 39",
+        "_MANZANA": "MZ-004",
+        "fid": 1038
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                -76.38596884310013,
+                8.265780693033587
+              ],
+              [
+                -76.38599918982354,
+                8.265715051492048
+              ],
+              [
+                -76.38614414905875,
+                8.265719284646988
+              ],
+              [
+                -76.38611400842346,
+                8.265785023961438
+              ],
+              [
+                -76.38596884310013,
+                8.265780693033587
+              ]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "OBJECTID": 362690,
+        "FICHA": 20101939,
+        "CIRULO": "034",
+        "MATRICULA": "14856",
+        "CIRCULO_MA": "034-14856",
+        "CARACTERIS": "NPH (0)",
+        "NPN": "056650001000000040023000000000",
+        "DIRECCION": "QUERUBE",
+        "SECTOR": "RURAL",
+        "TERRENO_CO": "056650001000000040023000000000",
+        "AVALUO_TER": null,
+        "AVALUO_COM": null,
+        "DIMENSION": 0,
+        "ETIQUETA": "40",
+        "RELACION_S": 0,
+        "ESPACIO_DE": null,
+        "LOCAL_ID": "6652001000000400023",
+        "CREATED_US": "GISANT",
+        "CREATED_DA": "2026/05/02 01:03:50.000",
+        "LAST_EDITE": "GISANT",
+        "LAST_EDI_1": "2026/05/02 01:03:50.000",
+        "GLOBALID": "{2AE71931-794C-4BE0-9195-933529561A58}",
+        "MUNICIPIO": "665",
+        "LLAVE_GLOB": "M665{37422971-3F2C-43F2-B4B0-0AD8FF01D642}",
+        "VEREDA": "66520010000004",
+        "PRIORIDAD": 3,
+        "SHAPE.AREA": 117.48616220522672,
+        "SHAPE.LEN": 5584.092362934251,
+        "LOTE": "LT",
+        "Manzana": "MZ-004",
+        "_LABEL": "Lt 40",
+        "_MANZANA": "MZ-004",
+        "fid": 1039
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                -76.38599918982354,
+                8.265715051492048
+              ],
+              [
+                -76.38602953654033,
+                8.265649409952076
+              ],
+              [
+                -76.38617428961673,
+                8.265653545488485
+              ],
+              [
+                -76.38614414905875,
+                8.265719284646988
+              ],
+              [
+                -76.38599918982354,
+                8.265715051492048
+              ]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "OBJECTID": 362690,
+        "FICHA": 20101939,
+        "CIRULO": "034",
+        "MATRICULA": "14856",
+        "CIRCULO_MA": "034-14856",
+        "CARACTERIS": "NPH (0)",
+        "NPN": "056650001000000040023000000000",
+        "DIRECCION": "QUERUBE",
+        "SECTOR": "RURAL",
+        "TERRENO_CO": "056650001000000040023000000000",
+        "AVALUO_TER": null,
+        "AVALUO_COM": null,
+        "DIMENSION": 0,
+        "ETIQUETA": "41",
+        "RELACION_S": 0,
+        "ESPACIO_DE": null,
+        "LOCAL_ID": "6652001000000400023",
+        "CREATED_US": "GISANT",
+        "CREATED_DA": "2026/05/02 01:03:50.000",
+        "LAST_EDITE": "GISANT",
+        "LAST_EDI_1": "2026/05/02 01:03:50.000",
+        "GLOBALID": "{2AE71931-794C-4BE0-9195-933529561A58}",
+        "MUNICIPIO": "665",
+        "LLAVE_GLOB": "M665{37422971-3F2C-43F2-B4B0-0AD8FF01D642}",
+        "VEREDA": "66520010000004",
+        "PRIORIDAD": 3,
+        "SHAPE.AREA": 117.28505153860897,
+        "SHAPE.LEN": 5584.092362934251,
+        "LOTE": "LT",
+        "Manzana": "MZ-004",
+        "_LABEL": "Lt 41",
+        "_MANZANA": "MZ-004",
+        "fid": 1040
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                -76.38602953654033,
+                8.265649409952076
+              ],
+              [
+                -76.38605988325055,
+                8.26558376841367
+              ],
+              [
+                -76.38620443009734,
+                8.265587806486197
+              ],
+              [
+                -76.38617428961673,
+                8.265653545488485
+              ],
+              [
+                -76.38602953654033,
+                8.265649409952076
+              ]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "OBJECTID": 362690,
+        "FICHA": 20101939,
+        "CIRULO": "034",
+        "MATRICULA": "14856",
+        "CIRCULO_MA": "034-14856",
+        "CARACTERIS": "NPH (0)",
+        "NPN": "056650001000000040023000000000",
+        "DIRECCION": "QUERUBE",
+        "SECTOR": "RURAL",
+        "TERRENO_CO": "056650001000000040023000000000",
+        "AVALUO_TER": null,
+        "AVALUO_COM": null,
+        "DIMENSION": 0,
+        "ETIQUETA": "42",
+        "RELACION_S": 0,
+        "ESPACIO_DE": null,
+        "LOCAL_ID": "6652001000000400023",
+        "CREATED_US": "GISANT",
+        "CREATED_DA": "2026/05/02 01:03:50.000",
+        "LAST_EDITE": "GISANT",
+        "LAST_EDI_1": "2026/05/02 01:03:50.000",
+        "GLOBALID": "{2AE71931-794C-4BE0-9195-933529561A58}",
+        "MUNICIPIO": "665",
+        "LLAVE_GLOB": "M665{37422971-3F2C-43F2-B4B0-0AD8FF01D642}",
+        "VEREDA": "66520010000004",
+        "PRIORIDAD": 3,
+        "SHAPE.AREA": 117.08393461117521,
+        "SHAPE.LEN": 5584.092362934251,
+        "LOTE": "LT",
+        "Manzana": "MZ-004",
+        "_LABEL": "Lt 42",
+        "_MANZANA": "MZ-004",
+        "fid": 1041
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                -76.38605988325055,
+                8.26558376841367
+              ],
+              [
+                -76.38609022995418,
+                8.265518126876843
+              ],
+              [
+                -76.38623457050038,
+                8.265522067640388
+              ],
+              [
+                -76.38620443009734,
+                8.265587806486197
+              ],
+              [
+                -76.38605988325055,
+                8.26558376841367
+              ]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "OBJECTID": 362690,
+        "FICHA": 20101939,
+        "CIRULO": "034",
+        "MATRICULA": "14856",
+        "CIRCULO_MA": "034-14856",
+        "CARACTERIS": "NPH (0)",
+        "NPN": "056650001000000040023000000000",
+        "DIRECCION": "QUERUBE",
+        "SECTOR": "RURAL",
+        "TERRENO_CO": "056650001000000040023000000000",
+        "AVALUO_TER": null,
+        "AVALUO_COM": null,
+        "DIMENSION": 0,
+        "ETIQUETA": "43",
+        "RELACION_S": 0,
+        "ESPACIO_DE": null,
+        "LOCAL_ID": "6652001000000400023",
+        "CREATED_US": "GISANT",
+        "CREATED_DA": "2026/05/02 01:03:50.000",
+        "LAST_EDITE": "GISANT",
+        "LAST_EDI_1": "2026/05/02 01:03:50.000",
+        "GLOBALID": "{2AE71931-794C-4BE0-9195-933529561A58}",
+        "MUNICIPIO": "665",
+        "LLAVE_GLOB": "M665{37422971-3F2C-43F2-B4B0-0AD8FF01D642}",
+        "VEREDA": "66520010000004",
+        "PRIORIDAD": 3,
+        "SHAPE.AREA": 151.29085788875818,
+        "SHAPE.LEN": 5584.092362934251,
+        "LOTE": "LT",
+        "Manzana": "MZ-004",
+        "_LABEL": "Lt 43",
+        "_MANZANA": "MZ-004",
+        "fid": 1042
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                -76.38623457050038,
+                8.265522067640388
+              ],
+              [
+                -76.38609022995418,
+                8.265518126876843
+              ],
+              [
+                -76.3861289417819,
+                8.265434391112448
+              ],
+              [
+                -76.38627416698966,
+                8.26543570422724
+              ],
+              [
+                -76.38623457050038,
+                8.265522067640388
+              ]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "OBJECTID": 362690,
+        "FICHA": 20101939,
+        "CIRULO": "034",
+        "MATRICULA": "14856",
+        "CIRCULO_MA": "034-14856",
+        "CARACTERIS": "NPH (0)",
+        "NPN": "056650001000000040023000000000",
+        "DIRECCION": "QUERUBE",
+        "SECTOR": "RURAL",
+        "TERRENO_CO": "056650001000000040023000000000",
+        "AVALUO_TER": null,
+        "AVALUO_COM": null,
+        "DIMENSION": 0,
+        "ETIQUETA": "44",
+        "RELACION_S": 0,
+        "ESPACIO_DE": null,
+        "LOCAL_ID": "6652001000000400023",
+        "CREATED_US": "GISANT",
+        "CREATED_DA": "2026/05/02 01:03:50.000",
+        "LAST_EDITE": "GISANT",
+        "LAST_EDI_1": "2026/05/02 01:03:50.000",
+        "GLOBALID": "{2AE71931-794C-4BE0-9195-933529561A58}",
+        "MUNICIPIO": "665",
+        "LLAVE_GLOB": "M665{37422971-3F2C-43F2-B4B0-0AD8FF01D642}",
+        "VEREDA": "66520010000004",
+        "PRIORIDAD": 3,
+        "SHAPE.AREA": 155.9612261732109,
+        "SHAPE.LEN": 5584.092362934251,
+        "LOTE": "LT",
+        "Manzana": "MZ-004",
+        "_LABEL": "Lt 44",
+        "_MANZANA": "MZ-004",
+        "fid": 1043
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                -76.38637892310423,
+                8.265526008680206
+              ],
+              [
+                -76.38623457050038,
+                8.265522067640388
+              ],
+              [
+                -76.38627416698966,
+                8.26543570422724
+              ],
+              [
+                -76.38641939217692,
+                8.265437017288749
+              ],
+              [
+                -76.38637892310423,
+                8.265526008680206
+              ]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "OBJECTID": 362690,
+        "FICHA": 20101939,
+        "CIRULO": "034",
+        "MATRICULA": "14856",
+        "CIRCULO_MA": "034-14856",
+        "CARACTERIS": "NPH (0)",
+        "NPN": "056650001000000040023000000000",
+        "DIRECCION": "QUERUBE",
+        "SECTOR": "RURAL",
+        "TERRENO_CO": "056650001000000040023000000000",
+        "AVALUO_TER": null,
+        "AVALUO_COM": null,
+        "DIMENSION": 0,
+        "ETIQUETA": "45",
+        "RELACION_S": 0,
+        "ESPACIO_DE": null,
+        "LOCAL_ID": "6652001000000400023",
+        "CREATED_US": "GISANT",
+        "CREATED_DA": "2026/05/02 01:03:50.000",
+        "LAST_EDITE": "GISANT",
+        "LAST_EDI_1": "2026/05/02 01:03:50.000",
+        "GLOBALID": "{2AE71931-794C-4BE0-9195-933529561A58}",
+        "MUNICIPIO": "665",
+        "LLAVE_GLOB": "M665{37422971-3F2C-43F2-B4B0-0AD8FF01D642}",
+        "VEREDA": "66520010000004",
+        "PRIORIDAD": 3,
+        "SHAPE.AREA": 117.25291255442426,
+        "SHAPE.LEN": 5584.092362934251,
+        "LOTE": "LT",
+        "Manzana": "MZ-004",
+        "_LABEL": "Lt 45",
+        "_MANZANA": "MZ-004",
+        "fid": 1044
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                -76.38623457050038,
+                8.265522067640388
+              ],
+              [
+                -76.38637892310423,
+                8.265526008680206
+              ],
+              [
+                -76.38634898399073,
+                8.265591844702488
+              ],
+              [
+                -76.38620443009734,
+                8.265587806486197
+              ],
+              [
+                -76.38623457050038,
+                8.265522067640388
+              ]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "OBJECTID": 362690,
+        "FICHA": 20101939,
+        "CIRULO": "034",
+        "MATRICULA": "14856",
+        "CIRCULO_MA": "034-14856",
+        "CARACTERIS": "NPH (0)",
+        "NPN": "056650001000000040023000000000",
+        "DIRECCION": "QUERUBE",
+        "SECTOR": "RURAL",
+        "TERRENO_CO": "056650001000000040023000000000",
+        "AVALUO_TER": null,
+        "AVALUO_COM": null,
+        "DIMENSION": 0,
+        "ETIQUETA": "46",
+        "RELACION_S": 0,
+        "ESPACIO_DE": null,
+        "LOCAL_ID": "6652001000000400023",
+        "CREATED_US": "GISANT",
+        "CREATED_DA": "2026/05/02 01:03:50.000",
+        "LAST_EDITE": "GISANT",
+        "LAST_EDI_1": "2026/05/02 01:03:50.000",
+        "GLOBALID": "{2AE71931-794C-4BE0-9195-933529561A58}",
+        "MUNICIPIO": "665",
+        "LLAVE_GLOB": "M665{37422971-3F2C-43F2-B4B0-0AD8FF01D642}",
+        "VEREDA": "66520010000004",
+        "PRIORIDAD": 3,
+        "SHAPE.AREA": 117.45022727362812,
+        "SHAPE.LEN": 5584.092362934251,
+        "LOTE": "LT",
+        "Manzana": "MZ-004",
+        "_LABEL": "Lt 46",
+        "_MANZANA": "MZ-004",
+        "fid": 1045
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                -76.38620443009734,
+                8.265587806486197
+              ],
+              [
+                -76.38634898399073,
+                8.265591844702488
+              ],
+              [
+                -76.38631904473276,
+                8.265657681029912
+              ],
+              [
+                -76.38617428961673,
+                8.265653545488485
+              ],
+              [
+                -76.38620443009734,
+                8.265587806486197
+              ]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "OBJECTID": 362690,
+        "FICHA": 20101939,
+        "CIRULO": "034",
+        "MATRICULA": "14856",
+        "CIRCULO_MA": "034-14856",
+        "CARACTERIS": "NPH (0)",
+        "NPN": "056650001000000040023000000000",
+        "DIRECCION": "QUERUBE",
+        "SECTOR": "RURAL",
+        "TERRENO_CO": "056650001000000040023000000000",
+        "AVALUO_TER": null,
+        "AVALUO_COM": null,
+        "DIMENSION": 0,
+        "ETIQUETA": "47",
+        "RELACION_S": 0,
+        "ESPACIO_DE": null,
+        "LOCAL_ID": "6652001000000400023",
+        "CREATED_US": "GISANT",
+        "CREATED_DA": "2026/05/02 01:03:50.000",
+        "LAST_EDITE": "GISANT",
+        "LAST_EDI_1": "2026/05/02 01:03:50.000",
+        "GLOBALID": "{2AE71931-794C-4BE0-9195-933529561A58}",
+        "MUNICIPIO": "665",
+        "LLAVE_GLOB": "M665{37422971-3F2C-43F2-B4B0-0AD8FF01D642}",
+        "VEREDA": "66520010000004",
+        "PRIORIDAD": 3,
+        "SHAPE.AREA": 117.64752899063751,
+        "SHAPE.LEN": 5584.092362934251,
+        "LOTE": "LT",
+        "Manzana": "MZ-004",
+        "_LABEL": "Lt 47",
+        "_MANZANA": "MZ-004",
+        "fid": 1046
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                -76.38617428961673,
+                8.265653545488485
+              ],
+              [
+                -76.38631904473276,
+                8.265657681029912
+              ],
+              [
+                -76.38628910533053,
+                8.265723517661964
+              ],
+              [
+                -76.38614414905875,
+                8.265719284646988
+              ],
+              [
+                -76.38617428961673,
+                8.265653545488485
+              ]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "OBJECTID": 362690,
+        "FICHA": 20101939,
+        "CIRULO": "034",
+        "MATRICULA": "14856",
+        "CIRCULO_MA": "034-14856",
+        "CARACTERIS": "NPH (0)",
+        "NPN": "056650001000000040023000000000",
+        "DIRECCION": "QUERUBE",
+        "SECTOR": "RURAL",
+        "TERRENO_CO": "056650001000000040023000000000",
+        "AVALUO_TER": null,
+        "AVALUO_COM": null,
+        "DIMENSION": 0,
+        "ETIQUETA": "48",
+        "RELACION_S": 0,
+        "ESPACIO_DE": null,
+        "LOCAL_ID": "6652001000000400023",
+        "CREATED_US": "GISANT",
+        "CREATED_DA": "2026/05/02 01:03:50.000",
+        "LAST_EDITE": "GISANT",
+        "LAST_EDI_1": "2026/05/02 01:03:50.000",
+        "GLOBALID": "{2AE71931-794C-4BE0-9195-933529561A58}",
+        "MUNICIPIO": "665",
+        "LLAVE_GLOB": "M665{37422971-3F2C-43F2-B4B0-0AD8FF01D642}",
+        "VEREDA": "66520010000004",
+        "PRIORIDAD": 3,
+        "SHAPE.AREA": 117.84484847448766,
+        "SHAPE.LEN": 5584.092362934251,
+        "LOTE": "LT",
+        "Manzana": "MZ-004",
+        "_LABEL": "Lt 48",
+        "_MANZANA": "MZ-004",
+        "fid": 1047
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                -76.38614414905875,
+                8.265719284646988
+              ],
+              [
+                -76.38628910533053,
+                8.265723517661964
+              ],
+              [
+                -76.38625916578431,
+                8.265789354598144
+              ],
+              [
+                -76.38611400842346,
+                8.265785023961438
+              ],
+              [
+                -76.38614414905875,
+                8.265719284646988
+              ]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "OBJECTID": 362690,
+        "FICHA": 20101939,
+        "CIRULO": "034",
+        "MATRICULA": "14856",
+        "CIRCULO_MA": "034-14856",
+        "CARACTERIS": "NPH (0)",
+        "NPN": "056650001000000040023000000000",
+        "DIRECCION": "QUERUBE",
+        "SECTOR": "RURAL",
+        "TERRENO_CO": "056650001000000040023000000000",
+        "AVALUO_TER": null,
+        "AVALUO_COM": null,
+        "DIMENSION": 0,
+        "ETIQUETA": "49",
+        "RELACION_S": 0,
+        "ESPACIO_DE": null,
+        "LOCAL_ID": "6652001000000400023",
+        "CREATED_US": "GISANT",
+        "CREATED_DA": "2026/05/02 01:03:50.000",
+        "LAST_EDITE": "GISANT",
+        "LAST_EDI_1": "2026/05/02 01:03:50.000",
+        "GLOBALID": "{2AE71931-794C-4BE0-9195-933529561A58}",
+        "MUNICIPIO": "665",
+        "LLAVE_GLOB": "M665{37422971-3F2C-43F2-B4B0-0AD8FF01D642}",
+        "VEREDA": "66520010000004",
+        "PRIORIDAD": 3,
+        "SHAPE.AREA": 117.95029898686334,
+        "SHAPE.LEN": 5584.092362934251,
+        "LOTE": "LT",
+        "Manzana": "MZ-005",
+        "_LABEL": "Lt 49",
+        "_MANZANA": "MZ-005",
+        "fid": 1048
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                -76.3863136015024,
+                8.265790978624043
+              ],
+              [
+                -76.38634346183447,
+                8.265725116137652
+              ],
+              [
+                -76.38648829910733,
+                8.26572934524897
+              ],
+              [
+                -76.38645863753139,
+                8.265795305567325
+              ],
+              [
+                -76.3863136015024,
+                8.265790978624043
+              ]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "OBJECTID": 362690,
+        "FICHA": 20101939,
+        "CIRULO": "034",
+        "MATRICULA": "14856",
+        "CIRCULO_MA": "034-14856",
+        "CARACTERIS": "NPH (0)",
+        "NPN": "056650001000000040023000000000",
+        "DIRECCION": "QUERUBE",
+        "SECTOR": "RURAL",
+        "TERRENO_CO": "056650001000000040023000000000",
+        "AVALUO_TER": null,
+        "AVALUO_COM": null,
+        "DIMENSION": 0,
+        "ETIQUETA": "50",
+        "RELACION_S": 0,
+        "ESPACIO_DE": null,
+        "LOCAL_ID": "6652001000000400023",
+        "CREATED_US": "GISANT",
+        "CREATED_DA": "2026/05/02 01:03:50.000",
+        "LAST_EDITE": "GISANT",
+        "LAST_EDI_1": "2026/05/02 01:03:50.000",
+        "GLOBALID": "{2AE71931-794C-4BE0-9195-933529561A58}",
+        "MUNICIPIO": "665",
+        "LLAVE_GLOB": "M665{37422971-3F2C-43F2-B4B0-0AD8FF01D642}",
+        "VEREDA": "66520010000004",
+        "PRIORIDAD": 3,
+        "SHAPE.AREA": 117.75506579456851,
+        "SHAPE.LEN": 5584.092362934251,
+        "LOTE": "LT",
+        "Manzana": "MZ-005",
+        "_LABEL": "Lt 50",
+        "_MANZANA": "MZ-005",
+        "fid": 1049
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                -76.38634346183447,
+                8.265725116137652
+              ],
+              [
+                -76.38637332216013,
+                8.265659253652853
+              ],
+              [
+                -76.3865179606095,
+                8.26566338508222
+              ],
+              [
+                -76.38648829910733,
+                8.26572934524897
+              ],
+              [
+                -76.38634346183447,
+                8.265725116137652
+              ]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "OBJECTID": 362690,
+        "FICHA": 20101939,
+        "CIRULO": "034",
+        "MATRICULA": "14856",
+        "CIRCULO_MA": "034-14856",
+        "CARACTERIS": "NPH (0)",
+        "NPN": "056650001000000040023000000000",
+        "DIRECCION": "QUERUBE",
+        "SECTOR": "RURAL",
+        "TERRENO_CO": "056650001000000040023000000000",
+        "AVALUO_TER": null,
+        "AVALUO_COM": null,
+        "DIMENSION": 0,
+        "ETIQUETA": "51",
+        "RELACION_S": 0,
+        "ESPACIO_DE": null,
+        "LOCAL_ID": "6652001000000400023",
+        "CREATED_US": "GISANT",
+        "CREATED_DA": "2026/05/02 01:03:50.000",
+        "LAST_EDITE": "GISANT",
+        "LAST_EDI_1": "2026/05/02 01:03:50.000",
+        "GLOBALID": "{2AE71931-794C-4BE0-9195-933529561A58}",
+        "MUNICIPIO": "665",
+        "LLAVE_GLOB": "M665{37422971-3F2C-43F2-B4B0-0AD8FF01D642}",
+        "VEREDA": "66520010000004",
+        "PRIORIDAD": 3,
+        "SHAPE.AREA": 117.5598906041123,
+        "SHAPE.LEN": 5584.092362934251,
+        "LOTE": "LT",
+        "Manzana": "MZ-005",
+        "_LABEL": "Lt 51",
+        "_MANZANA": "MZ-005",
+        "fid": 1050
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                -76.38637332216013,
+                8.265659253652853
+              ],
+              [
+                -76.3864031824794,
+                8.265593391169643
+              ],
+              [
+                -76.38654762203777,
+                8.265597425067316
+              ],
+              [
+                -76.3865179606095,
+                8.26566338508222
+              ],
+              [
+                -76.38637332216013,
+                8.265659253652853
+              ]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "OBJECTID": 362690,
+        "FICHA": 20101939,
+        "CIRULO": "034",
+        "MATRICULA": "14856",
+        "CIRCULO_MA": "034-14856",
+        "CARACTERIS": "NPH (0)",
+        "NPN": "056650001000000040023000000000",
+        "DIRECCION": "QUERUBE",
+        "SECTOR": "RURAL",
+        "TERRENO_CO": "056650001000000040023000000000",
+        "AVALUO_TER": null,
+        "AVALUO_COM": null,
+        "DIMENSION": 0,
+        "ETIQUETA": "52",
+        "RELACION_S": 0,
+        "ESPACIO_DE": null,
+        "LOCAL_ID": "6652001000000400023",
+        "CREATED_US": "GISANT",
+        "CREATED_DA": "2026/05/02 01:03:50.000",
+        "LAST_EDITE": "GISANT",
+        "LAST_EDI_1": "2026/05/02 01:03:50.000",
+        "GLOBALID": "{2AE71931-794C-4BE0-9195-933529561A58}",
+        "MUNICIPIO": "665",
+        "LLAVE_GLOB": "M665{37422971-3F2C-43F2-B4B0-0AD8FF01D642}",
+        "VEREDA": "66520010000004",
+        "PRIORIDAD": 3,
+        "SHAPE.AREA": 117.36465292936191,
+        "SHAPE.LEN": 5584.092362934251,
+        "LOTE": "LT",
+        "Manzana": "MZ-005",
+        "_LABEL": "Lt 52",
+        "_MANZANA": "MZ-005",
+        "fid": 1051
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                -76.3864031824794,
+                8.265593391169643
+              ],
+              [
+                -76.38643304279225,
+                8.26552752868802
+              ],
+              [
+                -76.38657728339203,
+                8.26553146520451
+              ],
+              [
+                -76.38654762203777,
+                8.265597425067316
+              ],
+              [
+                -76.3864031824794,
+                8.265593391169643
+              ]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "OBJECTID": 362690,
+        "FICHA": 20101939,
+        "CIRULO": "034",
+        "MATRICULA": "14856",
+        "CIRCULO_MA": "034-14856",
+        "CARACTERIS": "NPH (0)",
+        "NPN": "056650001000000040023000000000",
+        "DIRECCION": "QUERUBE",
+        "SECTOR": "RURAL",
+        "TERRENO_CO": "056650001000000040023000000000",
+        "AVALUO_TER": null,
+        "AVALUO_COM": null,
+        "DIMENSION": 0,
+        "ETIQUETA": "53",
+        "RELACION_S": 0,
+        "ESPACIO_DE": null,
+        "LOCAL_ID": "6652001000000400023",
+        "CREATED_US": "GISANT",
+        "CREATED_DA": "2026/05/02 01:03:50.000",
+        "LAST_EDITE": "GISANT",
+        "LAST_EDI_1": "2026/05/02 01:03:50.000",
+        "GLOBALID": "{2AE71931-794C-4BE0-9195-933529561A58}",
+        "MUNICIPIO": "665",
+        "LLAVE_GLOB": "M665{37422971-3F2C-43F2-B4B0-0AD8FF01D642}",
+        "VEREDA": "66520010000004",
+        "PRIORIDAD": 3,
+        "SHAPE.AREA": 162.30657851090655,
+        "SHAPE.LEN": 5584.092362934251,
+        "LOTE": "LT",
+        "Manzana": "MZ-005",
+        "_LABEL": "Lt 53",
+        "_MANZANA": "MZ-005",
+        "fid": 1052
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                -76.38657728339203,
+                8.26553146520451
+              ],
+              [
+                -76.38643304279225,
+                8.26552752868802
+              ],
+              [
+                -76.38647385501737,
+                8.26543750970382
+              ],
+              [
+                -76.38661894415539,
+                8.265438821462313
+              ],
+              [
+                -76.38657728339203,
+                8.26553146520451
+              ]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "OBJECTID": 362690,
+        "FICHA": 20101939,
+        "CIRULO": "034",
+        "MATRICULA": "14856",
+        "CIRCULO_MA": "034-14856",
+        "CARACTERIS": "NPH (0)",
+        "NPN": "056650001000000040023000000000",
+        "DIRECCION": "QUERUBE",
+        "SECTOR": "RURAL",
+        "TERRENO_CO": "056650001000000040023000000000",
+        "AVALUO_TER": null,
+        "AVALUO_COM": null,
+        "DIMENSION": 0,
+        "ETIQUETA": "54",
+        "RELACION_S": 0,
+        "ESPACIO_DE": null,
+        "LOCAL_ID": "6652001000000400023",
+        "CREATED_US": "GISANT",
+        "CREATED_DA": "2026/05/02 01:03:50.000",
+        "LAST_EDITE": "GISANT",
+        "LAST_EDI_1": "2026/05/02 01:03:50.000",
+        "GLOBALID": "{2AE71931-794C-4BE0-9195-933529561A58}",
+        "MUNICIPIO": "665",
+        "LLAVE_GLOB": "M665{37422971-3F2C-43F2-B4B0-0AD8FF01D642}",
+        "VEREDA": "66520010000004",
+        "PRIORIDAD": 3,
+        "SHAPE.AREA": 166.96666858252138,
+        "SHAPE.LEN": 5584.092362934251,
+        "LOTE": "LT",
+        "Manzana": "MZ-005",
+        "_LABEL": "Lt 54",
+        "_MANZANA": "MZ-005",
+        "fid": 1053
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                -76.38672153486344,
+                8.265535401964854
+              ],
+              [
+                -76.38657728339203,
+                8.26553146520451
+              ],
+              [
+                -76.38661894415539,
+                8.265438821462313
+              ],
+              [
+                -76.38676403327293,
+                8.265440133167614
+              ],
+              [
+                -76.38672153486344,
+                8.265535401964854
+              ]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "OBJECTID": 362690,
+        "FICHA": 20101939,
+        "CIRULO": "034",
+        "MATRICULA": "14856",
+        "CIRCULO_MA": "034-14856",
+        "CARACTERIS": "NPH (0)",
+        "NPN": "056650001000000040023000000000",
+        "DIRECCION": "QUERUBE",
+        "SECTOR": "RURAL",
+        "TERRENO_CO": "056650001000000040023000000000",
+        "AVALUO_TER": null,
+        "AVALUO_COM": null,
+        "DIMENSION": 0,
+        "ETIQUETA": "55",
+        "RELACION_S": 0,
+        "ESPACIO_DE": null,
+        "LOCAL_ID": "6652001000000400023",
+        "CREATED_US": "GISANT",
+        "CREATED_DA": "2026/05/02 01:03:50.000",
+        "LAST_EDITE": "GISANT",
+        "LAST_EDI_1": "2026/05/02 01:03:50.000",
+        "GLOBALID": "{2AE71931-794C-4BE0-9195-933529561A58}",
+        "MUNICIPIO": "665",
+        "LLAVE_GLOB": "M665{37422971-3F2C-43F2-B4B0-0AD8FF01D642}",
+        "VEREDA": "66520010000004",
+        "PRIORIDAD": 3,
+        "SHAPE.AREA": 117.5330733587034,
+        "SHAPE.LEN": 5584.092362934251,
+        "LOTE": "LT",
+        "Manzana": "MZ-005",
+        "_LABEL": "Lt 55",
+        "_MANZANA": "MZ-005",
+        "fid": 1054
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                -76.38657728339203,
+                8.26553146520451
+              ],
+              [
+                -76.38672153486344,
+                8.265535401964854
+              ],
+              [
+                -76.3866920674734,
+                8.26560145907612
+              ],
+              [
+                -76.38654762203777,
+                8.265597425067316
+              ],
+              [
+                -76.38657728339203,
+                8.26553146520451
+              ]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "OBJECTID": 362690,
+        "FICHA": 20101939,
+        "CIRULO": "034",
+        "MATRICULA": "14856",
+        "CIRCULO_MA": "034-14856",
+        "CARACTERIS": "NPH (0)",
+        "NPN": "056650001000000040023000000000",
+        "DIRECCION": "QUERUBE",
+        "SECTOR": "RURAL",
+        "TERRENO_CO": "056650001000000040023000000000",
+        "AVALUO_TER": null,
+        "AVALUO_COM": null,
+        "DIMENSION": 0,
+        "ETIQUETA": "56",
+        "RELACION_S": 0,
+        "ESPACIO_DE": null,
+        "LOCAL_ID": "6652001000000400023",
+        "CREATED_US": "GISANT",
+        "CREATED_DA": "2026/05/02 01:03:50.000",
+        "LAST_EDITE": "GISANT",
+        "LAST_EDI_1": "2026/05/02 01:03:50.000",
+        "GLOBALID": "{2AE71931-794C-4BE0-9195-933529561A58}",
+        "MUNICIPIO": "665",
+        "LLAVE_GLOB": "M665{37422971-3F2C-43F2-B4B0-0AD8FF01D642}",
+        "VEREDA": "66520010000004",
+        "PRIORIDAD": 3,
+        "SHAPE.AREA": 117.72447644593194,
+        "SHAPE.LEN": 5584.092362934251,
+        "LOTE": "LT",
+        "Manzana": "MZ-005",
+        "_LABEL": "Lt 56",
+        "_MANZANA": "MZ-005",
+        "fid": 1055
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                -76.38654762203777,
+                8.265597425067316
+              ],
+              [
+                -76.3866920674734,
+                8.26560145907612
+              ],
+              [
+                -76.38666259994564,
+                8.265667516483743
+              ],
+              [
+                -76.3865179606095,
+                8.26566338508222
+              ],
+              [
+                -76.38654762203777,
+                8.265597425067316
+              ]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "OBJECTID": 362690,
+        "FICHA": 20101939,
+        "CIRULO": "034",
+        "MATRICULA": "14856",
+        "CIRCULO_MA": "034-14856",
+        "CARACTERIS": "NPH (0)",
+        "NPN": "056650001000000040023000000000",
+        "DIRECCION": "QUERUBE",
+        "SECTOR": "RURAL",
+        "TERRENO_CO": "056650001000000040023000000000",
+        "AVALUO_TER": null,
+        "AVALUO_COM": null,
+        "DIMENSION": 0,
+        "ETIQUETA": "57",
+        "RELACION_S": 0,
+        "ESPACIO_DE": null,
+        "LOCAL_ID": "6652001000000400023",
+        "CREATED_US": "GISANT",
+        "CREATED_DA": "2026/05/02 01:03:50.000",
+        "LAST_EDITE": "GISANT",
+        "LAST_EDI_1": "2026/05/02 01:03:50.000",
+        "GLOBALID": "{2AE71931-794C-4BE0-9195-933529561A58}",
+        "MUNICIPIO": "665",
+        "LLAVE_GLOB": "M665{37422971-3F2C-43F2-B4B0-0AD8FF01D642}",
+        "VEREDA": "66520010000004",
+        "PRIORIDAD": 3,
+        "SHAPE.AREA": 117.9158938373439,
+        "SHAPE.LEN": 5584.092362934251,
+        "LOTE": "LT",
+        "Manzana": "MZ-005",
+        "_LABEL": "Lt 57",
+        "_MANZANA": "MZ-005",
+        "fid": 1056
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                -76.3865179606095,
+                8.26566338508222
+              ],
+              [
+                -76.38666259994564,
+                8.265667516483743
+              ],
+              [
+                -76.38663313228037,
+                8.265733574187246
+              ],
+              [
+                -76.38648829910733,
+                8.26572934524897
+              ],
+              [
+                -76.3865179606095,
+                8.26566338508222
+              ]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "OBJECTID": 362690,
+        "FICHA": 20101939,
+        "CIRULO": "034",
+        "MATRICULA": "14856",
+        "CIRCULO_MA": "034-14856",
+        "CARACTERIS": "NPH (0)",
+        "NPN": "056650001000000040023000000000",
+        "DIRECCION": "QUERUBE",
+        "SECTOR": "RURAL",
+        "TERRENO_CO": "056650001000000040023000000000",
+        "AVALUO_TER": null,
+        "AVALUO_COM": null,
+        "DIMENSION": 0,
+        "ETIQUETA": "58",
+        "RELACION_S": 0,
+        "ESPACIO_DE": null,
+        "LOCAL_ID": "6652001000000400023",
+        "CREATED_US": "GISANT",
+        "CREATED_DA": "2026/05/02 01:03:50.000",
+        "LAST_EDITE": "GISANT",
+        "LAST_EDI_1": "2026/05/02 01:03:50.000",
+        "GLOBALID": "{2AE71931-794C-4BE0-9195-933529561A58}",
+        "MUNICIPIO": "665",
+        "LLAVE_GLOB": "M665{37422971-3F2C-43F2-B4B0-0AD8FF01D642}",
+        "VEREDA": "66520010000004",
+        "PRIORIDAD": 3,
+        "SHAPE.AREA": 118.10728841321543,
+        "SHAPE.LEN": 5584.092362934251,
+        "LOTE": "LT",
+        "Manzana": "MZ-005",
+        "_LABEL": "Lt 58",
+        "_MANZANA": "MZ-005",
+        "fid": 1057
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                -76.38648829910733,
+                8.26572934524897
+              ],
+              [
+                -76.38663313228037,
+                8.265733574187246
+              ],
+              [
+                -76.38660366447776,
+                8.26579963218615
+              ],
+              [
+                -76.38645863753139,
+                8.265795305567325
+              ],
+              [
+                -76.38648829910733,
+                8.26572934524897
+              ]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "OBJECTID": 362690,
+        "FICHA": 20101939,
+        "CIRULO": "034",
+        "MATRICULA": "14856",
+        "CIRCULO_MA": "034-14856",
+        "CARACTERIS": "NPH (0)",
+        "NPN": "056650001000000040023000000000",
+        "DIRECCION": "QUERUBE",
+        "SECTOR": "RURAL",
+        "TERRENO_CO": "056650001000000040023000000000",
+        "AVALUO_TER": null,
+        "AVALUO_COM": null,
+        "DIMENSION": 0,
+        "ETIQUETA": "59",
+        "RELACION_S": 0,
+        "ESPACIO_DE": null,
+        "LOCAL_ID": "6652001000000400023",
+        "CREATED_US": "GISANT",
+        "CREATED_DA": "2026/05/02 01:03:50.000",
+        "LAST_EDITE": "GISANT",
+        "LAST_EDI_1": "2026/05/02 01:03:50.000",
+        "GLOBALID": "{2AE71931-794C-4BE0-9195-933529561A58}",
+        "MUNICIPIO": "665",
+        "LLAVE_GLOB": "M665{37422971-3F2C-43F2-B4B0-0AD8FF01D642}",
+        "VEREDA": "66520010000004",
+        "PRIORIDAD": 3,
+        "SHAPE.AREA": 118.30099939322099,
+        "SHAPE.LEN": 5584.092362934251,
+        "LOTE": "LT",
+        "Manzana": "MZ-006",
+        "_LABEL": "Lt 59",
+        "_MANZANA": "MZ-006",
+        "fid": 1058
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                -76.3866580553345,
+                8.265801254826012
+              ],
+              [
+                -76.38668744104818,
+                8.265735180880382
+              ],
+              [
+                -76.3868322846632,
+                8.265739409886345
+              ],
+              [
+                -76.3868030894444,
+                8.265805581682585
+              ],
+              [
+                -76.3866580553345,
+                8.265801254826012
+              ]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "OBJECTID": 362690,
+        "FICHA": 20101939,
+        "CIRULO": "034",
+        "MATRICULA": "14856",
+        "CIRCULO_MA": "034-14856",
+        "CARACTERIS": "NPH (0)",
+        "NPN": "056650001000000040023000000000",
+        "DIRECCION": "QUERUBE",
+        "SECTOR": "RURAL",
+        "TERRENO_CO": "056650001000000040023000000000",
+        "AVALUO_TER": null,
+        "AVALUO_COM": null,
+        "DIMENSION": 0,
+        "ETIQUETA": "60",
+        "RELACION_S": 0,
+        "ESPACIO_DE": null,
+        "LOCAL_ID": "6652001000000400023",
+        "CREATED_US": "GISANT",
+        "CREATED_DA": "2026/05/02 01:03:50.000",
+        "LAST_EDITE": "GISANT",
+        "LAST_EDI_1": "2026/05/02 01:03:50.000",
+        "GLOBALID": "{2AE71931-794C-4BE0-9195-933529561A58}",
+        "MUNICIPIO": "665",
+        "LLAVE_GLOB": "M665{37422971-3F2C-43F2-B4B0-0AD8FF01D642}",
+        "VEREDA": "66520010000004",
+        "PRIORIDAD": 3,
+        "SHAPE.AREA": 118.11244982574135,
+        "SHAPE.LEN": 5584.092362934251,
+        "LOTE": "LT",
+        "Manzana": "MZ-006",
+        "_LABEL": "Lt 60",
+        "_MANZANA": "MZ-006",
+        "fid": 1059
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                -76.38668744104818,
+                8.265735180880382
+              ],
+              [
+                -76.38671682675565,
+                8.265669106936363
+              ],
+              [
+                -76.38686147981194,
+                8.265673238236596
+              ],
+              [
+                -76.3868322846632,
+                8.265739409886345
+              ],
+              [
+                -76.38668744104818,
+                8.265735180880382
+              ]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "OBJECTID": 362690,
+        "FICHA": 20101939,
+        "CIRULO": "034",
+        "MATRICULA": "14856",
+        "CIRCULO_MA": "034-14856",
+        "CARACTERIS": "NPH (0)",
+        "NPN": "056650001000000040023000000000",
+        "DIRECCION": "QUERUBE",
+        "SECTOR": "RURAL",
+        "TERRENO_CO": "056650001000000040023000000000",
+        "AVALUO_TER": null,
+        "AVALUO_COM": null,
+        "DIMENSION": 0,
+        "ETIQUETA": "61",
+        "RELACION_S": 0,
+        "ESPACIO_DE": null,
+        "LOCAL_ID": "6652001000000400023",
+        "CREATED_US": "GISANT",
+        "CREATED_DA": "2026/05/02 01:03:50.000",
+        "LAST_EDITE": "GISANT",
+        "LAST_EDI_1": "2026/05/02 01:03:50.000",
+        "GLOBALID": "{2AE71931-794C-4BE0-9195-933529561A58}",
+        "MUNICIPIO": "665",
+        "LLAVE_GLOB": "M665{37422971-3F2C-43F2-B4B0-0AD8FF01D642}",
+        "VEREDA": "66520010000004",
+        "PRIORIDAD": 3,
+        "SHAPE.AREA": 117.92394118756056,
+        "SHAPE.LEN": 5584.092362934251,
+        "LOTE": "LT",
+        "Manzana": "MZ-006",
+        "_LABEL": "Lt 61",
+        "_MANZANA": "MZ-006",
+        "fid": 1060
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                -76.38671682675565,
+                8.265669106936363
+              ],
+              [
+                -76.38674621245691,
+                8.265603032993953
+              ],
+              [
+                -76.38689067489052,
+                8.265607066733567
+              ],
+              [
+                -76.38686147981194,
+                8.265673238236596
+              ],
+              [
+                -76.38671682675565,
+                8.265669106936363
+              ]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "OBJECTID": 362690,
+        "FICHA": 20101939,
+        "CIRULO": "034",
+        "MATRICULA": "14856",
+        "CIRCULO_MA": "034-14856",
+        "CARACTERIS": "NPH (0)",
+        "NPN": "056650001000000040023000000000",
+        "DIRECCION": "QUERUBE",
+        "SECTOR": "RURAL",
+        "TERRENO_CO": "056650001000000040023000000000",
+        "AVALUO_TER": null,
+        "AVALUO_COM": null,
+        "DIMENSION": 0,
+        "ETIQUETA": "62",
+        "RELACION_S": 0,
+        "ESPACIO_DE": null,
+        "LOCAL_ID": "6652001000000400023",
+        "CREATED_US": "GISANT",
+        "CREATED_DA": "2026/05/02 01:03:50.000",
+        "LAST_EDITE": "GISANT",
+        "LAST_EDI_1": "2026/05/02 01:03:50.000",
+        "GLOBALID": "{2AE71931-794C-4BE0-9195-933529561A58}",
+        "MUNICIPIO": "665",
+        "LLAVE_GLOB": "M665{37422971-3F2C-43F2-B4B0-0AD8FF01D642}",
+        "VEREDA": "66520010000004",
+        "PRIORIDAD": 3,
+        "SHAPE.AREA": 117.735421795398,
+        "SHAPE.LEN": 5584.092362934251,
+        "LOTE": "LT",
+        "Manzana": "MZ-006",
+        "_LABEL": "Lt 62",
+        "_MANZANA": "MZ-006",
+        "fid": 1061
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                -76.38674621245691,
+                8.265603032993953
+              ],
+              [
+                -76.38677559815194,
+                8.265536959053145
+              ],
+              [
+                -76.38691986989885,
+                8.265540895377484
+              ],
+              [
+                -76.38689067489052,
+                8.265607066733567
+              ],
+              [
+                -76.38674621245691,
+                8.265603032993953
+              ]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "OBJECTID": 362690,
+        "FICHA": 20101939,
+        "CIRULO": "034",
+        "MATRICULA": "14856",
+        "CIRCULO_MA": "034-14856",
+        "CARACTERIS": "NPH (0)",
+        "NPN": "056650001000000040023000000000",
+        "DIRECCION": "QUERUBE",
+        "SECTOR": "RURAL",
+        "TERRENO_CO": "056650001000000040023000000000",
+        "AVALUO_TER": null,
+        "AVALUO_COM": null,
+        "DIMENSION": 0,
+        "ETIQUETA": "63",
+        "RELACION_S": 0,
+        "ESPACIO_DE": null,
+        "LOCAL_ID": "6652001000000400023",
+        "CREATED_US": "GISANT",
+        "CREATED_DA": "2026/05/02 01:03:50.000",
+        "LAST_EDITE": "GISANT",
+        "LAST_EDI_1": "2026/05/02 01:03:50.000",
+        "GLOBALID": "{2AE71931-794C-4BE0-9195-933529561A58}",
+        "MUNICIPIO": "665",
+        "LLAVE_GLOB": "M665{37422971-3F2C-43F2-B4B0-0AD8FF01D642}",
+        "VEREDA": "66520010000004",
+        "PRIORIDAD": 3,
+        "SHAPE.AREA": 173.52073380257934,
+        "SHAPE.LEN": 5584.092362934251,
+        "LOTE": "LT",
+        "Manzana": "MZ-006",
+        "_LABEL": "Lt 63",
+        "_MANZANA": "MZ-006",
+        "fid": 1062
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                -76.38691986989885,
+                8.265540895377484
+              ],
+              [
+                -76.38677559815194,
+                8.265536959053145
+              ],
+              [
+                -76.38681844168671,
+                8.265440625043396
+              ],
+              [
+                -76.38696353077611,
+                8.265441936675572
+              ],
+              [
+                -76.38691986989885,
+                8.265540895377484
+              ]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "OBJECTID": 362690,
+        "FICHA": 20101939,
+        "CIRULO": "034",
+        "MATRICULA": "14856",
+        "CIRCULO_MA": "034-14856",
+        "CARACTERIS": "NPH (0)",
+        "NPN": "056650001000000040023000000000",
+        "DIRECCION": "QUERUBE",
+        "SECTOR": "RURAL",
+        "TERRENO_CO": "056650001000000040023000000000",
+        "AVALUO_TER": null,
+        "AVALUO_COM": null,
+        "DIMENSION": 0,
+        "ETIQUETA": "64",
+        "RELACION_S": 0,
+        "ESPACIO_DE": null,
+        "LOCAL_ID": "6652001000000400023",
+        "CREATED_US": "GISANT",
+        "CREATED_DA": "2026/05/02 01:03:50.000",
+        "LAST_EDITE": "GISANT",
+        "LAST_EDI_1": "2026/05/02 01:03:50.000",
+        "GLOBALID": "{2AE71931-794C-4BE0-9195-933529561A58}",
+        "MUNICIPIO": "665",
+        "LLAVE_GLOB": "M665{37422971-3F2C-43F2-B4B0-0AD8FF01D642}",
+        "VEREDA": "66520010000004",
+        "PRIORIDAD": 3,
+        "SHAPE.AREA": 178.18037487193942,
+        "SHAPE.LEN": 5584.092362934251,
+        "LOTE": "LT",
+        "Manzana": "MZ-006",
+        "_LABEL": "Lt 64",
+        "_MANZANA": "MZ-006",
+        "fid": 1063
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                -76.38706415209431,
+                8.265544831934026
+              ],
+              [
+                -76.38691986989885,
+                8.265540895377484
+              ],
+              [
+                -76.38696353077611,
+                8.265441936675572
+              ],
+              [
+                -76.38710861984502,
+                8.265443248254563
+              ],
+              [
+                -76.38706415209431,
+                8.265544831934026
+              ]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "OBJECTID": 362690,
+        "FICHA": 20101939,
+        "CIRULO": "034",
+        "MATRICULA": "14856",
+        "CIRCULO_MA": "034-14856",
+        "CARACTERIS": "NPH (0)",
+        "NPN": "056650001000000040023000000000",
+        "DIRECCION": "QUERUBE",
+        "SECTOR": "RURAL",
+        "TERRENO_CO": "056650001000000040023000000000",
+        "AVALUO_TER": null,
+        "AVALUO_COM": null,
+        "DIMENSION": 0,
+        "ETIQUETA": "65",
+        "RELACION_S": 0,
+        "ESPACIO_DE": null,
+        "LOCAL_ID": "6652001000000400023",
+        "CREATED_US": "GISANT",
+        "CREATED_DA": "2026/05/02 01:03:50.000",
+        "LAST_EDITE": "GISANT",
+        "LAST_EDI_1": "2026/05/02 01:03:50.000",
+        "GLOBALID": "{2AE71931-794C-4BE0-9195-933529561A58}",
+        "MUNICIPIO": "665",
+        "LLAVE_GLOB": "M665{37422971-3F2C-43F2-B4B0-0AD8FF01D642}",
+        "VEREDA": "66520010000004",
+        "PRIORIDAD": 3,
+        "SHAPE.AREA": 117.91459245793521,
+        "SHAPE.LEN": 5584.092362934251,
+        "LOTE": "LT",
+        "Manzana": "MZ-006",
+        "_LABEL": "Lt 65",
+        "_MANZANA": "MZ-006",
+        "fid": 1064
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                -76.38691986989885,
+                8.265540895377484
+              ],
+              [
+                -76.38706415209431,
+                8.265544831934026
+              ],
+              [
+                -76.3870351382236,
+                8.265611112215936
+              ],
+              [
+                -76.38689067489052,
+                8.265607066733567
+              ],
+              [
+                -76.38691986989885,
+                8.265540895377484
+              ]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "OBJECTID": 362690,
+        "FICHA": 20101939,
+        "CIRULO": "034",
+        "MATRICULA": "14856",
+        "CIRCULO_MA": "034-14856",
+        "CARACTERIS": "NPH (0)",
+        "NPN": "056650001000000040023000000000",
+        "DIRECCION": "QUERUBE",
+        "SECTOR": "RURAL",
+        "TERRENO_CO": "056650001000000040023000000000",
+        "AVALUO_TER": null,
+        "AVALUO_COM": null,
+        "DIMENSION": 0,
+        "ETIQUETA": "66",
+        "RELACION_S": 0,
+        "ESPACIO_DE": null,
+        "LOCAL_ID": "6652001000000400023",
+        "CREATED_US": "GISANT",
+        "CREATED_DA": "2026/05/02 01:03:50.000",
+        "LAST_EDITE": "GISANT",
+        "LAST_EDI_1": "2026/05/02 01:03:50.000",
+        "GLOBALID": "{2AE71931-794C-4BE0-9195-933529561A58}",
+        "MUNICIPIO": "665",
+        "LLAVE_GLOB": "M665{37422971-3F2C-43F2-B4B0-0AD8FF01D642}",
+        "VEREDA": "66520010000004",
+        "PRIORIDAD": 3,
+        "SHAPE.AREA": 118.07899222057313,
+        "SHAPE.LEN": 5584.092362934251,
+        "LOTE": "LT",
+        "Manzana": "MZ-006",
+        "_LABEL": "Lt 66",
+        "_MANZANA": "MZ-006",
+        "fid": 1065
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                -76.38689067489052,
+                8.265607066733567
+              ],
+              [
+                -76.3870351382236,
+                8.265611112215936
+              ],
+              [
+                -76.38700613440271,
+                8.265677369527472
+              ],
+              [
+                -76.38686147981194,
+                8.265673238236596
+              ],
+              [
+                -76.38689067489052,
+                8.265607066733567
+              ]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "OBJECTID": 362690,
+        "FICHA": 20101939,
+        "CIRULO": "034",
+        "MATRICULA": "14856",
+        "CIRCULO_MA": "034-14856",
+        "CARACTERIS": "NPH (0)",
+        "NPN": "056650001000000040023000000000",
+        "DIRECCION": "QUERUBE",
+        "SECTOR": "RURAL",
+        "TERRENO_CO": "056650001000000040023000000000",
+        "AVALUO_TER": null,
+        "AVALUO_COM": null,
+        "DIMENSION": 0,
+        "ETIQUETA": "67",
+        "RELACION_S": 0,
+        "ESPACIO_DE": null,
+        "LOCAL_ID": "6652001000000400023",
+        "CREATED_US": "GISANT",
+        "CREATED_DA": "2026/05/02 01:03:50.000",
+        "LAST_EDITE": "GISANT",
+        "LAST_EDI_1": "2026/05/02 01:03:50.000",
+        "GLOBALID": "{2AE71931-794C-4BE0-9195-933529561A58}",
+        "MUNICIPIO": "665",
+        "LLAVE_GLOB": "M665{37422971-3F2C-43F2-B4B0-0AD8FF01D642}",
+        "VEREDA": "66520010000004",
+        "PRIORIDAD": 3,
+        "SHAPE.AREA": 118.27450496004894,
+        "SHAPE.LEN": 5584.092362934251,
+        "LOTE": "LT",
+        "Manzana": "MZ-006",
+        "_LABEL": "Lt 67",
+        "_MANZANA": "MZ-006",
+        "fid": 1066
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                -76.38686147981194,
+                8.265673238236596
+              ],
+              [
+                -76.38700613440271,
+                8.265677369527472
+              ],
+              [
+                -76.38697712536081,
+                8.265743638753793
+              ],
+              [
+                -76.3868322846632,
+                8.265739409886345
+              ],
+              [
+                -76.38686147981194,
+                8.265673238236596
+              ]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "OBJECTID": 362690,
+        "FICHA": 20101939,
+        "CIRULO": "034",
+        "MATRICULA": "14856",
+        "CIRCULO_MA": "034-14856",
+        "CARACTERIS": "NPH (0)",
+        "NPN": "056650001000000040023000000000",
+        "DIRECCION": "QUERUBE",
+        "SECTOR": "RURAL",
+        "TERRENO_CO": "056650001000000040023000000000",
+        "AVALUO_TER": null,
+        "AVALUO_COM": null,
+        "DIMENSION": 0,
+        "ETIQUETA": "68",
+        "RELACION_S": 0,
+        "ESPACIO_DE": null,
+        "LOCAL_ID": "6652001000000400023",
+        "CREATED_US": "GISANT",
+        "CREATED_DA": "2026/05/02 01:03:50.000",
+        "LAST_EDITE": "GISANT",
+        "LAST_EDI_1": "2026/05/02 01:03:50.000",
+        "GLOBALID": "{2AE71931-794C-4BE0-9195-933529561A58}",
+        "MUNICIPIO": "665",
+        "LLAVE_GLOB": "M665{37422971-3F2C-43F2-B4B0-0AD8FF01D642}",
+        "VEREDA": "66520010000004",
+        "PRIORIDAD": 3,
+        "SHAPE.AREA": 118.45958983479068,
+        "SHAPE.LEN": 5584.092362934251,
+        "LOTE": "LT",
+        "Manzana": "MZ-006",
+        "_LABEL": "Lt 68",
+        "_MANZANA": "MZ-006",
+        "fid": 1067
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                -76.3868322846632,
+                8.265739409886345
+              ],
+              [
+                -76.38697712536081,
+                8.265743638753793
+              ],
+              [
+                -76.38694811618844,
+                8.265809908265917
+              ],
+              [
+                -76.3868030894444,
+                8.265805581682585
+              ],
+              [
+                -76.3868322846632,
+                8.265739409886345
+              ]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "OBJECTID": 362690,
+        "FICHA": 20101939,
+        "CIRULO": "034",
+        "MATRICULA": "14856",
+        "CIRCULO_MA": "034-14856",
+        "CARACTERIS": "NPH (0)",
+        "NPN": "056650001000000040023000000000",
+        "DIRECCION": "QUERUBE",
+        "SECTOR": "RURAL",
+        "TERRENO_CO": "056650001000000040023000000000",
+        "AVALUO_TER": null,
+        "AVALUO_COM": null,
+        "DIMENSION": 0,
+        "ETIQUETA": "23",
+        "RELACION_S": 0,
+        "ESPACIO_DE": null,
+        "LOCAL_ID": "6652001000000400023",
+        "CREATED_US": "GISANT",
+        "CREATED_DA": "2026/05/02 01:03:50.000",
+        "LAST_EDITE": "GISANT",
+        "LAST_EDI_1": "2026/05/02 01:03:50.000",
+        "GLOBALID": "{2AE71931-794C-4BE0-9195-933529561A58}",
+        "MUNICIPIO": "665",
+        "LLAVE_GLOB": "M665{37422971-3F2C-43F2-B4B0-0AD8FF01D642}",
+        "VEREDA": "66520010000004",
+        "PRIORIDAD": 3,
+        "SHAPE.AREA": 114010.40729171797,
+        "SHAPE.LEN": 5584.092362934251,
+        "LOTE": "REMANENTE",
+        "Manzana": null,
+        "_LABEL": "Lt 23",
+        "_MANZANA": "",
+        "fid": -1
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                -76.38201904391637,
+                8.266247995377682
+              ],
+              [
+                -76.38202489044413,
+                8.266238089966347
+              ],
+              [
+                -76.38203262148723,
+                8.26622584690609
+              ],
+              [
+                -76.38203952177213,
+                8.266216149388285
+              ],
+              [
+                -76.3820481625302,
+                8.26620636486856
+              ],
+              [
+                -76.38205747060476,
+                8.266198264030095
+              ],
+              [
+                -76.3820670517022,
+                8.266189212326818
+              ],
+              [
+                -76.38207714929993,
+                8.266180111082623
+              ],
+              [
+                -76.38208619770928,
+                8.266172400897133
+              ],
+              [
+                -76.3820955235333,
+                8.26616425473893
+              ],
+              [
+                -76.3821055496867,
+                8.266156346566936
+              ],
+              [
+                -76.38211639112781,
+                8.266148332121952
+              ],
+              [
+                -76.38212688037359,
+                8.266140492300895
+              ],
+              [
+                -76.38213926861894,
+                8.266132013071179
+              ],
+              [
+                -76.382148946452,
+                8.266125797176153
+              ],
+              [
+                -76.38216000547412,
+                8.266118837849014
+              ],
+              [
+                -76.38217108582054,
+                8.266110125775132
+              ],
+              [
+                -76.38217921403131,
+                8.266098728534567
+              ],
+              [
+                -76.38218440995652,
+                8.266089099645404
+              ],
+              [
+                -76.38219086718118,
+                8.266078493459027
+              ],
+              [
+                -76.38220318750065,
+                8.266070556834254
+              ],
+              [
+                -76.3822131988978,
+                8.266066235222867
+              ],
+              [
+                -76.38222462028234,
+                8.266060293652457
+              ],
+              [
+                -76.38223847633343,
+                8.266051657456156
+              ],
+              [
+                -76.38225008216757,
+                8.266042886730565
+              ],
+              [
+                -76.3822615857085,
+                8.266033818753787
+              ],
+              [
+                -76.3822710325175,
+                8.266027098917599
+              ],
+              [
+                -76.38228508698704,
+                8.266018334567224
+              ],
+              [
+                -76.38229745782952,
+                8.266012068774636
+              ],
+              [
+                -76.38230907603756,
+                8.266006875346031
+              ],
+              [
+                -76.38232068127142,
+                8.266002287294613
+              ],
+              [
+                -76.38233085427359,
+                8.26599777460281
+              ],
+              [
+                -76.38233996840431,
+                8.265994580780973
+              ],
+              [
+                -76.38235049508866,
+                8.265991131088757
+              ],
+              [
+                -76.38236074417978,
+                8.265987033309223
+              ],
+              [
+                -76.38237071323611,
+                8.265983064373664
+              ],
+              [
+                -76.382380594052,
+                8.265978319274254
+              ],
+              [
+                -76.38239030036206,
+                8.265974379663922
+              ],
+              [
+                -76.38240043135895,
+                8.26597132177534
+              ],
+              [
+                -76.3824147859114,
+                8.265969032148146
+              ],
+              [
+                -76.38242672506634,
+                8.265968506497655
+              ],
+              [
+                -76.38243992649305,
+                8.265969243934103
+              ],
+              [
+                -76.38245152310968,
+                8.265971088049293
+              ],
+              [
+                -76.3824627193118,
+                8.265974895897473
+              ],
+              [
+                -76.38247599543774,
+                8.265979074594538
+              ],
+              [
+                -76.38248651368853,
+                8.265979952181555
+              ],
+              [
+                -76.38249771516197,
+                8.265979062385552
+              ],
+              [
+                -76.38250907326312,
+                8.265975271399894
+              ],
+              [
+                -76.3825181281791,
+                8.2659704519843
+              ],
+              [
+                -76.38252744442876,
+                8.265964374652288
+              ],
+              [
+                -76.38253735843422,
+                8.265956078968827
+              ],
+              [
+                -76.38254436310217,
+                8.265944799642858
+              ],
+              [
+                -76.38254911937649,
+                8.265935725539155
+              ],
+              [
+                -76.38256039884553,
+                8.265928032598403
+              ],
+              [
+                -76.38257204183594,
+                8.265921492912145
+              ],
+              [
+                -76.38258071324768,
+                8.2659089257056
+              ],
+              [
+                -76.38258389733788,
+                8.265899467421296
+              ],
+              [
+                -76.38258669661332,
+                8.265885296728817
+              ],
+              [
+                -76.38258669454441,
+                8.265872297047453
+              ],
+              [
+                -76.38258581042265,
+                8.265860081742973
+              ],
+              [
+                -76.38258549895775,
+                8.265846958206787
+              ],
+              [
+                -76.38259064742405,
+                8.265836019812054
+              ],
+              [
+                -76.38260017597669,
+                8.265842073132774
+              ],
+              [
+                -76.38260543382914,
+                8.265855651659328
+              ],
+              [
+                -76.38260730853887,
+                8.265868111525833
+              ],
+              [
+                -76.38261211658103,
+                8.265881052456896
+              ],
+              [
+                -76.38262042216338,
+                8.265890449616608
+              ],
+              [
+                -76.38262974326132,
+                8.265888130320695
+              ],
+              [
+                -76.38263932538692,
+                8.265881328029518
+              ],
+              [
+                -76.38264581036402,
+                8.265871850837092
+              ],
+              [
+                -76.38264879955166,
+                8.265861870240009
+              ],
+              [
+                -76.38265142293035,
+                8.265851531385907
+              ],
+              [
+                -76.38265316453959,
+                8.26584094704847
+              ],
+              [
+                -76.38265521441666,
+                8.265828228114957
+              ],
+              [
+                -76.38265673289146,
+                8.265819127216421
+              ],
+              [
+                -76.3826584801783,
+                8.265808145341975
+              ],
+              [
+                -76.38266054073928,
+                8.26579880497485
+              ],
+              [
+                -76.38266317773254,
+                8.265788999002321
+              ],
+              [
+                -76.38266209370008,
+                8.26577567422857
+              ],
+              [
+                -76.38267288347518,
+                8.265744596817035
+              ],
+              [
+                -76.38266727639656,
+                8.265716657439885
+              ],
+              [
+                -76.38265513614236,
+                8.265680850685815
+              ],
+              [
+                -76.38264569617128,
+                8.265646909146021
+              ],
+              [
+                -76.38264839084341,
+                8.265605592645738
+              ],
+              [
+                -76.3826356962255,
+                8.265553701309196
+              ],
+              [
+                -76.38263192588698,
+                8.265544401265315
+              ],
+              [
+                -76.38262509382925,
+                8.265532326646744
+              ],
+              [
+                -76.38261971534558,
+                8.265522678861242
+              ],
+              [
+                -76.38261327974476,
+                8.265510302769508
+              ],
+              [
+                -76.38260767078228,
+                8.26550021427626
+              ],
+              [
+                -76.3826016117785,
+                8.265489461087892
+              ],
+              [
+                -76.38259197616333,
+                8.265465539730076
+              ],
+              [
+                -76.38258742735735,
+                8.26545321993717
+              ],
+              [
+                -76.38258309947221,
+                8.265443409682296
+              ],
+              [
+                -76.38257875085543,
+                8.265434358445532
+              ],
+              [
+                -76.382572637575,
+                8.265422557789686
+              ],
+              [
+                -76.38256645883871,
+                8.265411588801168
+              ],
+              [
+                -76.38255936404116,
+                8.26539954350515
+              ],
+              [
+                -76.38255292011891,
+                8.265389380772744
+              ],
+              [
+                -76.38254573420255,
+                8.265378348037807
+              ],
+              [
+                -76.38253896699176,
+                8.265365369482353
+              ],
+              [
+                -76.38253083249387,
+                8.26535263737956
+              ],
+              [
+                -76.38252387523312,
+                8.265342894547848
+              ],
+              [
+                -76.38251301646208,
+                8.265330799804405
+              ],
+              [
+                -76.38250218887357,
+                8.265321297509425
+              ],
+              [
+                -76.38249059259687,
+                8.265313111627465
+              ],
+              [
+                -76.38247950441581,
+                8.26530708053297
+              ],
+              [
+                -76.38246983659216,
+                8.265302771914023
+              ],
+              [
+                -76.38245682208128,
+                8.265298428384197
+              ],
+              [
+                -76.38244611375562,
+                8.265295465580142
+              ],
+              [
+                -76.38243640200214,
+                8.265292385934663
+              ],
+              [
+                -76.3824246496834,
+                8.265289296458546
+              ],
+              [
+                -76.38241452405471,
+                8.265287665730435
+              ],
+              [
+                -76.3824024438123,
+                8.265287596332925
+              ],
+              [
+                -76.38239199146894,
+                8.265288064221286
+              ],
+              [
+                -76.38237949542456,
+                8.265289217911326
+              ],
+              [
+                -76.3823684782593,
+                8.265290449422556
+              ],
+              [
+                -76.3823558794834,
+                8.265292317655113
+              ],
+              [
+                -76.38234518347835,
+                8.265293989105917
+              ],
+              [
+                -76.38233361209988,
+                8.26529616482682
+              ],
+              [
+                -76.38232225329509,
+                8.265298808508202
+              ],
+              [
+                -76.38230797705684,
+                8.26530389795182
+              ],
+              [
+                -76.38229730953461,
+                8.2653078456894
+              ],
+              [
+                -76.3822854341218,
+                8.265312652831291
+              ],
+              [
+                -76.38227389130253,
+                8.265317113871912
+              ],
+              [
+                -76.38226349012254,
+                8.265320390850107
+              ],
+              [
+                -76.38225168851719,
+                8.265323218954496
+              ],
+              [
+                -76.38221884187432,
+                8.26532966706747
+              ],
+              [
+                -76.38220659690677,
+                8.26533155036932
+              ],
+              [
+                -76.38219523378426,
+                8.26533368818898
+              ],
+              [
+                -76.38218493548787,
+                8.26533626868867
+              ],
+              [
+                -76.38216139572714,
+                8.265340858362466
+              ],
+              [
+                -76.38209998224096,
+                8.265333473502444
+              ],
+              [
+                -76.38202347822543,
+                8.265338845661152
+              ],
+              [
+                -76.3817910548556,
+                8.265380462146068
+              ],
+              [
+                -76.38172053751606,
+                8.265391303272313
+              ],
+              [
+                -76.3816538272864,
+                8.265407252432537
+              ],
+              [
+                -76.38157796262738,
+                8.265421671022246
+              ],
+              [
+                -76.38149832190045,
+                8.265423989088356
+              ],
+              [
+                -76.38141315635657,
+                8.265411195082075
+              ],
+              [
+                -76.38140489081232,
+                8.265400108212438
+              ],
+              [
+                -76.38139813083586,
+                8.2653901016994
+              ],
+              [
+                -76.3813920998561,
+                8.265380504575008
+              ],
+              [
+                -76.38138617078323,
+                8.26537115953603
+              ],
+              [
+                -76.38137930843922,
+                8.26536084673744
+              ],
+              [
+                -76.38137237755566,
+                8.265351004278887
+              ],
+              [
+                -76.38136576652303,
+                8.265341448197034
+              ],
+              [
+                -76.38135659649106,
+                8.26532745104375
+              ],
+              [
+                -76.38134968678462,
+                8.265315837769888
+              ],
+              [
+                -76.38134418451315,
+                8.265305495394326
+              ],
+              [
+                -76.38133956262406,
+                8.265295235908027
+              ],
+              [
+                -76.38133576358592,
+                8.26528256645425
+              ],
+              [
+                -76.3813313364366,
+                8.265268556270675
+              ],
+              [
+                -76.38132796575957,
+                8.265256136140081
+              ],
+              [
+                -76.38132577362059,
+                8.265246858852572
+              ],
+              [
+                -76.38132307306377,
+                8.265234324645606
+              ],
+              [
+                -76.38132216465529,
+                8.26522350977495
+              ],
+              [
+                -76.38131810020836,
+                8.265188221796262
+              ],
+              [
+                -76.38132039342071,
+                8.265178509068242
+              ],
+              [
+                -76.38132120817389,
+                8.265166640724601
+              ],
+              [
+                -76.3813211827873,
+                8.2651572818669
+              ],
+              [
+                -76.38131944380633,
+                8.265146907648594
+              ],
+              [
+                -76.38131528905481,
+                8.265135063284106
+              ],
+              [
+                -76.38130973934764,
+                8.26512341139921
+              ],
+              [
+                -76.38130283214448,
+                8.265105709283768
+              ],
+              [
+                -76.3813034110136,
+                8.265095956857612
+              ],
+              [
+                -76.3813042951759,
+                8.265084783533345
+              ],
+              [
+                -76.38130276358835,
+                8.265073206057323
+              ],
+              [
+                -76.38129911981359,
+                8.265061727756857
+              ],
+              [
+                -76.38129549282975,
+                8.265052218694384
+              ],
+              [
+                -76.38128867539115,
+                8.265038662357464
+              ],
+              [
+                -76.38128146534697,
+                8.265025859151871
+              ],
+              [
+                -76.38127490264888,
+                8.265015588981976
+              ],
+              [
+                -76.38126604685915,
+                8.265001218775458
+              ],
+              [
+                -76.38125881515766,
+                8.264989066189639
+              ],
+              [
+                -76.3811423188238,
+                8.264722270267757
+              ],
+              [
+                -76.38119425976575,
+                8.26471953623833
+              ],
+              [
+                -76.38640927724306,
+                8.264678805694489
+              ],
+              [
+                -76.38602750204318,
+                8.26553396495882
+              ],
+              [
+                -76.38579464818544,
+                8.266055002751626
+              ],
+              [
+                -76.38535816775682,
+                8.266964277787794
+              ],
+              [
+                -76.38534278096289,
+                8.267053842947504
+              ],
+              [
+                -76.38197283237606,
+                8.26712975576133
+              ],
+              [
+                -76.38188204906976,
+                8.267132466473093
+              ],
+              [
+                -76.38188138939678,
+                8.267118921284592
+              ],
+              [
+                -76.38188037464856,
+                8.267107339446602
+              ],
+              [
+                -76.38187897862682,
+                8.267094649672465
+              ],
+              [
+                -76.38187820147733,
+                8.267082216641558
+              ],
+              [
+                -76.38187839002615,
+                8.267070299399876
+              ],
+              [
+                -76.38187926711278,
+                8.267060427013721
+              ],
+              [
+                -76.38187983033292,
+                8.267049906847166
+              ],
+              [
+                -76.38188003144171,
+                8.267039462016427
+              ],
+              [
+                -76.38188137159895,
+                8.26702859198746
+              ],
+              [
+                -76.38188325163416,
+                8.26701828652126
+              ],
+              [
+                -76.38188522217318,
+                8.26700689622727
+              ],
+              [
+                -76.38188760024167,
+                8.266995439246934
+              ],
+              [
+                -76.38189018331016,
+                8.266982498980376
+              ],
+              [
+                -76.38189262077715,
+                8.26696737375503
+              ],
+              [
+                -76.38189299595435,
+                8.266957135229553
+              ],
+              [
+                -76.3818925999018,
+                8.266944726074552
+              ],
+              [
+                -76.38189113025808,
+                8.26693191044961
+              ],
+              [
+                -76.38188919648951,
+                8.266921031996562
+              ],
+              [
+                -76.38188779265917,
+                8.26690955282399
+              ],
+              [
+                -76.38188787714986,
+                8.266893941619234
+              ],
+              [
+                -76.38188788274255,
+                8.266882902209435
+              ],
+              [
+                -76.38188778062498,
+                8.266869867230877
+              ],
+              [
+                -76.38188794191824,
+                8.266859007180177
+              ],
+              [
+                -76.38188839591258,
+                8.26684737677492
+              ],
+              [
+                -76.38188992385946,
+                8.266835132011801
+              ],
+              [
+                -76.38189287571983,
+                8.26682183630405
+              ],
+              [
+                -76.38189506407443,
+                8.266811528228592
+              ],
+              [
+                -76.38189744409388,
+                8.26680136307247
+              ],
+              [
+                -76.3819000768962,
+                8.266788937314782
+              ],
+              [
+                -76.38190203294512,
+                8.266779037728835
+              ],
+              [
+                -76.38190435442395,
+                8.26676626228621
+              ],
+              [
+                -76.38190633752335,
+                8.26675634440368
+              ],
+              [
+                -76.38190912024707,
+                8.266743420515548
+              ],
+              [
+                -76.3819115352293,
+                8.266733101488272
+              ],
+              [
+                -76.38191406979311,
+                8.266722980193553
+              ],
+              [
+                -76.381916952498,
+                8.266710082560849
+              ],
+              [
+                -76.38191870144249,
+                8.266700356371176
+              ],
+              [
+                -76.38192060000583,
+                8.266686906969795
+              ],
+              [
+                -76.3819220043116,
+                8.266675051709083
+              ],
+              [
+                -76.38192318296197,
+                8.266665447786488
+              ],
+              [
+                -76.38192483252367,
+                8.266651512664954
+              ],
+              [
+                -76.38192624551256,
+                8.26663961216159
+              ],
+              [
+                -76.38192836982671,
+                8.26662817539768
+              ],
+              [
+                -76.38193024678093,
+                8.26661750860453
+              ],
+              [
+                -76.3819318662816,
+                8.266606428433485
+              ],
+              [
+                -76.3819332424823,
+                8.266595530998707
+              ],
+              [
+                -76.38193492787263,
+                8.266585796313336
+              ],
+              [
+                -76.38193694023332,
+                8.266575056103436
+              ],
+              [
+                -76.38193811194948,
+                8.266564639193401
+              ],
+              [
+                -76.38193983462018,
+                8.266551832684328
+              ],
+              [
+                -76.38194148890615,
+                8.266539514581867
+              ],
+              [
+                -76.38194332885296,
+                8.266523445861184
+              ],
+              [
+                -76.38194444652785,
+                8.2665088196356
+              ],
+              [
+                -76.3819449675695,
+                8.266498670214501
+              ],
+              [
+                -76.38194573587658,
+                8.266483486847392
+              ],
+              [
+                -76.3819473668704,
+                8.266467374726155
+              ],
+              [
+                -76.38194943942537,
+                8.266454122597366
+              ],
+              [
+                -76.3819513242925,
+                8.26644332022991
+              ],
+              [
+                -76.38195365088089,
+                8.266432206972997
+              ],
+              [
+                -76.38195617375685,
+                8.266421778627178
+              ],
+              [
+                -76.38195885814137,
+                8.266410084175751
+              ],
+              [
+                -76.38196128172956,
+                8.266399710873458
+              ],
+              [
+                -76.38197869534443,
+                8.266355225363393
+              ],
+              [
+                -76.38198250536223,
+                8.26634472288675
+              ],
+              [
+                -76.38198606247254,
+                8.266334339990737
+              ],
+              [
+                -76.38198928462303,
+                8.266325089160736
+              ],
+              [
+                -76.38199231695809,
+                8.266315912208109
+              ],
+              [
+                -76.38199576380963,
+                8.266306424596298
+              ],
+              [
+                -76.38199938760933,
+                8.266295354563566
+              ],
+              [
+                -76.38200254895538,
+                8.266285354439018
+              ],
+              [
+                -76.38200632416377,
+                8.266275023900354
+              ],
+              [
+                -76.3820111962898,
+                8.266263581948234
+              ],
+              [
+                -76.38201904391637,
+                8.266247995377682
+              ]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "OBJECTID": 362690,
+        "FICHA": 20101939,
+        "CIRULO": "034",
+        "MATRICULA": "14856",
+        "CIRCULO_MA": "034-14856",
+        "CARACTERIS": "NPH (0)",
+        "NPN": "056650001000000040023000000000",
+        "DIRECCION": "QUERUBE",
+        "SECTOR": "RURAL",
+        "TERRENO_CO": "056650001000000040023000000000",
+        "AVALUO_TER": null,
+        "AVALUO_COM": null,
+        "DIMENSION": 0,
+        "ETIQUETA": "23",
+        "RELACION_S": 0,
+        "ESPACIO_DE": null,
+        "LOCAL_ID": "6652001000000400023",
+        "CREATED_US": "GISANT",
+        "CREATED_DA": "2026/05/02 01:03:50.000",
+        "LAST_EDITE": "GISANT",
+        "LAST_EDI_1": "2026/05/02 01:03:50.000",
+        "GLOBALID": "{2AE71931-794C-4BE0-9195-933529561A58}",
+        "MUNICIPIO": "665",
+        "LLAVE_GLOB": "M665{37422971-3F2C-43F2-B4B0-0AD8FF01D642}",
+        "VEREDA": "66520010000004",
+        "PRIORIDAD": 3,
+        "SHAPE.AREA": 3042.9787163762376,
+        "SHAPE.LEN": 5584.092362934251,
+        "LOTE": "REMANENTE",
+        "Manzana": null,
+        "_LABEL": "Lt 23",
+        "_MANZANA": "",
+        "fid": -1
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                -76.38596884310013,
+                8.265780693033587
+              ],
+              [
+                -76.3866580553345,
+                8.265801254826012
+              ],
+              [
+                -76.38694811618844,
+                8.265809908265917
+              ],
+              [
+                -76.38700249941442,
+                8.265811530731815
+              ],
+              [
+                -76.38685002853902,
+                8.266071798631259
+              ],
+              [
+                -76.38679491738665,
+                8.266068650208142
+              ],
+              [
+                -76.38665825276831,
+                8.266059852643895
+              ],
+              [
+                -76.38652095794062,
+                8.266051014487045
+              ],
+              [
+                -76.38646736352344,
+                8.266044175863572
+              ],
+              [
+                -76.38633069887548,
+                8.266035378180689
+              ],
+              [
+                -76.38619340401803,
+                8.266026539904662
+              ],
+              [
+                -76.38613981584385,
+                8.266019614291485
+              ],
+              [
+                -76.38586585627915,
+                8.266001978094748
+              ],
+              [
+                -76.38596884310013,
+                8.265780693033587
+              ]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "OBJECTID": 362690,
+        "FICHA": 20101939,
+        "CIRULO": "034",
+        "MATRICULA": "14856",
+        "CIRCULO_MA": "034-14856",
+        "CARACTERIS": "NPH (0)",
+        "NPN": "056650001000000040023000000000",
+        "DIRECCION": "QUERUBE",
+        "SECTOR": "RURAL",
+        "TERRENO_CO": "056650001000000040023000000000",
+        "AVALUO_TER": null,
+        "AVALUO_COM": null,
+        "DIMENSION": 0,
+        "ETIQUETA": "23",
+        "RELACION_S": 0,
+        "ESPACIO_DE": null,
+        "LOCAL_ID": "6652001000000400023",
+        "CREATED_US": "GISANT",
+        "CREATED_DA": "2026/05/02 01:03:50.000",
+        "LAST_EDITE": "GISANT",
+        "LAST_EDI_1": "2026/05/02 01:03:50.000",
+        "GLOBALID": "{2AE71931-794C-4BE0-9195-933529561A58}",
+        "MUNICIPIO": "665",
+        "LLAVE_GLOB": "M665{37422971-3F2C-43F2-B4B0-0AD8FF01D642}",
+        "VEREDA": "66520010000004",
+        "PRIORIDAD": 3,
+        "SHAPE.AREA": 322000.15226582903,
+        "SHAPE.LEN": 5584.092362934251,
+        "LOTE": "REMANENTE",
+        "Manzana": null,
+        "_LABEL": "Lt 23",
+        "_MANZANA": "",
+        "fid": -1
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                -76.38615899101451,
+                8.265368613929803
+              ],
+              [
+                -76.38646871511196,
+                8.264690633203015
+              ],
+              [
+                -76.38726665511129,
+                8.264650120821944
+              ],
+              [
+                -76.38800425399393,
+                8.264676368653678
+              ],
+              [
+                -76.39088288732671,
+                8.264778793010226
+              ],
+              [
+                -76.39393728970545,
+                8.264967317889882
+              ],
+              [
+                -76.39614593267234,
+                8.264801178865506
+              ],
+              [
+                -76.39882300169131,
+                8.26451981299737
+              ],
+              [
+                -76.40089668759434,
+                8.26416639968244
+              ],
+              [
+                -76.40162907403973,
+                8.26583005011305
+              ],
+              [
+                -76.39875232789186,
+                8.266139514428815
+              ],
+              [
+                -76.39374587405189,
+                8.266560634516226
+              ],
+              [
+                -76.38761459658485,
+                8.266862120622514
+              ],
+              [
+                -76.3869205484039,
+                8.266896242386762
+              ],
+              [
+                -76.38543922039212,
+                8.266969065518722
+              ],
+              [
+                -76.38562118301208,
+                8.266555357344416
+              ],
+              [
+                -76.38665922900312,
+                8.266504326747322
+              ],
+              [
+                -76.38685002853902,
+                8.266071798631259
+              ],
+              [
+                -76.38700249941442,
+                8.265811530731815
+              ],
+              [
+                -76.3871630282406,
+                8.265443740082965
+              ],
+              [
+                -76.3871943532508,
+                8.265373304628923
+              ],
+              [
+                -76.38686073378172,
+                8.265371793463128
+              ],
+              [
+                -76.38615899101451,
+                8.265368613929803
+              ]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "OBJECTID": 362690,
+        "FICHA": 20101939,
+        "CIRULO": "034",
+        "MATRICULA": "14856",
+        "CIRCULO_MA": "034-14856",
+        "CARACTERIS": "NPH (0)",
+        "NPN": "056650001000000040023000000000",
+        "DIRECCION": "QUERUBE",
+        "SECTOR": "RURAL",
+        "TERRENO_CO": "056650001000000040023000000000",
+        "AVALUO_TER": null,
+        "AVALUO_COM": null,
+        "DIMENSION": 0,
+        "ETIQUETA": "23",
+        "RELACION_S": 0,
+        "ESPACIO_DE": null,
+        "LOCAL_ID": "6652001000000400023",
+        "CREATED_US": "GISANT",
+        "CREATED_DA": "2026/05/02 01:03:50.000",
+        "LAST_EDITE": "GISANT",
+        "LAST_EDI_1": "2026/05/02 01:03:50.000",
+        "GLOBALID": "{2AE71931-794C-4BE0-9195-933529561A58}",
+        "MUNICIPIO": "665",
+        "LLAVE_GLOB": "M665{37422971-3F2C-43F2-B4B0-0AD8FF01D642}",
+        "VEREDA": "66520010000004",
+        "PRIORIDAD": 3,
+        "SHAPE.AREA": 1661.6953410743736,
+        "SHAPE.LEN": 5584.092362934251,
+        "LOTE": "REMANENTE",
+        "Manzana": null,
+        "_LABEL": "Lt 23",
+        "_MANZANA": "",
+        "fid": -1
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                -76.38665922900312,
+                8.266504326747322
+              ],
+              [
+                -76.38562118301208,
+                8.266555357344416
+              ],
+              [
+                -76.38565095861682,
+                8.266489131518428
+              ],
+              [
+                -76.3859396051516,
+                8.26647494184623
+              ],
+              [
+                -76.38613981584385,
+                8.266019614291485
+              ],
+              [
+                -76.38619340401803,
+                8.266026539904662
+              ],
+              [
+                -76.38599685218826,
+                8.266472127569648
+              ],
+              [
+                -76.38628549270099,
+                8.266457937946836
+              ],
+              [
+                -76.38646736352344,
+                8.266044175863572
+              ],
+              [
+                -76.38652095794062,
+                8.266051014487045
+              ],
+              [
+                -76.38634268285524,
+                8.266455126548184
+              ],
+              [
+                -76.38648701649635,
+                8.266448030902259
+              ],
+              [
+                -76.38663117742807,
+                8.266440943774432
+              ],
+              [
+                -76.38679491738665,
+                8.266068650208142
+              ],
+              [
+                -76.38680884174339,
+                8.266069147308732
+              ],
+              [
+                -76.38685002853902,
+                8.266071798631259
+              ],
+              [
+                -76.38665922900312,
+                8.266504326747322
+              ]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "OBJECTID": 362690,
+        "FICHA": 20101939,
+        "CIRULO": "034",
+        "MATRICULA": "14856",
+        "CIRCULO_MA": "034-14856",
+        "CARACTERIS": "NPH (0)",
+        "NPN": "056650001000000040023000000000",
+        "DIRECCION": "QUERUBE",
+        "SECTOR": "RURAL",
+        "TERRENO_CO": "056650001000000040023000000000",
+        "AVALUO_TER": null,
+        "AVALUO_COM": null,
+        "DIMENSION": 0,
+        "ETIQUETA": "23",
+        "RELACION_S": 0,
+        "ESPACIO_DE": null,
+        "LOCAL_ID": "6652001000000400023",
+        "CREATED_US": "GISANT",
+        "CREATED_DA": "2026/05/02 01:03:50.000",
+        "LAST_EDITE": "GISANT",
+        "LAST_EDI_1": "2026/05/02 01:03:50.000",
+        "GLOBALID": "{2AE71931-794C-4BE0-9195-933529561A58}",
+        "MUNICIPIO": "665",
+        "LLAVE_GLOB": "M665{37422971-3F2C-43F2-B4B0-0AD8FF01D642}",
+        "VEREDA": "66520010000004",
+        "PRIORIDAD": 3,
+        "SHAPE.AREA": 1583.6757040075026,
+        "SHAPE.LEN": 5584.092362934251,
+        "LOTE": "REMANENTE",
+        "Manzana": null,
+        "_LABEL": "Lt 23",
+        "_MANZANA": "",
+        "fid": -1
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                -76.38676403327293,
+                8.26544013316762
+              ],
+              [
+                -76.38661894415539,
+                8.265438821462313
+              ],
+              [
+                -76.38647385501737,
+                8.265437509703826
+              ],
+              [
+                -76.38643304279225,
+                8.26552752868802
+              ],
+              [
+                -76.3864031824794,
+                8.265593391169643
+              ],
+              [
+                -76.38637332216013,
+                8.265659253652853
+              ],
+              [
+                -76.38634346183447,
+                8.265725116137652
+              ],
+              [
+                -76.3863136015024,
+                8.265790978624043
+              ],
+              [
+                -76.38625916578431,
+                8.265789354598144
+              ],
+              [
+                -76.38628910533053,
+                8.265723517661964
+              ],
+              [
+                -76.38631904473276,
+                8.265657681029912
+              ],
+              [
+                -76.38634898399073,
+                8.265591844702488
+              ],
+              [
+                -76.38637892310423,
+                8.265526008680206
+              ],
+              [
+                -76.38641939217692,
+                8.265437017288749
+              ],
+              [
+                -76.38627416698966,
+                8.26543570422724
+              ],
+              [
+                -76.3861289417819,
+                8.265434391112448
+              ],
+              [
+                -76.38615899101451,
+                8.265368613929803
+              ],
+              [
+                -76.3871943532508,
+                8.265373304628923
+              ],
+              [
+                -76.3871630282406,
+                8.265443740082965
+              ],
+              [
+                -76.38700249941442,
+                8.265811530731815
+              ],
+              [
+                -76.38694811618844,
+                8.265809908265917
+              ],
+              [
+                -76.38697712536081,
+                8.265743638753793
+              ],
+              [
+                -76.38700613440271,
+                8.265677369527472
+              ],
+              [
+                -76.3870351382236,
+                8.265611112215936
+              ],
+              [
+                -76.38706415209431,
+                8.265544831934026
+              ],
+              [
+                -76.38710861984502,
+                8.265443248254563
+              ],
+              [
+                -76.38696353077611,
+                8.265441936675572
+              ],
+              [
+                -76.38681844168671,
+                8.265440625043396
+              ],
+              [
+                -76.38677559815194,
+                8.265536959053145
+              ],
+              [
+                -76.38674621245691,
+                8.265603032993953
+              ],
+              [
+                -76.38671682675565,
+                8.265669106936363
+              ],
+              [
+                -76.38668744104818,
+                8.265735180880382
+              ],
+              [
+                -76.3866580553345,
+                8.265801254826012
+              ],
+              [
+                -76.38660366447776,
+                8.26579963218615
+              ],
+              [
+                -76.38663313228037,
+                8.265733574187246
+              ],
+              [
+                -76.38666259994564,
+                8.265667516483743
+              ],
+              [
+                -76.3866920674734,
+                8.26560145907612
+              ],
+              [
+                -76.38672153486344,
+                8.265535401964854
+              ],
+              [
+                -76.38676403327293,
+                8.26544013316762
+              ]
+            ]
+          ]
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,227 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;600;700;900&display=swap');
+
+/* Clean CSS Reset */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Global Variables */
+:root {
+  /* Color Palette - Urabá Rainforest Theme */
+  --bg-dark: #070e08;
+  --bg-darker: #030704;
+  --primary: #15803d;       /* Emerald */
+  --primary-light: #22c55e; /* Vibrant Green */
+  --primary-dark: #166534;  /* Deep Forest */
+  --accent-gold: #eab308;   /* Warm Gold */
+  --accent-gold-light: #fde047;
+  
+  /* Text Colors */
+  --text-primary: #f8fafc;
+  --text-secondary: #cbd5e1;
+  --text-muted: #94a3b8;
+  
+  /* Glassmorphism Styles */
+  --glass-bg: rgba(7, 14, 8, 0.7);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-highlight: rgba(34, 197, 94, 0.15);
+  --glass-shadow: rgba(0, 0, 0, 0.5);
+  
+  /* Transitions */
+  --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-bounce: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  
+  /* Font Families */
+  --font-header: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  
+  /* Accessibility Font Scales (Controlled by JS classes) */
+  --font-scale-base: 18px;
+  --font-scale-h1: 2.2rem;
+  --font-scale-h2: 1.6rem;
+  --font-scale-h3: 1.3rem;
+  --font-scale-body: 1rem;
+}
+
+/* Senior Accessibility Typography Modifiers */
+body.font-large {
+  --font-scale-base: 22px;
+  --font-scale-h1: 2.4rem;
+  --font-scale-h2: 1.8rem;
+  --font-scale-h3: 1.5rem;
+  --font-scale-body: 1.1rem;
+}
+
+body.font-extra-large {
+  --font-scale-base: 26px;
+  --font-scale-h1: 2.6rem;
+  --font-scale-h2: 2.0rem;
+  --font-scale-h3: 1.7rem;
+  --font-scale-body: 1.2rem;
+}
+
+body {
+  font-family: var(--font-body);
+  font-size: var(--font-scale-base);
+  background-color: var(--bg-dark);
+  color: var(--text-primary);
+  line-height: 1.6;
+  overflow: hidden;
+  height: 100vh;
+  width: 100vw;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-header);
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--text-primary);
+}
+
+h1 { font-size: var(--font-scale-h1); }
+h2 { font-size: var(--font-scale-h2); }
+h3 { font-size: var(--font-scale-h3); }
+
+/* Common Buttons & Focus Styles */
+button, input, select, textarea {
+  font-family: inherit;
+  font-size: inherit;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  outline: none;
+  background: none;
+  transition: var(--transition-smooth);
+}
+
+button:focus-visible, a:focus-visible {
+  outline: 4px solid var(--accent-gold);
+  outline-offset: 2px;
+}
+
+/* Glassmorphic Panel Base */
+.glass-panel {
+  background: var(--glass-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 8px 32px 0 var(--glass-shadow);
+  border-radius: 20px;
+  color: var(--text-primary);
+  transition: var(--transition-smooth);
+}
+
+/* Interactive elements in glass panels */
+.glass-panel-interactive:hover {
+  border-color: var(--primary-light);
+  box-shadow: 0 12px 40px 0 var(--glass-highlight);
+  transform: translateY(-2px);
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 6px;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--primary-dark);
+  border: 3px solid var(--bg-dark);
+  border-radius: 6px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-light);
+}
+
+/* Animations */
+@keyframes pulse-gold {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(234, 179, 8, 0.7);
+  }
+  50% {
+    box-shadow: 0 0 15px 5px rgba(234, 179, 8, 0.3);
+  }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+.animate-pulse-gold {
+  animation: pulse-gold 2s infinite;
+}
+
+.animate-float {
+  animation: float 4s ease-in-out infinite;
+}
+
+/* Screen Layout Styles */
+#root {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100vw;
+  position: relative;
+}
+
+/* Map Container */
+.map-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+/* Maplibre UI Overrides for Elderly Accessibility */
+.maplibregl-ctrl-group {
+  border-radius: 12px !important;
+  border: 1px solid var(--glass-border) !important;
+  background-color: var(--glass-bg) !important;
+  backdrop-filter: blur(8px);
+}
+.maplibregl-ctrl-group button {
+  width: 44px !important;
+  height: 44px !important;
+}
+.maplibregl-ctrl-group button span {
+  transform: scale(1.3);
+}
+
+/* Toast Messages */
+.accessibility-toast {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  padding: 16px 24px;
+  z-index: 9999;
+  font-weight: 600;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+  animation: slide-in 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes slide-in {
+  from {
+    transform: translateY(100px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
