@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Map, SlidersHorizontal, Compass, X, Film } from 'lucide-react';
+import { Map, SlidersHorizontal, Compass, X, Film, Car } from 'lucide-react';
 import LotComparator from './components/LotComparator';
 import Map3D from './components/Map3D';
 import { useWebSocket } from './hooks/useWebSocket';

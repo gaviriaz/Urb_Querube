@@ -2259,6 +2259,30 @@ const Map3D = forwardRef(({ onSelectLot, selectedLotId, adminOverrides, lotClick
   // ─────────────────────────────────────────────
   // ROUTE ANIMATION ENGINE
   // ─────────────────────────────────────────────
+  const stopRouteAnimation = useCallback(() => {
+    routeActiveRef.current = false;
+    setRouteActive(false);
+    setRouteProgress(0);
+    if (routeReqRef.current) {
+      cancelAnimationFrame(routeReqRef.current);
+      routeReqRef.current = null;
+    }
+    
+    // Clear vehicle from Three.js custom layer
+    if (customLayerRef.current) {
+      customLayerRef.current.setVehicleState(null, 0, null);
+    }
+    
+    // Remove route layers from map
+    if (mapRef.current) {
+      try {
+        if (mapRef.current.getLayer('route-line')) mapRef.current.removeLayer('route-line');
+        if (mapRef.current.getLayer('route-line-glow')) mapRef.current.removeLayer('route-line-glow');
+        if (mapRef.current.getSource('route-path')) mapRef.current.removeSource('route-path');
+      } catch(e) { /* layers may not exist */ }
+    }
+  }, []);
+
   const stopTourStepAnimation = useCallback(() => {
     tourActiveRef.current = false;
     if (tourReqRef.current) {
@@ -2393,31 +2417,7 @@ const Map3D = forwardRef(({ onSelectLot, selectedLotId, adminOverrides, lotClick
       }
     }, 1600);
     
-  }, [cameraMode, stopRouteAnimation, stopFlight]);
-
-  const stopRouteAnimation = useCallback(() => {
-    routeActiveRef.current = false;
-    setRouteActive(false);
-    setRouteProgress(0);
-    if (routeReqRef.current) {
-      cancelAnimationFrame(routeReqRef.current);
-      routeReqRef.current = null;
-    }
-    
-    // Clear vehicle from Three.js custom layer
-    if (customLayerRef.current) {
-      customLayerRef.current.setVehicleState(null, 0, null);
-    }
-    
-    // Remove route layers from map
-    if (mapRef.current) {
-      try {
-        if (mapRef.current.getLayer('route-line')) mapRef.current.removeLayer('route-line');
-        if (mapRef.current.getLayer('route-line-glow')) mapRef.current.removeLayer('route-line-glow');
-        if (mapRef.current.getSource('route-path')) mapRef.current.removeSource('route-path');
-      } catch(e) { /* layers may not exist */ }
-    }
-  }, []);
+  }, [cameraMode, stopRouteAnimation, stopTourStepAnimation, stopFlight]);
 
   const startRouteAnimation = useCallback((lotCentroid, vType) => {
     if (!mapRef.current || !viasGeojson || !lotCentroid) return;
