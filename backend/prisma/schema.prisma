@@ -1,0 +1,96 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String    @id @default(uuid())
+  email     String    @unique
+  phone     String
+  name      String
+  createdAt DateTime  @default(now())
+  reservas  Reserva[]
+}
+
+model Lote {
+  id          Int        @id
+  numero      Int        @unique
+  metraje     Int
+  precio      Int
+  estado      LoteEstado @default(DISPONIBLE)
+  x           Float
+  y           Float
+  z           Float
+  tags        String?
+  description String?
+  createdAt   DateTime   @default(now())
+  reservas    Reserva[]
+}
+
+enum LoteEstado {
+  DISPONIBLE
+  RESERVADO
+  VENDIDO
+}
+
+model Reserva {
+  id        String   @id @default(uuid())
+  userId    String
+  loteId    Int
+  nombre    String
+  email     String
+  phone     String
+  captcha   String
+  ip        String
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id])
+  lote      Lote     @relation(fields: [loteId], references: [id])
+}
+
+model Analytics {
+  id        String   @id @default(uuid())
+  event     String
+  data      Json
+  ip        String
+  createdAt DateTime @default(now())
+}
+
+model Lead {
+  id        Int      @id @default(autoincrement())
+  lotId     Int
+  sessionId String
+  qualifier Json?
+  createdAt DateTime @default(now())
+}
+
+model FlightMetric {
+  id           Int      @id @default(autoincrement())
+  eventType    String
+  stationIndex Int?
+  stationLabel String?
+  sessionId    String
+  createdAt    DateTime @default(now())
+}
+
+model LotClick {
+  lotId      Int      @id
+  clickCount Int      @default(0)
+}
+
+model SessionHeartbeat {
+  sessionId String   @id
+  updatedAt DateTime @updatedAt
+}
+
+model OverridesLog {
+  id           Int      @id @default(autoincrement())
+  lotId        Int
+  fieldChanged String
+  oldValue     String?
+  newValue     String?
+  createdAt    DateTime @default(now())
+}
