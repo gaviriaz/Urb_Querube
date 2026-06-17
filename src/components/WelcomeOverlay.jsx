@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { HelpCircle, ChevronRight, Map, Sliders, Navigation } from 'lucide-react';
+import QuerubeLogo from './QuerubeLogo';
 
 export default function WelcomeOverlay() {
   const [show, setShow] = useState(false);
@@ -65,11 +66,7 @@ export default function WelcomeOverlay() {
                 border: '1px solid rgba(212, 168, 67, 0.25)',
                 display: 'flex', alignItems: 'center', justifyContent: 'center'
               }}>
-                <svg width="34" height="34" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <circle cx="46" cy="44" r="30" stroke="var(--gold-400, #d4a843)" strokeWidth="9" />
-                  <path d="M68 66 L88 86" stroke="var(--gold-400, #d4a843)" strokeWidth="12" strokeLinecap="round" />
-                  <path d="M46 25 C46 25 54 33 54 44 C54 55 46 63 46 63 C46 63 38 55 38 44 C38 33 46 25 46 25 Z" fill="var(--gold-400, #d4a843)" opacity="0.95" />
-                </svg>
+                <QuerubeLogo width={34} height={34} />
               </div>
 
               <h2 style={{ fontSize: '1.7rem', color: 'var(--gold-300)', marginBottom: '8px', fontFamily: 'var(--font-header)' }}>

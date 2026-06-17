@@ -5,41 +5,41 @@
 
 /* ─── CSS Variables ──────────────────────────────────────────────── */
 :root {
-  /* Slate palette – professional GIS dark mode */
-  --ink-950: #020617; /* Slate 950 */
-  --ink-900: #0f172a; /* Slate 900 */
-  --ink-800: #1e293b; /* Slate 800 */
-  --ink-700: #334155; /* Slate 700 */
-  --ink-600: #475569; /* Slate 600 */
+  /* Campestre palette – forest green and slate dark mode */
+  --ink-950: #0a1009; /* Deepest Forest Slate */
+  --ink-900: #141f12; /* Deep Forest Green */
+  --ink-800: #21331e; /* Forest Slate */
+  --ink-700: #314126; /* Verde oscuro profundo */
+  --ink-600: #425733; /* Medium Forest Green */
 
-  /* Precision Blue System (replacing Gold) */
-  --gold-200: #bae6fd;   /* Sky 200 */
-  --gold-300: #7dd3fc;   /* Sky 300 */
-  --gold-400: #0284c7;   /* Sky 600 (primary accent) */
-  --gold-500: #0369a1;   /* Sky 700 */
-  --gold-600: #075985;   /* Sky 800 */
-  --gold-glow: rgba(2, 132, 199, 0.15);
-  --gold-glow-strong: rgba(2, 132, 199, 0.3);
+  /* Gold System */
+  --gold-200: #ebdcb9;   /* Champagne Gold */
+  --gold-300: #dcc28a;   /* Light Gold */
+  --gold-400: #c7a86d;   /* Dorado elegante (primary accent) */
+  --gold-500: #b59458;   /* Medium Gold */
+  --gold-600: #9e7f45;   /* Dark Gold */
+  --gold-glow: rgba(199, 168, 109, 0.15);
+  --gold-glow-strong: rgba(199, 168, 109, 0.35);
 
   /* Status */
-  --status-available: #10b981; /* Emerald 500 */
-  --status-reserved:  #f59e0b; /* Amber 500 */
-  --status-sold:      #ef4444; /* Red 500 */
+  --status-available: #2e7d32; /* Rich Green */
+  --status-reserved:  #d48a04; /* Amber Gold */
+  --status-sold:      #c62828; /* Rich Red */
 
   /* Text */
-  --text-100: #f8fafc; /* Slate 50 */
-  --text-200: #e2e8f0; /* Slate 200 */
-  --text-400: #94a3b8; /* Slate 400 */
-  --text-600: #64748b; /* Slate 500 */
+  --text-100: #f4f6f3; /* Warm off-white */
+  --text-200: #e3e7e0; /* Warm gray */
+  --text-400: #a3ab9c; /* Muted greenish slate */
+  --text-600: #767f70; /* Muted slate */
 
   /* Glass / UI Panels */
-  --glass-bg:         rgba(15, 23, 42, 0.95); /* Semi-opaque Slate 900 */
-  --glass-bg-mid:     rgba(15, 23, 42, 0.85);
-  --glass-bg-light:   rgba(30, 41, 59, 0.80);
+  --glass-bg:         rgba(10, 16, 9, 0.94); /* Semi-opaque Deepest Forest */
+  --glass-bg-mid:     rgba(10, 16, 9, 0.84);
+  --glass-bg-light:   rgba(20, 31, 18, 0.80);
   --glass-border:     rgba(255, 255, 255, 0.08);
   --glass-border-hi:  rgba(255, 255, 255, 0.15);
-  --glass-gold:       rgba(2, 132, 199, 0.12);
-  --glass-shadow:     0 4px 20px rgba(0, 0, 0, 0.5);
+  --glass-gold:       rgba(199, 168, 109, 0.12);
+  --glass-shadow:     0 6px 30px rgba(0, 0, 0, 0.55);
 
   /* Legacy compat aliases */
   --bg-dark:          var(--ink-900);

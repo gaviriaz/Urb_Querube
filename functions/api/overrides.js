@@ -11,7 +11,7 @@ export async function onRequestGet(context) {
   }
 
   try {
-    // Ensure table exists just in case
+    // Ensure tables exist just in case
     await db.exec(`
       CREATE TABLE IF NOT EXISTS overrides (
         lot_id TEXT PRIMARY KEY,
@@ -20,6 +20,28 @@ export async function onRequestGet(context) {
         tags TEXT,
         description TEXT,
         updated_at INTEGER
+      );
+      CREATE TABLE IF NOT EXISTS overrides_log (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        lot_id TEXT,
+        field_changed TEXT,
+        old_value TEXT,
+        new_value TEXT,
+        timestamp INTEGER
+      );
+      CREATE TABLE IF NOT EXISTS leads (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        lot_id TEXT,
+        timestamp INTEGER,
+        session_id TEXT
+      );
+      CREATE TABLE IF NOT EXISTS flight_metrics (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        event_type TEXT,
+        station_index INTEGER,
+        station_label TEXT,
+        session_id TEXT,
+        timestamp INTEGER
       );
     `);
 

@@ -956,7 +956,6 @@ export const createProceduralNeighborhood = (scene, mapInstance, loteoGeojson, v
       roofOverhangMat.dispose();
       doorClassicMat.dispose();
       doorFrameMat.dispose();
-      windowClassicMat.dispose();
       windowFrameMat.dispose();
       wallPremiumMat.dispose();
       wallBaseMat.dispose();
@@ -965,7 +964,6 @@ export const createProceduralNeighborhood = (scene, mapInstance, loteoGeojson, v
       roofEdgeMat.dispose();
       doorPremiumMat.dispose();
       doorFramePremiumMat.dispose();
-      windowPremiumMat.dispose();
       windowFramePremiumMat.dispose();
       poolBorderMat.dispose();
       poolEdgeMat.dispose();

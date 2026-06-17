@@ -78,7 +78,7 @@ const getCentroid = (coords, geometryType) => {
 // ─────────────────────────────────────────────
 // Flight HUD Overlay Component
 // ─────────────────────────────────────────────
-const FlightHUD = ({ progress, totalStations, currentLabel, elapsed, totalDuration, onStop }) => {
+const FlightHUD = ({ progress, totalStations, currentLabel, elapsed, totalDuration, subtitle, paused, onTogglePause, onSeekStation, onStop }) => {
   const minutes = Math.floor(elapsed / 60000);
   const seconds = Math.floor((elapsed % 60000) / 1000);
   const totalMin = Math.floor(totalDuration / 60000);
@@ -92,26 +92,51 @@ const FlightHUD = ({ progress, totalStations, currentLabel, elapsed, totalDurati
       left: 0,
       right: 0,
       zIndex: 20,
-      background: 'linear-gradient(to top, rgba(15,23,42,0.95) 0%, rgba(15,23,42,0.6) 70%, transparent 100%)',
-      padding: '30px 24px 16px 24px',
+      background: 'linear-gradient(to top, rgba(10,16,9,0.95) 0%, rgba(10,16,9,0.6) 70%, transparent 100%)',
+      padding: '24px 24px 16px 24px',
       pointerEvents: 'auto',
-      borderTop: '1px solid var(--glass-border)'
+      borderTop: '1px solid var(--glass-border)',
+      display: 'flex',
+      flexDirection: 'column',
+      gap: '8px'
     }}>
+      {/* Subtitles (Fase 8, Requirement 6) */}
+      {subtitle && (
+        <div style={{
+          width: '100%',
+          textAlign: 'center',
+          fontSize: '0.82rem',
+          lineHeight: '1.4',
+          color: 'var(--text-100)',
+          background: 'rgba(10,16,9,0.75)',
+          padding: '8px 16px',
+          borderRadius: '6px',
+          border: '1px solid var(--glass-border)',
+          textShadow: '0 1px 3px rgba(0,0,0,0.85)',
+          maxHeight: '52px',
+          overflowY: 'auto',
+          margin: '0 auto 4px auto',
+          maxWidth: '800px'
+        }}>
+          {subtitle}
+        </div>
+      )}
+
       {/* Progress bar */}
       <div style={{
         width: '100%',
-        height: '3px',
+        height: '4px',
         backgroundColor: 'rgba(255,255,255,0.08)',
         borderRadius: '2px',
-        marginBottom: '12px',
-        overflow: 'hidden'
+        overflow: 'hidden',
+        position: 'relative'
       }}>
         <div style={{
           width: `${progressPercent}%`,
           height: '100%',
           background: 'linear-gradient(90deg, var(--gold-600), var(--gold-400))',
           borderRadius: '2px',
-          transition: 'width 0.3s ease'
+          transition: 'width 0.1s linear'
         }} />
       </div>
 
@@ -121,23 +146,28 @@ const FlightHUD = ({ progress, totalStations, currentLabel, elapsed, totalDurati
         justifyContent: 'space-between',
         gap: '20px'
       }}>
-        {/* Station dots */}
-        <div style={{ display: 'flex', gap: '5px', alignItems: 'center', flexShrink: 0 }}>
+        {/* Station dots (Interactive click-to-seek, Fase 8, Requirement 3) */}
+        <div style={{ display: 'flex', gap: '6px', alignItems: 'center', flexShrink: 0 }}>
           {Array.from({ length: totalStations }, (_, i) => (
-            <div
+            <button
               key={i}
+              onClick={() => onSeekStation(i)}
               style={{
-                width: i === Math.floor(progress) ? '8px' : '5px',
-                height: i === Math.floor(progress) ? '8px' : '5px',
+                width: i === Math.floor(progress) ? '10px' : '6px',
+                height: i === Math.floor(progress) ? '10px' : '6px',
                 borderRadius: '50%',
                 backgroundColor: i < Math.floor(progress)
                   ? 'var(--gold-500)'
                   : i === Math.floor(progress)
                     ? 'var(--gold-300)'
-                    : 'rgba(255,255,255,0.15)',
+                    : 'rgba(255,255,255,0.2)',
+                border: 'none',
+                cursor: 'pointer',
+                padding: 0,
                 transition: 'all 0.3s ease',
-                boxShadow: i === Math.floor(progress) ? '0 0 6px var(--gold-glow)' : 'none'
+                boxShadow: i === Math.floor(progress) ? '0 0 6px var(--gold-glow-strong)' : 'none'
               }}
+              title={`Estación ${i + 1}`}
             />
           ))}
         </div>
@@ -170,26 +200,48 @@ const FlightHUD = ({ progress, totalStations, currentLabel, elapsed, totalDurati
           {String(minutes).padStart(2, '0')}:{String(seconds).padStart(2, '0')} / {String(totalMin).padStart(2, '0')}:{String(totalSec).padStart(2, '0')}
         </div>
 
-        {/* Stop button */}
-        <button
-          onClick={onStop}
-          style={{
-            padding: '4px 12px',
-            borderRadius: '4px',
-            border: '1px solid rgba(239,68,68,0.35)',
-            backgroundColor: 'rgba(239,68,68,0.1)',
-            color: '#ef4444',
-            fontSize: '0.78rem',
-            fontWeight: 600,
-            cursor: 'pointer',
-            transition: 'all 0.2s ease',
-            flexShrink: 0
-          }}
-          onMouseEnter={e => { e.target.style.backgroundColor = 'rgba(239,68,68,0.2)'; }}
-          onMouseLeave={e => { e.target.style.backgroundColor = 'rgba(239,68,68,0.1)'; }}
-        >
-          Detener
-        </button>
+        {/* Control buttons */}
+        <div style={{ display: 'flex', gap: '6px', alignItems: 'center', flexShrink: 0 }}>
+          {/* Pause / Resume Button (Fase 8, Requirement 3) */}
+          <button
+            onClick={onTogglePause}
+            style={{
+              padding: '4px 10px',
+              borderRadius: '4px',
+              border: '1px solid rgba(199,168,109,0.35)',
+              backgroundColor: 'rgba(199,168,109,0.1)',
+              color: 'var(--gold-300)',
+              fontSize: '0.78rem',
+              fontWeight: 600,
+              cursor: 'pointer',
+              transition: 'all 0.2s ease'
+            }}
+            onMouseEnter={e => { e.target.style.backgroundColor = 'rgba(199,168,109,0.2)'; }}
+            onMouseLeave={e => { e.target.style.backgroundColor = 'rgba(199,168,109,0.1)'; }}
+          >
+            {paused ? 'Reanudar' : 'Pausar'}
+          </button>
+
+          {/* Stop button */}
+          <button
+            onClick={() => onStop(false)}
+            style={{
+              padding: '4px 12px',
+              borderRadius: '4px',
+              border: '1px solid rgba(239,68,68,0.35)',
+              backgroundColor: 'rgba(239,68,68,0.1)',
+              color: '#ef4444',
+              fontSize: '0.78rem',
+              fontWeight: 600,
+              cursor: 'pointer',
+              transition: 'all 0.2s ease'
+            }}
+            onMouseEnter={e => { e.target.style.backgroundColor = 'rgba(239,68,68,0.2)'; }}
+            onMouseLeave={e => { e.target.style.backgroundColor = 'rgba(239,68,68,0.1)'; }}
+          >
+            Detener
+          </button>
+        </div>
       </div>
     </div>
   );
@@ -250,7 +302,7 @@ const RouteHUD = ({ vehicleType, cameraMode, progress, distance, onStop, onCycle
 // ─────────────────────────────────────────────
 // Main Map3D Component
 // ─────────────────────────────────────────────
-const Map3D = forwardRef(({ onSelectLot, selectedLotId, adminOverrides, viasGeojson, loteoGeojson, manzanaGeojson, predioGeojson, cotasGeojson, voiceEnabled, timeOfDay, environmentalLayer, cameraMode, setCameraMode, viewMode, performanceMode }, ref) => {
+const Map3D = forwardRef(({ onSelectLot, selectedLotId, adminOverrides, viasGeojson, loteoGeojson, manzanaGeojson, predioGeojson, cotasGeojson, voiceEnabled, timeOfDay, environmentalLayer, cameraMode, setCameraMode, viewMode, performanceMode, sessionId, flightMode = 'full', onFlightComplete }, ref) => {
   const mapContainerRef = useRef(null);
   const mapRef = useRef(null);
   const [mapLoaded, setMapLoaded] = useState(false);
@@ -261,6 +313,11 @@ const Map3D = forwardRef(({ onSelectLot, selectedLotId, adminOverrides, viasGeoj
   const [flightProgress, setFlightProgress] = useState(0);
   const [flightLabel, setFlightLabel] = useState('');
   const [flightElapsed, setFlightElapsed] = useState(0);
+  const [flightPaused, setFlightPaused] = useState(false);
+  const [flightSubtitle, setFlightSubtitle] = useState('');
+  const flightPausedRef = useRef(false);
+  const flightElapsedRef = useRef(0);
+  const activeAudioRef = useRef(null);
   
   // Route animation state
   const [routeActive, setRouteActive] = useState(false);
@@ -282,9 +339,41 @@ const Map3D = forwardRef(({ onSelectLot, selectedLotId, adminOverrides, viasGeoj
   const flightActiveRef = useRef(false);
   const [lotCentroids, setLotCentroids] = useState([]);
 
-  // Flight timing calculation
-  const flightTiming = useMemo(() => getFlightTiming(), []);
-  const FLIGHT_TOTAL_DURATION = 120000;
+  // Telemetry Metric Log
+  const logFlightMetric = useCallback((eventType, stationIndex = null, stationLabel = null) => {
+    fetch('/api/flight-metrics', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        event_type: eventType,
+        station_index: stationIndex,
+        station_label: stationLabel,
+        session_id: sessionId
+      })
+    }).catch(err => console.error("Error logging flight metric:", err));
+  }, [sessionId]);
+
+  // Flight waypoints and timing calculation depending on flightMode
+  const activeWaypoints = useMemo(() => {
+    if (flightMode === 'short') {
+      return flightWaypoints.filter(wp => wp.shortTour || wp.label.includes('🛫') || wp.label.includes('🌅'));
+    }
+    return flightWaypoints;
+  }, [flightMode]);
+
+  const activeFlightTiming = useMemo(() => {
+    let totalWeight = 0;
+    const cumulativeWeights = [];
+    activeWaypoints.forEach(wp => {
+      cumulativeWeights.push(totalWeight);
+      totalWeight += (wp.duration || 1.0);
+    });
+    return { cumulativeWeights, totalWeight };
+  }, [activeWaypoints]);
+
+  const FLIGHT_TOTAL_DURATION = flightMode === 'short' ? 35000 : 120000;
 
   const normalizeLoteoGeojson = useMemo(
     () => normalizeLoteoFeatures(loteoGeojson),
@@ -394,19 +483,38 @@ const Map3D = forwardRef(({ onSelectLot, selectedLotId, adminOverrides, viasGeoj
   const centerLat = 8.26558986;
 
   // ─── Stop flight (stable callback) ───
-  const stopFlight = useCallback(() => {
+  const stopFlight = useCallback((completedNaturally = false) => {
     flightActiveRef.current = false;
     setFlightActive(false);
     setFlightProgress(0);
     setFlightLabel('');
     setFlightElapsed(0);
+    setFlightSubtitle('');
+    setFlightPaused(false);
+    flightPausedRef.current = false;
+    flightElapsedRef.current = 0;
+
     if (requestRef.current) {
       cancelAnimationFrame(requestRef.current);
       requestRef.current = null;
     }
+    if (activeAudioRef.current) {
+      activeAudioRef.current.pause();
+      activeAudioRef.current = null;
+    }
     if ('speechSynthesis' in window) {
       window.speechSynthesis.cancel();
     }
+
+    if (completedNaturally) {
+      logFlightMetric('completed');
+      if (onFlightComplete) {
+        onFlightComplete();
+      }
+    } else {
+      logFlightMetric('stopped', lastSpokenStationRef.current, activeWaypoints[lastSpokenStationRef.current]?.label);
+    }
+
     if (mapRef.current) {
       mapRef.current.easeTo({
         pitch: 55,
@@ -415,7 +523,7 @@ const Map3D = forwardRef(({ onSelectLot, selectedLotId, adminOverrides, viasGeoj
         duration: 2000
       });
     }
-  }, []);
+  }, [onFlightComplete, logFlightMetric, activeWaypoints]);
 
   // Expose map controls to parent (Accessibility controls)
   useImperativeHandle(ref, () => ({
@@ -502,7 +610,7 @@ const Map3D = forwardRef(({ onSelectLot, selectedLotId, adminOverrides, viasGeoj
       startFlight();
     },
     stopStreetFlight: () => {
-      stopFlight();
+      stopFlight(false);
     },
     isFlightActive: () => flightActive,
     // Route animation API
@@ -1185,28 +1293,69 @@ const Map3D = forwardRef(({ onSelectLot, selectedLotId, adminOverrides, viasGeoj
   // CINEMATIC DRONE FLIGHT ENGINE
   // ─────────────────────────────────────────────
 
-  // Voice narration for specific stations during drone tour
-  const speakStation = useCallback((waypoint) => {
+  // Resolve narration text based on lot availability (Fase 8, Requirement 1)
+  const getNarrationText = useCallback((waypoint) => {
+    if (!waypoint) return '';
+    if (waypoint.lotId) {
+      const status = adminOverrides[waypoint.lotId]?.status || 'Disponible';
+      if (status !== 'Disponible' && waypoint.narrationFallback) {
+        return waypoint.narrationFallback;
+      }
+    }
+    return waypoint.narration || '';
+  }, [adminOverrides]);
+
+  // Voice narration backup using speechSynthesis
+  const speakStation = useCallback((text) => {
     if (!('speechSynthesis' in window) || !voiceEnabled) return;
-    if (!waypoint || !waypoint.narration) return;
+    if (!text) return;
 
     window.speechSynthesis.cancel();
 
-    const utterance = new SpeechSynthesisUtterance(waypoint.narration);
+    const utterance = new SpeechSynthesisUtterance(text);
     utterance.lang = 'es-CO';
     const voices = window.speechSynthesis.getVoices();
-    const spanishVoice = voices.find(v => v.lang.startsWith('es'));
+    const spanishVoice = voices.find(v => v.lang.startsWith('es') || v.lang.startsWith('es-ES') || v.lang.startsWith('es-MX') || v.lang.startsWith('es-CO'));
     if (spanishVoice) utterance.voice = spanishVoice;
-    utterance.rate = 0.82;
-    utterance.pitch = 1.05;
-    utterance.volume = 0.9;
+    utterance.rate = 0.84;
+    utterance.pitch = 1.0;
+    utterance.volume = 0.95;
     window.speechSynthesis.speak(utterance);
   }, [voiceEnabled]);
 
+  // Pre-recorded audio loader with TTS fallback (Fase 8, Requirement 5)
+  const playAudioNarration = useCallback((index, text) => {
+    if (activeAudioRef.current) {
+      activeAudioRef.current.pause();
+      activeAudioRef.current = null;
+    }
+
+    const fallbackToTTS = () => {
+      speakStation(text);
+    };
+
+    const audioUrl = `/audio/flight/station_${index}.mp3`;
+    const audio = new Audio(audioUrl);
+    activeAudioRef.current = audio;
+
+    audio.oncanplaythrough = () => {
+      if (flightActiveRef.current && !flightPausedRef.current) {
+        audio.play().catch(err => {
+          console.warn("Audio play failed, falling back to TTS:", err);
+          fallbackToTTS();
+        });
+      }
+    };
+
+    audio.onerror = () => {
+      fallbackToTTS();
+    };
+  }, [speakStation]);
+
   // Convert elapsed time to weighted progress along waypoints
   const elapsedToProgress = useCallback((elapsed) => {
-    const { cumulativeWeights, totalWeight } = flightTiming;
-    const N = flightWaypoints.length;
+    const { cumulativeWeights, totalWeight } = activeFlightTiming;
+    const N = activeWaypoints.length;
 
     // Normalized time [0, 1]
     const normalizedTime = Math.min(elapsed / FLIGHT_TOTAL_DURATION, 1.0);
@@ -1226,32 +1375,45 @@ const Map3D = forwardRef(({ onSelectLot, selectedLotId, adminOverrides, viasGeoj
 
     // Last segment
     const lastStart = cumulativeWeights[N - 1];
-    const lastDuration = flightWaypoints[N - 1].duration || 1.0;
+    const lastDuration = activeWaypoints[N - 1].duration || 1.0;
     const segProgress = Math.min((targetWeight - lastStart) / lastDuration, 1.0);
     return (N - 1) + smoothstep(segProgress);
-  }, [flightTiming]);
+  }, [activeFlightTiming, activeWaypoints, FLIGHT_TOTAL_DURATION]);
 
   const startFlight = useCallback(() => {
     if (flightActiveRef.current || !mapRef.current) return;
     flightActiveRef.current = true;
     setFlightActive(true);
+    setFlightPaused(false);
+    flightPausedRef.current = false;
+    setFlightSubtitle('');
 
     const map = mapRef.current;
     startTimeRef.current = null;
     lastSpokenStationRef.current = -1;
     lastHighlightedLotIdRef.current = null;
+    flightElapsedRef.current = 0;
 
-    const N = flightWaypoints.length;
+    logFlightMetric('started');
+
+    const N = activeWaypoints.length;
 
     const animate = (timestamp) => {
       if (!flightActiveRef.current) return; // Check ref, not state
 
+      if (flightPausedRef.current) {
+        startTimeRef.current = timestamp - flightElapsedRef.current;
+        requestRef.current = requestAnimationFrame(animate);
+        return;
+      }
+
       if (!startTimeRef.current) startTimeRef.current = timestamp;
       const elapsed = timestamp - startTimeRef.current;
+      flightElapsedRef.current = elapsed;
 
       // Tour complete
       if (elapsed >= FLIGHT_TOTAL_DURATION) {
-        stopFlight();
+        stopFlight(true);
         return;
       }
 
@@ -1261,10 +1423,10 @@ const Map3D = forwardRef(({ onSelectLot, selectedLotId, adminOverrides, viasGeoj
       const t = progress - Math.floor(progress);
 
       // Catmull-Rom requires 4 control points (p0, p1, p2, p3)
-      const p0 = flightWaypoints[Math.max(0, index - 1)];
-      const p1 = flightWaypoints[index];
-      const p2 = flightWaypoints[Math.min(N - 1, index + 1)];
-      const p3 = flightWaypoints[Math.min(N - 1, index + 2)];
+      const p0 = activeWaypoints[Math.max(0, index - 1)];
+      const p1 = activeWaypoints[index];
+      const p2 = activeWaypoints[Math.min(N - 1, index + 1)];
+      const p3 = activeWaypoints[Math.min(N - 1, index + 2)];
 
       // Interpolate all camera parameters with Catmull-Rom
       const lng = catmullRom(p0.lng, p1.lng, p2.lng, p3.lng, t);
@@ -1273,10 +1435,9 @@ const Map3D = forwardRef(({ onSelectLot, selectedLotId, adminOverrides, viasGeoj
       const pitch = catmullRom(p0.pitch, p1.pitch, p2.pitch, p3.pitch, t);
       
       // Bearing: look-ahead calculation for natural camera tracking
-      // Calculate direction towards next waypoint and blend
       const bearingBase = lerpAngle(p1.bearing, p2.bearing, t);
       
-      // Subtle cinematic sweep (gentler than before, ±8° oscillation)
+      // Subtle cinematic sweep (±8° oscillation)
       const isOverview = index === 0 || index >= N - 2;
       const sweepAmplitude = isOverview ? 0 : 8;
       const sweep = Math.sin(progress * Math.PI * 0.8) * sweepAmplitude;
@@ -1303,11 +1464,26 @@ const Map3D = forwardRef(({ onSelectLot, selectedLotId, adminOverrides, viasGeoj
       const currentStation = Math.floor(progress);
       if (currentStation !== lastSpokenStationRef.current && currentStation < N) {
         lastSpokenStationRef.current = currentStation;
-        speakStation(flightWaypoints[currentStation]);
+        const text = getNarrationText(activeWaypoints[currentStation]);
+        setFlightSubtitle(text);
+        playAudioNarration(currentStation, text);
+      }
+
+      // Sincronized spotlight pulse effect for active lot selection (Fase 8, Requirement 7)
+      if (selectedLotId) {
+        const pulseWidth = 3.5 + Math.sin(timestamp * 0.008) * 2.0; // Oscillates between 1.5 and 5.5
+        const hoveredLotId = hoveredLot?.id || null;
+        const soldLots = Object.keys(adminOverrides).filter(k => adminOverrides[k].status === 'Vendido').map(Number);
+        const reservedLots = Object.keys(adminOverrides).filter(k => adminOverrides[k].status === 'Reservado').map(Number);
+        map.setPaintProperty('loteo-line-base', 'line-width', [
+          'case',
+          ['==', ['to-number', ['get', 'fid']], Number(selectedLotId || -1)], pulseWidth,
+          ['==', ['to-number', ['get', 'fid']], Number(hoveredLotId || -1)], 2.5,
+          1.5
+        ]);
       }
 
       // Automated Lot Highlighting (closest lot to camera)
-      // Fix: previous lon/lat squared-distance threshold was not metric-safe.
       if (lotCentroids.length > 0 && zoom >= 18.0) {
         let nearest = null;
         let minD = Infinity;
@@ -1333,12 +1509,68 @@ const Map3D = forwardRef(({ onSelectLot, selectedLotId, adminOverrides, viasGeoj
         }
       }
 
-
       requestRef.current = requestAnimationFrame(animate);
     };
 
     requestRef.current = requestAnimationFrame(animate);
-  }, [lotCentroids, voiceEnabled, speakStation, elapsedToProgress, stopFlight, onSelectLot]);
+  }, [lotCentroids, voiceEnabled, activeWaypoints, activeFlightTiming, FLIGHT_TOTAL_DURATION, selectedLotId, hoveredLot, adminOverrides, onSelectLot, speakStation, playAudioNarration, getNarrationText, logFlightMetric]);
+
+  // Handle Play/Pause toggle (Fase 8, Requirement 3)
+  const handleTogglePause = useCallback(() => {
+    if (!flightActiveRef.current) return;
+    const isPaused = !flightPausedRef.current;
+    flightPausedRef.current = isPaused;
+    setFlightPaused(isPaused);
+
+    if (isPaused) {
+      if (activeAudioRef.current) activeAudioRef.current.pause();
+      if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+      logFlightMetric('paused', lastSpokenStationRef.current, activeWaypoints[lastSpokenStationRef.current]?.label);
+    } else {
+      logFlightMetric('resumed', lastSpokenStationRef.current, activeWaypoints[lastSpokenStationRef.current]?.label);
+      if (activeAudioRef.current) {
+        activeAudioRef.current.play().catch(() => {
+          speakStation(getNarrationText(activeWaypoints[lastSpokenStationRef.current]));
+        });
+      }
+    }
+  }, [activeWaypoints, getNarrationText, speakStation, logFlightMetric]);
+
+  // Handle Skip/Seek to station from progress dots (Fase 8, Requirement 3)
+  const seekToStation = useCallback((i) => {
+    if (!flightActiveRef.current) return;
+    const { cumulativeWeights, totalWeight } = activeFlightTiming;
+    const targetWeight = cumulativeWeights[i];
+    const targetElapsed = (targetWeight / totalWeight) * FLIGHT_TOTAL_DURATION;
+    
+    flightElapsedRef.current = targetElapsed;
+    setFlightElapsed(targetElapsed);
+    setFlightProgress(i);
+    setFlightLabel(activeWaypoints[i]?.label || '');
+
+    lastSpokenStationRef.current = i; 
+    
+    if (startTimeRef.current) {
+      startTimeRef.current = performance.now() - targetElapsed;
+    }
+
+    if (activeAudioRef.current) {
+      activeAudioRef.current.pause();
+      activeAudioRef.current = null;
+    }
+    if ('speechSynthesis' in window) {
+      window.speechSynthesis.cancel();
+    }
+
+    const text = getNarrationText(activeWaypoints[i]);
+    setFlightSubtitle(text);
+    
+    logFlightMetric('seeked_to_station', i, activeWaypoints[i]?.label);
+
+    if (!flightPausedRef.current) {
+      playAudioNarration(i, text);
+    }
+  }, [activeWaypoints, activeFlightTiming, FLIGHT_TOTAL_DURATION, getNarrationText, playAudioNarration, logFlightMetric]);
 
   // ─────────────────────────────────────────────
   // ROUTE ANIMATION ENGINE
@@ -1595,10 +1827,14 @@ const Map3D = forwardRef(({ onSelectLot, selectedLotId, adminOverrides, viasGeoj
       {flightActive && (
         <FlightHUD
           progress={flightProgress}
-          totalStations={flightWaypoints.length}
+          totalStations={activeWaypoints.length}
           currentLabel={flightLabel}
           elapsed={flightElapsed}
           totalDuration={FLIGHT_TOTAL_DURATION}
+          subtitle={flightSubtitle}
+          paused={flightPaused}
+          onTogglePause={handleTogglePause}
+          onSeekStation={seekToStation}
           onStop={stopFlight}
         />
       )}

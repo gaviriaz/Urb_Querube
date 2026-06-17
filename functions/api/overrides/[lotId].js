@@ -73,7 +73,40 @@ export async function onRequestPost(context) {
     const body = await request.json();
     const { price, status, tags, description } = body;
 
-    await db.prepare(`
+    // 1. Fetch current values for comparison
+    const existing = await db.prepare("SELECT * FROM overrides WHERE lot_id = ?").bind(lotId).first();
+    const oldPrice = existing ? existing.price : null;
+    const oldStatus = existing ? existing.status : 'Disponible';
+    const oldTags = existing ? existing.tags : '';
+    const oldDescription = existing ? existing.description : '';
+
+    const now = Date.now();
+    const newPrice = price !== undefined && price !== null ? price : null;
+    const newStatus = status || 'Disponible';
+    const newTags = tags || '';
+    const newDescription = description || '';
+
+    const statements = [];
+
+    if (newPrice !== oldPrice) {
+      statements.push(db.prepare("INSERT INTO overrides_log (lot_id, field_changed, old_value, new_value, timestamp) VALUES (?, ?, ?, ?, ?)")
+        .bind(lotId, 'price', String(oldPrice), String(newPrice), now));
+    }
+    if (newStatus !== oldStatus) {
+      statements.push(db.prepare("INSERT INTO overrides_log (lot_id, field_changed, old_value, new_value, timestamp) VALUES (?, ?, ?, ?, ?)")
+        .bind(lotId, 'status', oldStatus, newStatus, now));
+    }
+    if (newTags !== oldTags) {
+      statements.push(db.prepare("INSERT INTO overrides_log (lot_id, field_changed, old_value, new_value, timestamp) VALUES (?, ?, ?, ?, ?)")
+        .bind(lotId, 'tags', oldTags, newTags, now));
+    }
+    if (newDescription !== oldDescription) {
+      statements.push(db.prepare("INSERT INTO overrides_log (lot_id, field_changed, old_value, new_value, timestamp) VALUES (?, ?, ?, ?, ?)")
+        .bind(lotId, 'description', oldDescription, newDescription, now));
+    }
+
+    // 2. Perform the actual upsert
+    statements.push(db.prepare(`
       INSERT INTO overrides (lot_id, price, status, tags, description, updated_at)
       VALUES (?, ?, ?, ?, ?, ?)
       ON CONFLICT(lot_id) DO UPDATE SET
@@ -82,14 +115,9 @@ export async function onRequestPost(context) {
         tags = excluded.tags,
         description = excluded.description,
         updated_at = excluded.updated_at
-    `).bind(
-      lotId,
-      price !== undefined && price !== null ? price : null,
-      status || 'Disponible',
-      tags || '',
-      description || '',
-      Date.now()
-    ).run();
+    `).bind(lotId, newPrice, newStatus, newTags, newDescription, now));
+
+    await db.batch(statements);
 
     return new Response(JSON.stringify({ success: true }), {
       status: 200,
