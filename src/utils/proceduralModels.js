@@ -116,6 +116,40 @@ export const createProceduralNeighborhood = (scene, mapInstance, loteoGeojson, v
 
   const count = features.length;
 
+  // Pre-calculate lot states for matrix access and smooth hover elevation animations
+  const lotStates = features.map((feat, lotIdx) => {
+    const coords = feat.geometry.coordinates;
+    const centroid = getCentroid(coords);
+    const elevation = mapInstance.getTerrain() ? mapInstance.queryTerrainElevation(centroid) : 0;
+    const mercator = maplibregl.MercatorCoordinate.fromLngLat(centroid, elevation);
+    const scaleFactor = mercator.meterInMercatorCoordinateUnits();
+    const position = new THREE.Vector3(mercator.x, mercator.y, mercator.z);
+    
+    let angle = 0;
+    const outerRing = Array.isArray(coords[0][0][0]) ? coords[0][0] : coords[0];
+    if (outerRing && outerRing.length >= 2) {
+      const p1 = maplibregl.MercatorCoordinate.fromLngLat(outerRing[0], 0);
+      const p2 = maplibregl.MercatorCoordinate.fromLngLat(outerRing[1], 0);
+      angle = -Math.atan2(p2.y - p1.y, p2.x - p1.x) + Math.PI / 2;
+    }
+    const rotation = new THREE.Quaternion().setFromEuler(new THREE.Euler(Math.PI / 2, 0, angle));
+    const scale = new THREE.Vector3(scaleFactor, scaleFactor, scaleFactor);
+    const lotId = feat.properties.fid || feat.properties.OBJECTID || 0;
+    const style = lotId % 3;
+
+    return {
+      lotIdx,
+      lotId,
+      position,
+      rotation,
+      scale,
+      scaleFactor,
+      style,
+      currentHoverY: 0,
+      targetHoverY: 0
+    };
+  });
+
   // 1. Geometries - Enhanced for Revit/SketchUp quality
   const lawnGeom = new THREE.BoxGeometry(7.8, 0.15, 15.8);
   const drivewayGeom = new THREE.BoxGeometry(2.8, 0.06, 4.5);
@@ -465,31 +499,17 @@ export const createProceduralNeighborhood = (scene, mapInstance, loteoGeojson, v
     instancedSlReflector.setMatrixAt(i, zeroMatrix);
   }
 
-  // 5. Position Lot instances
-  features.forEach((feat, lotIdx) => {
-    const coords = feat.geometry.coordinates;
-    const centroid = getCentroid(coords);
-
-    const elevation = mapInstance.getTerrain() ? mapInstance.queryTerrainElevation(centroid) : 0;
-    const mercator = maplibregl.MercatorCoordinate.fromLngLat(centroid, elevation);
-    const scaleFactor = mercator.meterInMercatorCoordinateUnits();
+  // 5. Position Lot instances using lotStates
+  lotStates.forEach((state) => {
+    const lotIdx = state.lotIdx;
+    const position = state.position;
+    const rotation = state.rotation;
+    const scale = state.scale;
+    const style = state.style;
+    const lotId = state.lotId;
+    const scaleFactor = state.scaleFactor;
     
-    const position = new THREE.Vector3(mercator.x, mercator.y, mercator.z);
-    
-    // Angle calculation based on lot boundary orientation
-    let angle = 0;
-    const outerRing = Array.isArray(coords[0][0][0]) ? coords[0][0] : coords[0];
-    if (outerRing && outerRing.length >= 2) {
-      const p1 = maplibregl.MercatorCoordinate.fromLngLat(outerRing[0], 0);
-      const p2 = maplibregl.MercatorCoordinate.fromLngLat(outerRing[1], 0);
-      angle = -Math.atan2(p2.y - p1.y, p2.x - p1.x) + Math.PI / 2;
-    }
-    const rotation = new THREE.Quaternion().setFromEuler(new THREE.Euler(Math.PI / 2, 0, angle));
-    const scale = new THREE.Vector3(scaleFactor, scaleFactor, scaleFactor);
-
-    // Style assignment: 0=Classic, 1=Premium, 2=Eco
-    const lotId = feat.properties.fid || feat.properties.OBJECTID || 0;
-    const style = lotId % 3;
+    const feat = features[lotIdx];
 
     // Compose lot master matrix
     const lotMatrix = new THREE.Matrix4();
@@ -893,7 +913,8 @@ export const createProceduralNeighborhood = (scene, mapInstance, loteoGeojson, v
       slBulbMat.needsUpdate = true;
       slReflectorMat.needsUpdate = true;
     },
-    animate: () => {
+    animate: (hoveredId) => {
+      // 1. Pulse animations
       const elapsed = (Date.now() % 4000) / 4000;
       const scaleVal = 0.1 + elapsed * 1.7;
       const opacityVal = 0.6 * (1 - elapsed);
@@ -901,6 +922,92 @@ export const createProceduralNeighborhood = (scene, mapInstance, loteoGeojson, v
         p.mesh.scale.set(p.baseScale * scaleVal, p.baseScale * scaleVal, p.baseScale);
         p.material.opacity = opacityVal;
       });
+
+      // 2. Smooth hover elevation lerp (+2 meters on local Y / global Z axis when hovered)
+      let needsUpdate = false;
+      lotStates.forEach(state => {
+        const isHovered = Number(state.lotId) === Number(hoveredId);
+        state.targetHoverY = isHovered ? 2.0 * state.scaleFactor : 0;
+        
+        const diff = state.targetHoverY - state.currentHoverY;
+        if (Math.abs(diff) > 0.0001) {
+          state.currentHoverY += diff * 0.12; // Lerp speed factor
+          needsUpdate = true;
+        } else {
+          state.currentHoverY = state.targetHoverY;
+        }
+      });
+
+      if (needsUpdate) {
+        lotStates.forEach(state => {
+          const lotMatrix = new THREE.Matrix4();
+          const tempPos = state.position.clone();
+          tempPos.z += state.currentHoverY; // Elevated on Z axis
+          lotMatrix.compose(tempPos, state.rotation, state.scale);
+
+          const subMatrix = new THREE.Matrix4();
+          const tempTranslation = new THREE.Vector3();
+          const tempRotation = new THREE.Quaternion();
+          const tempScale = new THREE.Vector3(1, 1, 1);
+
+          const setSubMesh = (instancedMesh, localPos, localEuler, localScale) => {
+            tempTranslation.copy(localPos);
+            if (localEuler) tempRotation.setFromEuler(localEuler);
+            else tempRotation.set(0, 0, 0, 1);
+            tempScale.copy(localScale || new THREE.Vector3(1, 1, 1));
+            subMatrix.compose(tempTranslation, tempRotation, tempScale);
+            matrix.multiplyMatrices(lotMatrix, subMatrix);
+            instancedMesh.setMatrixAt(state.lotIdx, matrix);
+          };
+
+          // Redraw components for the animated lot
+          setSubMesh(instancedLawn, new THREE.Vector3(0, 0.15 / 2, 0));
+          setSubMesh(instancedDriveway, new THREE.Vector3(2.0, 0.06 / 2, 5.0));
+
+          if (state.style === 0) {
+            setSubMesh(instancedFoundation, new THREE.Vector3(-0.3, 0.3 / 2, -1.0));
+            setSubMesh(instancedWallClassic, new THREE.Vector3(-0.3, 0.3 + 4.5 / 2, -1.0));
+            setSubMesh(instancedWallAccent, new THREE.Vector3(-0.3, 0.3 + 0.15, -1.0));
+            setSubMesh(instancedRoofBase, new THREE.Vector3(-0.3, 0.3 + 4.5 + 0.25 / 2, -1.0));
+            setSubMesh(instancedRoofClassic, new THREE.Vector3(-0.3, 0.3 + 4.5 + 0.25 + 1.2, -1.0), new THREE.Euler(Math.PI / 2, 0, 0));
+            setSubMesh(instancedDoorClassic, new THREE.Vector3(-1.5, 0.3 + 2.4 / 2, 3.9));
+            setSubMesh(instancedDoorFrame, new THREE.Vector3(-1.5, 0.3 + 2.6 / 2, 3.85));
+            setSubMesh(instancedWindowClassic, new THREE.Vector3(1.5, 0.3 + 1.8, 3.9));
+            setSubMesh(instancedWindowFrame, new THREE.Vector3(1.5, 0.3 + 1.8, 3.85));
+          } else if (state.style === 1) {
+            setSubMesh(instancedFoundation, new THREE.Vector3(-0.3, 0.3 / 2, -1.0));
+            setSubMesh(instancedWallPremium, new THREE.Vector3(-0.3, 0.3 + 8.0 / 2, -1.0));
+            setSubMesh(instancedWallBase, new THREE.Vector3(-0.3, 0.3 + 0.4 / 2, -1.0));
+            setSubMesh(instancedWallCap, new THREE.Vector3(-0.3, 0.3 + 8.0 - 0.25 / 2, -1.0));
+            setSubMesh(instancedRoofPremium, new THREE.Vector3(-0.3, 0.3 + 8.0 + 0.5 / 2, -1.0));
+            setSubMesh(instancedRoofEdge, new THREE.Vector3(-0.3, 0.3 + 8.0 + 0.5 + 0.2 / 2, -1.0));
+            setSubMesh(instancedDoorPremium, new THREE.Vector3(-1.5, 0.3 + 2.6 / 2, 3.9));
+            setSubMesh(instancedDoorFramePremium, new THREE.Vector3(-1.5, 0.3 + 2.8 / 2, 3.85));
+            setSubMesh(instancedWindowPremium, new THREE.Vector3(1.5, 0.3 + 4.8 / 2, 3.9));
+            setSubMesh(instancedWindowFramePremium, new THREE.Vector3(1.5, 0.3 + 4.8 / 2, 3.85));
+            setSubMesh(instancedPoolBorder, new THREE.Vector3(1.5, 0.15 / 2, -5.5));
+            setSubMesh(instancedPoolWater, new THREE.Vector3(1.5, 0.12, -5.5));
+            setSubMesh(instancedPoolEdge, new THREE.Vector3(1.5, 0.08 / 2, -5.5));
+            setSubMesh(instancedSolarFrame, new THREE.Vector3(-1.5, 0.3 + 8.0 + 0.5 + 0.06, -1.0), new THREE.Euler(-0.25, 0, 0));
+            setSubMesh(instancedSolarPanel, new THREE.Vector3(-1.5, 0.3 + 8.0 + 0.5 + 0.12, -1.0), new THREE.Euler(-0.25, 0, 0));
+          } else {
+            setSubMesh(instancedFoundation, new THREE.Vector3(-0.3, 0.3 / 2, -1.0));
+            setSubMesh(instancedWallClassic, new THREE.Vector3(-0.3, 0.3 + 4.5 / 2, -1.0));
+            setSubMesh(instancedRoofPremium, new THREE.Vector3(-0.3, 0.3 + 4.5 + 0.5 / 2, -1.0));
+            setSubMesh(instancedDoorClassic, new THREE.Vector3(-1.5, 0.3 + 2.4 / 2, 3.9));
+            setSubMesh(instancedDoorFrame, new THREE.Vector3(-1.5, 0.3 + 2.6 / 2, 3.85));
+            setSubMesh(instancedWindowClassic, new THREE.Vector3(1.5, 0.3 + 1.8, 3.9));
+            setSubMesh(instancedWindowFrame, new THREE.Vector3(1.5, 0.3 + 1.8, 3.85));
+            setSubMesh(instancedSolarFrame, new THREE.Vector3(-1.5, 0.3 + 4.5 + 0.5 + 0.06, -1.0), new THREE.Euler(-0.25, 0, 0));
+            setSubMesh(instancedSolarPanel, new THREE.Vector3(-1.5, 0.3 + 4.5 + 0.5 + 0.12, -1.0), new THREE.Euler(-0.25, 0, 0));
+          }
+        });
+
+        // Trigger updates on all matrix instances
+        allInstancedMeshes.forEach(m => {
+          m.instanceMatrix.needsUpdate = true;
+        });
+      }
     },
     updateLOD: (zoom) => {
       const showAll = zoom >= 17.8;
