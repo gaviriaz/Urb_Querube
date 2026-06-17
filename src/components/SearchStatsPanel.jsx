@@ -150,22 +150,7 @@ const SearchStatsPanel = ({
         <ChevronLeft size={18} />
       </button>
 
-      {/* ── Header ── */}
-      <div className="catalog-header">
-        <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 8 }}>
-          <div style={{
-            width: 34, height: 34, borderRadius: 6,
-            background: 'rgba(255,255,255,0.03)', border: '1px solid var(--glass-border)',
-            display: 'flex', alignItems: 'center', justifyContent: 'center'
-          }}>
-            <QuerubeLogo width={22} height={22} />
-          </div>
-          <div>
-            <div className="catalog-title" style={{ fontSize: '1.15rem' }}>Querube</div>
-            <div className="catalog-subtitle" style={{ fontSize: '0.62rem' }}>Visualizador Catastral 3D</div>
-          </div>
-        </div>
-      </div>
+
 
       {/* ── Stats ── */}
       <div className="catalog-stats">

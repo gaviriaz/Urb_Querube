@@ -10,6 +10,11 @@ import { calculateRouteToLot, routeToGeoJSON, routeDistance as getRouteDistance,
 import { haversineDistanceMeters, extractLotInfo, normalizeLoteoFeatures } from '../utils/lotUtils.js';
 import { API_BASE_URL } from '../utils/config.js';
 
+// Optimized 3D Route Tour imports
+import { createPersonMesh, createMotoMesh, createCarMesh, animatePerson, animateMoto, animateCar } from '../utils/proceduralVehicles.js';
+import { createPathFromVias, getPositionAlongPath, getRotationAlongPath, getBearingAlongPath } from '../utils/pathFinder.js';
+import { viasUrbanizacion } from '../data/vias.js';
+
 // ─────────────────────────────────────────────
 // Robust centroid calculator for Polygon / MultiPolygon
 // ─────────────────────────────────────────────
@@ -368,6 +373,14 @@ const Map3D = forwardRef(({ onSelectLot, selectedLotId, adminOverrides, lotClick
   const routeDataRef = useRef(null);
   const vehicleMarkerRef = useRef(null);
   const routeCameraRef = useRef(null);
+  
+  // Custom layer and Tour 3D refs
+  const customLayerRef = useRef(null);
+  const tourActiveRef = useRef(false);
+  const tourReqRef = useRef(null);
+  const tourStartTimeRef = useRef(null);
+  const tourCameraRef = useRef(null);
+  const tourPathRef = useRef(null);
   
   // Drone tour animation references
   const requestRef = useRef(null);
@@ -1094,6 +1107,13 @@ const Map3D = forwardRef(({ onSelectLot, selectedLotId, adminOverrides, lotClick
       stopRouteAnimation();
     },
     isRouteActive: () => routeActive,
+    // Tour 3D API
+    startTourStep: (vType, duration, onComplete) => {
+      startTourStepAnimation(vType, duration, onComplete);
+    },
+    stopTour: () => {
+      stopTourStepAnimation();
+    },
     // Expose new modular APIs
     getLotsBounds: () => getLotsBounds(loteoGeojson),
     getLotsCenter: () => getLotsCenter(loteoGeojson),
@@ -1330,6 +1350,7 @@ const Map3D = forwardRef(({ onSelectLot, selectedLotId, adminOverrides, lotClick
         renderingMode: '3d',
         performanceMode: performanceMode,
         onAdd: function (mapInstance, gl) {
+          customLayerRef.current = this; // Store the reference for React access
           this.map = mapInstance;
           this.camera = new THREE.Camera();
           this.scene = new THREE.Scene();
@@ -1369,6 +1390,23 @@ const Map3D = forwardRef(({ onSelectLot, selectedLotId, adminOverrides, lotClick
           }
           this.setTimeOfDay(timeOfDay);
 
+          // Initialize procedural vehicles
+          this.personGroup = createPersonMesh();
+          this.motoGroup = createMotoMesh();
+          this.carGroup = createCarMesh();
+
+          this.personGroup.visible = false;
+          this.motoGroup.visible = false;
+          this.carGroup.visible = false;
+
+          this.scene.add(this.personGroup);
+          this.scene.add(this.motoGroup);
+          this.scene.add(this.carGroup);
+
+          this.activeVehicle = null;
+          this.animationProgress = 0;
+          this.activeCurve = null;
+
           this.renderer = new THREE.WebGLRenderer({
             canvas: mapInstance.getCanvas(),
             context: gl,
@@ -1381,6 +1419,15 @@ const Map3D = forwardRef(({ onSelectLot, selectedLotId, adminOverrides, lotClick
           this.renderer.toneMappingExposure = 1.2;
           this.renderer.outputColorSpace = THREE.SRGBColorSpace;
         },
+        setVehicleState: function (vehicleType, progress, pathCurve) {
+          this.activeVehicle = vehicleType;
+          this.animationProgress = progress;
+          this.activeCurve = pathCurve;
+
+          if (this.personGroup) this.personGroup.visible = (vehicleType === 'person');
+          if (this.motoGroup) this.motoGroup.visible = (vehicleType === 'moto');
+          if (this.carGroup) this.carGroup.visible = (vehicleType === 'car');
+        },
         render: function (gl, matrix) {
           let hasActiveAnimation = false;
           if (this.neighborhood) {
@@ -1391,17 +1438,51 @@ const Map3D = forwardRef(({ onSelectLot, selectedLotId, adminOverrides, lotClick
               this.neighborhood.updateLOD(this.map.getZoom());
             }
           }
+
+          // Update active vehicle position and orientation
+          if (this.activeVehicle && this.activeCurve) {
+            const pos = getPositionAlongPath(this.activeCurve, this.animationProgress);
+            const rot = getRotationAlongPath(this.activeCurve, this.animationProgress);
+            
+            // Convert 1 real meter to Mercator units at this location
+            const mercator = maplibregl.MercatorCoordinate.fromLngLat(this.map.getCenter(), 0);
+            const scale = mercator.meterInMercatorCoordinateUnits();
+
+            const activeMesh = this.activeVehicle === 'person' ? this.personGroup
+                             : this.activeVehicle === 'moto' ? this.motoGroup
+                             : this.carGroup;
+
+            if (activeMesh) {
+              activeMesh.position.copy(pos);
+              activeMesh.rotation.set(Math.PI / 2, 0, rot);
+              activeMesh.scale.set(scale, scale, scale);
+
+              // Animate internal submeshes
+              if (this.activeVehicle === 'person') {
+                animatePerson(this.personGroup, this.animationProgress);
+              } else if (this.activeVehicle === 'moto') {
+                animateMoto(this.motoGroup, this.animationProgress);
+              } else if (this.activeVehicle === 'car') {
+                animateCar(this.carGroup, this.animationProgress);
+              }
+            }
+          }
+
           this.camera.projectionMatrix = new THREE.Matrix4().fromArray(matrix);
           this.renderer.resetState();
           this.renderer.render(this.scene, this.camera);
           
-          if (hasActiveAnimation || flightActiveRef.current || routeActiveRef.current) {
+          if (hasActiveAnimation || flightActiveRef.current || routeActiveRef.current || tourActiveRef.current || this.activeVehicle) {
             this.map.triggerRepaint();
           }
         },
         onRemove: function (mapInstance, gl) {
           if (this.neighborhood) this.neighborhood.dispose();
+          if (this.personGroup) this.scene.remove(this.personGroup);
+          if (this.motoGroup) this.scene.remove(this.motoGroup);
+          if (this.carGroup) this.scene.remove(this.carGroup);
           if (this.renderer) this.renderer.dispose();
+          customLayerRef.current = null;
         },
         setTimeOfDay: function (mode) {
           this.currentTimeOfDay = mode;
@@ -2178,6 +2259,142 @@ const Map3D = forwardRef(({ onSelectLot, selectedLotId, adminOverrides, lotClick
   // ─────────────────────────────────────────────
   // ROUTE ANIMATION ENGINE
   // ─────────────────────────────────────────────
+  const stopTourStepAnimation = useCallback(() => {
+    tourActiveRef.current = false;
+    if (tourReqRef.current) {
+      cancelAnimationFrame(tourReqRef.current);
+      tourReqRef.current = null;
+    }
+    if (customLayerRef.current) {
+      customLayerRef.current.setVehicleState(null, 0, null);
+    }
+    
+    // Clean up tour line from map if any
+    if (mapRef.current) {
+      try {
+        if (mapRef.current.getLayer('tour-line')) mapRef.current.removeLayer('tour-line');
+        if (mapRef.current.getLayer('tour-line-glow')) mapRef.current.removeLayer('tour-line-glow');
+        if (mapRef.current.getSource('tour-path')) mapRef.current.removeSource('tour-path');
+      } catch(e) {}
+    }
+  }, []);
+
+  const startTourStepAnimation = useCallback((vType, duration, onStepComplete) => {
+    if (!mapRef.current) return;
+    
+    stopTourStepAnimation();
+    stopRouteAnimation();
+    stopFlight();
+    
+    const map = mapRef.current;
+    
+    // Build path
+    const tourPath = createPathFromVias(viasUrbanizacion, map);
+    tourPathRef.current = tourPath;
+    
+    if (customLayerRef.current) {
+      customLayerRef.current.setVehicleState(vType, 0, tourPath);
+    }
+    
+    // Draw route path on map
+    const routeGeoJSON = routeToGeoJSON(viasUrbanizacion);
+    if (routeGeoJSON) {
+      if (!map.getSource('tour-path')) {
+        map.addSource('tour-path', { type: 'geojson', data: routeGeoJSON });
+      } else {
+        map.getSource('tour-path').setData(routeGeoJSON);
+      }
+      
+      if (!map.getLayer('tour-line-glow')) {
+        map.addLayer({
+          id: 'tour-line-glow',
+          type: 'line',
+          source: 'tour-path',
+          layout: { 'line-join': 'round', 'line-cap': 'round' },
+          paint: { 'line-color': '#d4a843', 'line-width': 8, 'line-opacity': 0.25, 'line-blur': 4 }
+        });
+      }
+      if (!map.getLayer('tour-line')) {
+        map.addLayer({
+          id: 'tour-line',
+          type: 'line',
+          source: 'tour-path',
+          layout: { 'line-join': 'round', 'line-cap': 'round' },
+          paint: { 'line-color': '#d4a843', 'line-width': 3, 'line-opacity': 0.9, 'line-dasharray': [2, 1] }
+        });
+      }
+    }
+    
+    tourActiveRef.current = true;
+    tourStartTimeRef.current = null;
+    tourCameraRef.current = null;
+    
+    const animateTour = (timestamp) => {
+      if (!tourActiveRef.current) return;
+      if (!tourStartTimeRef.current) tourStartTimeRef.current = timestamp;
+      
+      const elapsed = timestamp - tourStartTimeRef.current;
+      const progress = Math.min(elapsed / duration, 1.0);
+      const easedProgress = smoothstep(progress);
+      
+      if (customLayerRef.current) {
+        customLayerRef.current.animationProgress = easedProgress;
+      }
+      
+      const posMercator = tourPath.curve.getPoint(easedProgress);
+      const pos = new maplibregl.MercatorCoordinate(posMercator.x, posMercator.y, posMercator.z).toLngLat();
+      const bearing = getBearingAlongPath(tourPath, easedProgress);
+      
+      if (pos) {
+        const currentMode = cameraMode || 'third';
+        const targetCam = getCameraForPerspective(pos, currentMode, bearing, vType);
+        const smooth = 0.15;
+        if (!tourCameraRef.current) {
+          tourCameraRef.current = targetCam;
+        } else {
+          const prev = tourCameraRef.current;
+          const bearingDelta = ((targetCam.bearing - prev.bearing + 540) % 360) - 180;
+          tourCameraRef.current = {
+            center: [
+              lerp(prev.center[0], targetCam.center[0], smooth),
+              lerp(prev.center[1], targetCam.center[1], smooth)
+            ],
+            zoom: lerp(prev.zoom, targetCam.zoom, smooth),
+            pitch: lerp(prev.pitch, targetCam.pitch, smooth),
+            bearing: prev.bearing + bearingDelta * smooth
+          };
+        }
+        map.jumpTo(tourCameraRef.current);
+      }
+      
+      if (progress >= 1.0) {
+        stopTourStepAnimation();
+        if (onStepComplete) {
+          onStepComplete();
+        }
+        return;
+      }
+      
+      tourReqRef.current = requestAnimationFrame(animateTour);
+    };
+    
+    // Fly to tour start first
+    map.flyTo({
+      center: viasUrbanizacion[0],
+      zoom: 18.5,
+      pitch: 65,
+      bearing: 0,
+      duration: 1500
+    });
+    
+    setTimeout(() => {
+      if (tourActiveRef.current) {
+        tourReqRef.current = requestAnimationFrame(animateTour);
+      }
+    }, 1600);
+    
+  }, [cameraMode, stopRouteAnimation, stopFlight]);
+
   const stopRouteAnimation = useCallback(() => {
     routeActiveRef.current = false;
     setRouteActive(false);
@@ -2186,19 +2403,19 @@ const Map3D = forwardRef(({ onSelectLot, selectedLotId, adminOverrides, lotClick
       cancelAnimationFrame(routeReqRef.current);
       routeReqRef.current = null;
     }
-    // Remove route layers and marker
+    
+    // Clear vehicle from Three.js custom layer
+    if (customLayerRef.current) {
+      customLayerRef.current.setVehicleState(null, 0, null);
+    }
+    
+    // Remove route layers from map
     if (mapRef.current) {
       try {
         if (mapRef.current.getLayer('route-line')) mapRef.current.removeLayer('route-line');
         if (mapRef.current.getLayer('route-line-glow')) mapRef.current.removeLayer('route-line-glow');
         if (mapRef.current.getSource('route-path')) mapRef.current.removeSource('route-path');
-        if (mapRef.current.getLayer('vehicle-marker')) mapRef.current.removeLayer('vehicle-marker');
-        if (mapRef.current.getSource('vehicle-point')) mapRef.current.removeSource('vehicle-point');
       } catch(e) { /* layers may not exist */ }
-    }
-    if (vehicleMarkerRef.current) {
-      vehicleMarkerRef.current.remove();
-      vehicleMarkerRef.current = null;
     }
   }, []);
 
@@ -2207,6 +2424,7 @@ const Map3D = forwardRef(({ onSelectLot, selectedLotId, adminOverrides, lotClick
     
     // Stop any existing animation
     stopRouteAnimation();
+    stopTourStepAnimation();
     stopFlight();
     
     const map = mapRef.current;
@@ -2253,15 +2471,10 @@ const Map3D = forwardRef(({ onSelectLot, selectedLotId, adminOverrides, lotClick
       }
     }
     
-    // Create vehicle marker (HTML marker for emoji)
-    const vConfig = VEHICLE_TYPES[vt];
-    const el = document.createElement('div');
-    el.style.cssText = 'font-size:28px;filter:drop-shadow(0 2px 6px rgba(0,0,0,0.7));transition:transform 0.1s linear;pointer-events:none;';
-    el.textContent = vConfig.emoji;
-    const marker = new maplibregl.Marker({ element: el, anchor: 'center', rotationAlignment: 'map' })
-      .setLngLat(routeData.route[0])
-      .addTo(map);
-    vehicleMarkerRef.current = marker;
+    const routeCurve = createPathFromVias(routeData.route, map);
+    if (customLayerRef.current) {
+      customLayerRef.current.setVehicleState(vt, 0, routeCurve);
+    }
     
     // Start animation
     routeActiveRef.current = true;
@@ -2269,6 +2482,7 @@ const Map3D = forwardRef(({ onSelectLot, selectedLotId, adminOverrides, lotClick
     routeStartTimeRef.current = null;
     routeCameraRef.current = null;
     
+    const vConfig = VEHICLE_TYPES[vt];
     const vSpeed = vConfig.speed;
     const animDuration = (dist / vSpeed) * 1000; // ms
     
@@ -2280,21 +2494,18 @@ const Map3D = forwardRef(({ onSelectLot, selectedLotId, adminOverrides, lotClick
       const progress = Math.min(elapsed / animDuration, 1.0);
       const easedProgress = smoothstep(progress);
       
-      const pos = interpolateRoute(routeData.route, easedProgress);
+      if (customLayerRef.current) {
+        customLayerRef.current.animationProgress = easedProgress;
+      }
+      
+      const posMercator = routeCurve.curve.getPoint(easedProgress);
+      const pos = new maplibregl.MercatorCoordinate(posMercator.x, posMercator.y, posMercator.z).toLngLat();
+      const bearing = getBearingAlongPath(routeCurve, easedProgress);
+      
       if (pos) {
-        // Update marker
-        if (vehicleMarkerRef.current) {
-          vehicleMarkerRef.current.setLngLat([pos.lng, pos.lat]);
-          vehicleMarkerRef.current.setRotation(pos.bearing || 0);
-          const markerEl = vehicleMarkerRef.current.getElement();
-          if (markerEl) {
-            markerEl.style.display = (cameraMode === 'first') ? 'none' : 'block';
-          }
-        }
-        
         // Update camera with smoothing to reduce jitter
         const currentMode = cameraMode || 'third';
-        const targetCam = getCameraForPerspective(pos, currentMode, pos.bearing, vt);
+        const targetCam = getCameraForPerspective(pos, currentMode, bearing, vt);
         const smooth = 0.18;
         if (!routeCameraRef.current) {
           routeCameraRef.current = targetCam;
@@ -2354,7 +2565,7 @@ const Map3D = forwardRef(({ onSelectLot, selectedLotId, adminOverrides, lotClick
       }
     }, 1600);
     
-  }, [viasGeojson, vehicleType, cameraMode, stopRouteAnimation, stopFlight]);
+  }, [viasGeojson, vehicleType, cameraMode, stopRouteAnimation, stopTourStepAnimation, stopFlight]);
 
   // Cycle vehicle types
   const cycleVehicle = useCallback(() => {

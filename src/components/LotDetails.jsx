@@ -7,6 +7,7 @@ import ShareMenu from './ShareMenu';
 import ReservaForm from './ReservaForm';
 import { playLotSelect } from '../utils/brandAudio';
 import { API_BASE_URL } from '../utils/config';
+import { useDeviceDetection } from '../hooks/useDeviceDetection';
 
 const STATUS_STYLE = {
   Disponible: { bg: 'rgba(16,185,129,0.12)', border: 'rgba(16,185,129,0.3)', text: '#10b981' },
@@ -177,7 +178,8 @@ Ver lote: ${shareUrl}`;
 
   const shareUrl = `${window.location.origin}${window.location.pathname}#lote=${lot.id}`;
 
-  const isMobile = typeof window !== 'undefined' && window.innerWidth <= 768;
+  const { device } = useDeviceDetection();
+  const isMobile = device === 'mobile';
 
   return (
     <motion.div
@@ -301,9 +303,10 @@ Ver lote: ${shareUrl}`;
               background: 'rgba(255,255,255,0.02)',
               border: '1px solid var(--glass-border)',
               borderRadius: 6,
-              padding: '6px 10px',
+              padding: isMobile ? '0 12px' : '6px 10px',
+              height: isMobile ? 48 : 'auto',
               color: '#fff',
-              fontSize: '0.78rem',
+              fontSize: isMobile ? '16px' : '0.78rem',
               outline: 'none',
               width: '100%',
               transition: 'border-color 0.2s'
@@ -530,9 +533,9 @@ Ver lote: ${shareUrl}`;
               className="drone-btn"
               onClick={() => setShowQualifier(true)}
               style={{
-                padding: '10px',
+                height: 48,
                 borderRadius: '6px',
-                fontSize: '0.8rem',
+                fontSize: '0.82rem',
                 border: '1px solid var(--gold-400)',
                 background: 'rgba(199, 168, 109, 0.1)',
                 color: 'var(--gold-300)',
@@ -544,16 +547,16 @@ Ver lote: ${shareUrl}`;
                 gap: 6
               }}
             >
-              <MessageSquare size={13} />
+              <MessageSquare size={14} />
               Solicitar Información Catastral
             </button>
             <button
               className="drone-btn"
               onClick={() => setShowReservaForm(true)}
               style={{
-                padding: '10px',
+                height: 48,
                 borderRadius: '6px',
-                fontSize: '0.8rem',
+                fontSize: '0.82rem',
                 border: '1px solid var(--gold-400)',
                 background: 'linear-gradient(135deg, var(--gold-400), var(--gold-500))',
                 color: '#020617',
@@ -566,7 +569,7 @@ Ver lote: ${shareUrl}`;
                 boxShadow: '0 4px 12px rgba(212, 168, 67, 0.15)'
               }}
             >
-              <Calendar size={13} />
+              <Calendar size={14} />
               Reservar Lote Campestre
             </button>
           </div>
